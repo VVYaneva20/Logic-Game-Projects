@@ -1,0 +1,4 @@
+﻿  MultyPlayer.cpp
+C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(114,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(203,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  LogicGame.vcxproj -> C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\x64\Debug\LogicGame.exe
