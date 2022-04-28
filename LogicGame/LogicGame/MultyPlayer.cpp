@@ -22,86 +22,74 @@ void gotoXY(int x, int y)
 void cardOrZero(int x, int y)
 {
     gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|   |            |  |" << endl;
-    gotoXY(x, y++); cout << "|   |     " << RED << "OR   " << RESET << "  |  |" << endl;
+    gotoXY(x, y++); cout << "|         " << RED << "OR   " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|        " << RED << "___" << RESET << "        |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "/ _ \\ " << RESET << "      |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| | | | " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| | | |  " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| |_| |   " << RESET << "   |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "\\___/  " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|                   |" << endl;
-    gotoXY(x, y++); cout << "|_________|_________|" << endl;
+    gotoXY(x, y++); cout << "|___________________|" << endl;
 }
 void cardAndZero(int x, int y)
 {
     gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|   |            |  |" << endl;
-    gotoXY(x, y++); cout << "|   |     " << RED << "AND  " << RESET << "  |  |" << endl;
+    gotoXY(x, y++); cout << "|         " << RED << "AND  " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|        " << RED << "___" << RESET << "        |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "/ _ \\ " << RESET << "      |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| | | | " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| | | |  " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| |_| |   " << RESET << "   |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "\\___/  " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|                   |" << endl;
-    gotoXY(x, y++); cout << "|_________|_________|" << endl;
+    gotoXY(x, y++); cout << "|___________________|" << endl;
 }
 void cardXorZero(int x, int y)
 {
     gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|   |            |  |" << endl;
-    gotoXY(x, y++); cout << "|   |     " << RED << "XOR   " << RESET << " |  |" << endl;
+    gotoXY(x, y++); cout << "|         " << RED << "XOR   " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|        " << RED << "___" << RESET << "        |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "/ _ \\ " << RESET << "      |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| | | | " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| | | |  " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "| |_| |   " << RESET << "   |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "\\___/  " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|                   |" << endl;
-    gotoXY(x, y++); cout << "|_________|_________|" << endl;
+    gotoXY(x, y++); cout << "|___________________|" << endl;
 }
 void cardAndOne(int x, int y)
 {
     gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|   |            |  |" << endl;
-    gotoXY(x, y++); cout << "|   |    " << RED << "AND    " << RESET << " |  |" << endl;
+    gotoXY(x, y++); cout << "|        " << RED << "AND    " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|        " << RED << "__" << RESET << "         |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "/_ | " << RESET << "       |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |  " << RESET << "      |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |   " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |    " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << " |_|  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|                   |" << endl;
-    gotoXY(x, y++); cout << "|_________|_________|" << endl;
+    gotoXY(x, y++); cout << "|___________________|" << endl;
 }
 void cardOrOne(int x, int y)
 {
     gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|   |            |  |" << endl;
-    gotoXY(x, y++); cout << "|   |    " << RED << " OR    " << RESET << " |  |" << endl;
+    gotoXY(x, y++); cout << "|        " << RED << " OR    " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|        " << RED << "__" << RESET << "         |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "/_ | " << RESET << "       |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |  " << RESET << "      |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |   " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |    " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << " |_|  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|                   |" << endl;
-    gotoXY(x, y++); cout << "|_________|_________|" << endl;
+    gotoXY(x, y++); cout << "|___________________|" << endl;
 }
 void cardXorOne(int x, int y)
 {
     gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|   |            |  |" << endl;
-    gotoXY(x, y++); cout << "|   |    " << RED << "XOR    " << RESET << " |  |" << endl;
+    gotoXY(x, y++); cout << "|        " << RED << "XOR    " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|        " << RED << "__" << RESET << "         |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << "/_ | " << RESET << "       |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |  " << RESET << "      |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |   " << RESET << "     |" << endl;
     gotoXY(x, y++); cout << "|      " << RED << "  | |    " << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|       " << RED << " |_|  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|                   |" << endl;
-    gotoXY(x, y++); cout << "|_________|_________|" << endl;
+    gotoXY(x, y++); cout << "|___________________|" << endl;
 }
 void shuffleCards()
 {
