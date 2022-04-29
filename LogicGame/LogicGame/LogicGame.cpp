@@ -29,46 +29,46 @@ void menu()
 
     while (true)
     {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 
-    for (int i = 0; i < 5; ++i)
-    {
-        if (i == pointer)
+        for (int i = 0; i < 5; ++i)
         {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
-            gotoXY(85, 16 + i);  cout << Menu[i] << endl;
+            if (i == pointer)
+            {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+                gotoXY(85, 16 + i);  cout << Menu[i] << endl;
+            }
+            else
+            {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+                gotoXY(85, 16 + i); cout << Menu[i] << endl;
+            }
         }
-        else
-        {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-            gotoXY(85, 16 + i); cout << Menu[i] << endl;
-        }
-    }
 
-    while (true)
-    {
-        if (GetAsyncKeyState(VK_UP) != 0)
+        while (true)
         {
-            pointer -= 1;
-            if (pointer == -1)
+            if (GetAsyncKeyState(VK_UP) != 0)
             {
-                pointer = 4;
+                pointer -= 1;
+                if (pointer == -1)
+                {
+                    pointer = 4;
+                }
+                break;
             }
-            break;
-        }
-        else if (GetAsyncKeyState(VK_DOWN) != 0)
-        {
-            pointer += 1;
-            if (pointer == 5)
+            else if (GetAsyncKeyState(VK_DOWN) != 0)
             {
-                pointer = 0;
+                pointer += 1;
+                if (pointer == 5)
+                {
+                    pointer = 0;
+                }
+                break;
             }
-            break;
-        }
-        else if (GetAsyncKeyState(VK_RETURN) != 0)
-        {
-            switch (pointer)
+            else if (GetAsyncKeyState(VK_RETURN) != 0)
             {
+                switch (pointer)
+                {
                 case 0:
                 {
                     onePlayer();
@@ -88,11 +88,11 @@ void menu()
                 {
                     break;
                 }
+                }
             }
         }
-    }
 
-    Sleep(150);
+        Sleep(150);
     }
 }
 
