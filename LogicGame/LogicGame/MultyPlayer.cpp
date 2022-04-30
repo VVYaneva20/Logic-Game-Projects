@@ -5,7 +5,8 @@
 #include <string>
 
 #define RESET   "\033[0m"
-#define RED     "\033[31m"
+#define RED     "\033[1m\033[31m" 
+#define YELLOW  "\033[1m\033[33m" 
 
 using namespace std;
 
@@ -13,7 +14,7 @@ HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition; // used for goto
 
 int cards[48];
-int player1Cards[5];
+int playerOneCards[5], playerTwoCards[5];
 
 void gotoXY(int x, int y)
 {
@@ -23,75 +24,123 @@ void gotoXY(int x, int y)
 }
 void cardOrZero(int x, int y)
 {
-    gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "OR    " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "___" << RESET << "        |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "/ _ \\ " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| | | | " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| | | |  " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| |_| |   " << RESET << "   |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "\\___/  " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|___________________|" << endl;
+    gotoXY(x, y++); cout << " _______________" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "OR    " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "___" << RESET << "      |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "/ _ \\ " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| | | | " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| | | |  " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| |_| |   " << RESET << " |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "\\___/  " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|_______________|" << endl;
 }
 void cardAndZero(int x, int y)
 {
-    gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "AND   " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "___" << RESET << "        |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "/ _ \\ " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| | | | " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| | | |  " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| |_| |   " << RESET << "   |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "\\___/  " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|___________________|" << endl;
+    gotoXY(x, y++); cout << " _______________" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "AND   " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "___" << RESET << "      |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "/ _ \\ " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| | | | " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| | | |  " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| |_| |   " << RESET << " |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "\\___/  " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|_______________|" << endl;
 }
 void cardXorZero(int x, int y)
 {
-    gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "XOR    " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "___" << RESET << "        |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "/ _ \\ " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| | | | " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| | | |  " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "| |_| |   " << RESET << "   |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "\\___/  " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|___________________|" << endl;
+    gotoXY(x, y++); cout << " _______________" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "XOR    " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "___" << RESET << "      |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "/ _ \\ " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| | | | " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| | | |  " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "| |_| |   " << RESET << " |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "\\___/  " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|_______________|" << endl;
 }
 void cardAndOne(int x, int y)
 {
-    gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "AND    " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "__" << RESET << "         |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "/_ | " << RESET << "       |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |   " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |    " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << " |_|  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|___________________|" << endl;
+    gotoXY(x, y++); cout << " _______________" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "AND    " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "__" << RESET << "       |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "/_ | " << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |  " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |   " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |    " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << " |_|  " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|_______________|" << endl;
 }
 void cardOrOne(int x, int y)
 {
-    gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "OR     " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "__" << RESET << "         |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "/_ | " << RESET << "       |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |   " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |    " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << " |_|  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|___________________|" << endl;
+    gotoXY(x, y++); cout << " _______________" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "OR     " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "__" << RESET << "       |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "/_ | " << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |  " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |   " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |    " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << " |_|  " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|_______________|" << endl;
 }
 void cardXorOne(int x, int y)
 {
-    gotoXY(x, y++); cout << " ___________________" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "XOR    " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|        " << RED << "__" << RESET << "         |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << "/_ | " << RESET << "       |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |   " << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|      " << RED << "  | |    " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|       " << RED << " |_|  " << RESET << "      |" << endl;
-    gotoXY(x, y++); cout << "|___________________|" << endl;
+    gotoXY(x, y++); cout << " _______________" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "XOR    " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|      " << RED << "__" << RESET << "       |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << "/_ | " << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |  " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |   " << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|    " << RED << "  | |    " << RESET << "  |" << endl;
+    gotoXY(x, y++); cout << "|     " << RED << " |_|  " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|_______________|" << endl;
+}
+void cardOne(int x, int y)
+{
+    gotoXY(x, y++); cout << " _____________" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << " __  " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << "/_ |" << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << " | |" << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << " | |" << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << " | |" << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << " |_|" << RESET << "     |" << endl;
+    gotoXY(x, y++); cout << "|_____________|" << endl;
+}
+void cardZero(int x, int y)
+{
+    gotoXY(x, y++); cout << " _____________" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << " ___ " << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << "/ _ \\" << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|   " << YELLOW << "| | | |" << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|   " << YELLOW << "| | | |" << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|   " << YELLOW << "| |_| |" << RESET << "   |" << endl;
+    gotoXY(x, y++); cout << "|    " << YELLOW << "\\___/" << RESET << "    |" << endl;
+    gotoXY(x, y++); cout << "|_____________|" << endl;
+}
+void shuffleBoolCards()
+{
+    bool cards[6];
+    int pixelsX = 77;
+    int pixelsY = 2;
+    srand(time(NULL));
+    for (int i = 0; i < 6; i++)
+    {
+        cards[i] = rand() % 2;
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        if (cards[i] == 0)
+        {
+            cardZero(pixelsX, pixelsY);
+            cardOne(pixelsX + 15, pixelsY);
+        }
+        else
+        {
+            cardOne(pixelsX, pixelsY);
+            cardZero(pixelsX + 15, pixelsY);
+        }
+        pixelsY += 8;
+    }
+
 }
 void shuffleCards()
 {
@@ -111,133 +160,158 @@ void shuffleCards()
         cards[j] = temp;
     }
 }
-void displayCards(int cardsNeeded)
+
+void displayCards(int cardsNeeded, int player)
 {
     int cardCounter = 0;
-    int pixelsX = 190;
+    int pixelsX = 191;
     int pixelsY = 2;
-    int selectedCards = 0;
 
     for (int i = 0; i < 63; i++)
     {
-
-        gotoXY(185, i); cout << "|";
+        gotoXY(187, i); cout << "|";
     }
 
     srand(time(NULL));
 
-    while (selectedCards < 5)
+    if (player == 1)
     {
-        int selectedCard = rand() % 6;
+        for (int i = 0; i < 5; i++)
+        {
+            if (playerOneCards[i] % 6 == 1)
+            {
+                cardOrZero(pixelsX, pixelsY);
+            }
+            else if (playerOneCards[i] % 6 == 2)
+            {
+                cardXorZero(pixelsX, pixelsY);
+            }
+            else if (playerOneCards[i] % 6 == 3)
+            {
+                cardAndZero(pixelsX, pixelsY);
+            }
+            else if (playerOneCards[i] % 6 == 4)
+            {
+                cardOrOne(pixelsX, pixelsY);
+            }
+            else if (playerOneCards[i] % 6 == 5)
+            {
+                cardXorOne(pixelsX, pixelsY);
+            }
+            else if (playerOneCards[i] % 6 == 0)
+            {
+                cardAndOne(pixelsX, pixelsY);
+            }
 
-        if (selectedCard == 0)
-        {
-            cardOrZero(pixelsX, pixelsY);
-            player1Cards[selectedCards] = 0;
-        }
-        else if (selectedCard == 1)
-        {
-            cardXorZero(pixelsX, pixelsY);
-            player1Cards[selectedCards] = 1;
-        }
-        else if (selectedCard == 2)
-        {
-            cardAndZero(pixelsX, pixelsY);
-            player1Cards[selectedCards] = 2;
-        }
-        else if (selectedCard == 3)
-        {
-            cardOrOne(pixelsX, pixelsY);
-            player1Cards[selectedCards] = 3;
-        }
-        else if (selectedCard == 4)
-        {
-            cardXorOne(pixelsX, pixelsY);
-            player1Cards[selectedCards] = 4;
-        }
-        else if (selectedCard == 5)
-        {
-            cardAndOne(pixelsX, pixelsY);
-            player1Cards[selectedCards] = 5;
-        }
+            cardCounter++;
+            pixelsY += 9;
 
-        selectedCards++;
-        cardCounter++;
-        pixelsX += 22;
-
-        if (cardCounter % 2 == 0 && cardCounter >= 2)
-        {
-            pixelsY += 10;
-            pixelsX = 190;
+            if (cardCounter == 4)
+            {
+                pixelsY += 2;
+            }
         }
-        if (cardCounter == 4)
-        {
-            pixelsX = 200;
-        }
-
-
     }
-
-}
-void cardOne(int x, int y)
-{
-    gotoXY(x, y++); cout << " _____________" << endl;
-    gotoXY(x, y++); cout << "|             |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << " __  " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << "/_ |" << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << " | |" << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << " | |" << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << " | |" << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << " |_|" << RESET << "     |" << endl;
-    gotoXY(x, y++); cout << "|_____________|" << endl;
-}
-void cardZero(int x, int y)
-{
-    gotoXY(x, y++); cout << " _____________" << endl;
-    gotoXY(x, y++); cout << "|             |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << " ___ " << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << "/ _ \\" << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|   " << RED << "| | | |" << RESET << "   |" << endl;
-    gotoXY(x, y++); cout << "|   " << RED << "| | | |" << RESET << "   |" << endl;
-    gotoXY(x, y++); cout << "|   " << RED << "| |_| |" << RESET << "   |" << endl;
-    gotoXY(x, y++); cout << "|    " << RED << "\\___/" << RESET << "    |" << endl;
-    gotoXY(x, y++); cout << "|_____________|" << endl;
-}
-void shuffleBoolCards()
-{
-    bool cards[6];
-    int pixelsX = 70;
-    int pixelsY = 2;
-    srand(time(NULL));
-    for (int i = 0; i < 6; i++)
+    else
     {
-        cards[i] = rand() % 2;
-    }
-    for (int i = 0; i < 6; i++)
-    {
-        if (cards[i] == 0)
+        for (int i = 0; i < 5; i++)
         {
-            cardZero(pixelsX, pixelsY);
-            cardOne(pixelsX + 15, pixelsY);
+            if (playerTwoCards[i] % 6 == 1)
+            {
+                cardOrZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[i] % 6 == 2)
+            {
+                cardXorZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[i] % 6 == 3)
+            {
+                cardAndZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[i] % 6 == 4)
+            {
+                cardOrOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[i] % 6 == 5)
+            {
+                cardXorOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[i] % 6 == 0)
+            {
+                cardAndOne(pixelsX, pixelsY);
+            }
+
+            cardCounter++;
+            pixelsY += 9;
+
+            if (cardCounter == 4)
+            {
+                pixelsY += 2;
+            }
+        }
+    }
+    
+
+    gotoXY(195, 50); 
+    
+    if (player == 1)
+    {
+        cout << "PLAYER 1";
+    }
+    else
+    {
+        cout << "PLAYER 2";
+    }
+}
+void takeCards(int cardsNeeded, int player)
+{
+    if (cardsNeeded != 1)
+    {
+        for (int i = 0; i < cardsNeeded; i++)
+        {
+            if (player == 1)
+            {
+                playerOneCards[i] = cards[i];
+            }
+            else
+            {
+                playerTwoCards[i] = cards[i];
+            }
+        }
+    }
+    else
+    {
+        if (player == 1)
+        {
+            playerOneCards[4] = cards[0];
         }
         else
         {
-            cardOne(pixelsX, pixelsY);
-            cardZero(pixelsX + 15, pixelsY);
+            playerTwoCards[4] = cards[0];
         }
-        pixelsY += 10;
     }
 
+    for (int i = 0; i < cardsNeeded; i++)
+    {
+        int temp = cards[0];
+        for (int j = 0; j < 47; j++)
+        {
+            cards[j] = cards[j + 1];
+        }
+        cards[47] = temp;
+    }
 }
+
 
 
 void firstPlayer()
 {
-
-    int pixelsX;
+    int pixelsX = 107;
     int pixelsY;
 
-    displayCards(4);
+    takeCards(1, 1);
+    displayCards(5, 1);
+
     while (true)
     {
         char keyPress;
@@ -246,160 +320,350 @@ void firstPlayer()
 
         if (asciiValue == 49) // '1' ASCII code
         {
-            pixelsX = 100;
-            pixelsY = 7;
+            pixelsY = 4;
 
-            if (player1Cards[0] == 0)
+            if (playerOneCards[1] % 6 == 1)
             {
                 cardOrZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[0] == 1)
+            else if (playerOneCards[1] % 6 == 2)
             {
                 cardXorZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[0] == 2)
+            else if (playerOneCards[1] % 6 == 3)
             {
                 cardAndZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[0] == 3)
+            else if (playerOneCards[1] % 6 == 4)
             {
                 cardOrOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[0] == 4)
+            else if (playerOneCards[1] % 6 == 5)
             {
                 cardXorOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[0] == 5)
+            else if (playerOneCards[1] % 6 == 0)
             {
                 cardAndOne(pixelsX, pixelsY);
             }
+
+            break;
         }
         if (asciiValue == 50)  // '2' ASCII code
         {
-            pixelsY = 17;
+            pixelsY = 13;
 
-            if (player1Cards[1] == 0)
+            if (playerOneCards[1] % 6 == 1)
             {
                 cardOrZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[1] == 1)
+            else if (playerOneCards[1] % 6 == 2)
             {
                 cardXorZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[1] == 2)
+            else if (playerOneCards[1] % 6 == 3)
             {
                 cardAndZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[1] == 3)
+            else if (playerOneCards[1] % 6 == 4)
             {
                 cardOrOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[1] == 4)
+            else if (playerOneCards[1] % 6 == 5)
             {
                 cardXorOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[1] == 5)
+            else if (playerOneCards[1] % 6 == 0)
             {
                 cardAndOne(pixelsX, pixelsY);
             }
+
+            break;
         }
         if (asciiValue == 51) // '3' ASCII code
         {
-            pixelsY = 27;
+            pixelsY = 22;
 
-            if (player1Cards[2] == 0)
+            if (playerOneCards[1] % 6 == 1)
             {
                 cardOrZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[2] == 1)
+            else if (playerOneCards[1] % 6 == 2)
             {
                 cardXorZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[2] == 2)
+            else if (playerOneCards[1] % 6 == 3)
             {
                 cardAndZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[2] == 3)
+            else if (playerOneCards[1] % 6 == 4)
             {
                 cardOrOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[2] == 4)
+            else if (playerOneCards[1] % 6 == 5)
             {
                 cardXorOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[2] == 5)
+            else if (playerOneCards[1] % 6 == 0)
             {
                 cardAndOne(pixelsX, pixelsY);
             }
+
+            break;
         }
         if (asciiValue == 52) // '4' ASCII code
         {
-            pixelsY = 37;
+            pixelsY = 31;
 
-            if (player1Cards[3] == 0)
+            if (playerOneCards[1] % 6 == 1)
             {
                 cardOrZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[3] == 1)
+            else if (playerOneCards[1] % 6 == 2)
             {
                 cardXorZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[3] == 2)
+            else if (playerOneCards[1] % 6 == 3)
             {
                 cardAndZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[3] == 3)
+            else if (playerOneCards[1] % 6 == 4)
             {
                 cardOrOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[3] == 4)
+            else if (playerOneCards[1] % 6 == 5)
             {
                 cardXorOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[3] == 5)
+            else if (playerOneCards[1] % 6 == 0)
             {
                 cardAndOne(pixelsX, pixelsY);
             }
+
+            break;
         }
         if (asciiValue == 53) // '5' ASCII code
         {
-            pixelsY = 47;
+            pixelsY = 40;
 
-            if (player1Cards[4] == 0)
+            if (playerOneCards[1] % 6 == 1)
             {
                 cardOrZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[4] == 1)
+            else if (playerOneCards[1] % 6 == 2)
             {
                 cardXorZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[4] == 2)
+            else if (playerOneCards[1] % 6 == 3)
             {
                 cardAndZero(pixelsX, pixelsY);
             }
-            else if (player1Cards[4] == 3)
+            else if (playerOneCards[1] % 6 == 4)
             {
                 cardOrOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[4] == 4)
+            else if (playerOneCards[1] % 6 == 5)
             {
                 cardXorOne(pixelsX, pixelsY);
             }
-            else if (player1Cards[4] == 5)
+            else if (playerOneCards[1] % 6 == 0)
             {
                 cardAndOne(pixelsX, pixelsY);
             }
+
+            break;
         }
     }
+   
 }
 
 void secondPlayer()
 {
-    displayCards(4);
+
+    int pixelsX = 60;
+    int pixelsY;
+
+    takeCards(1, 2);
+    displayCards(5, 2);
+
+
+
+    while (true)
+    {
+        char keyPress;
+        keyPress = _getch();
+        int asciiValue = keyPress;
+
+        if (asciiValue == 49) // '1' ASCII code
+        {
+            pixelsY = 4;
+
+            if (playerTwoCards[1] % 6 == 1)
+            {
+                cardOrZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 2)
+            {
+                cardXorZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 3)
+            {
+                cardAndZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 4)
+            {
+                cardOrOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 5)
+            {
+                cardXorOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 0)
+            {
+                cardAndOne(pixelsX, pixelsY);
+            }
+
+            break;
+        }
+        if (asciiValue == 50)  // '2' ASCII code
+        {
+            pixelsY = 13;
+
+            if (playerTwoCards[1] % 6 == 1)
+            {
+                cardOrZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 2)
+            {
+                cardXorZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 3)
+            {
+                cardAndZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 4)
+            {
+                cardOrOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 5)
+            {
+                cardXorOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 0)
+            {
+                cardAndOne(pixelsX, pixelsY);
+            }
+
+            break;
+        }
+        if (asciiValue == 51) // '3' ASCII code
+        {
+            pixelsY = 22;
+
+            if (playerTwoCards[1] % 6 == 1)
+            {
+                cardOrZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 2)
+            {
+                cardXorZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 3)
+            {
+                cardAndZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 4)
+            {
+                cardOrOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 5)
+            {
+                cardXorOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 0)
+            {
+                cardAndOne(pixelsX, pixelsY);
+            }
+
+            break;
+        }
+        if (asciiValue == 52) // '4' ASCII code
+        {
+            pixelsY = 31;
+
+            if (playerTwoCards[1] % 6 == 1)
+            {
+                cardOrZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 2)
+            {
+                cardXorZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 3)
+            {
+                cardAndZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 4)
+            {
+                cardOrOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 5)
+            {
+                cardXorOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 0)
+            {
+                cardAndOne(pixelsX, pixelsY);
+            }
+
+            break;
+        }
+        if (asciiValue == 53) // '5' ASCII code
+        {
+            pixelsY = 40;
+
+            if (playerTwoCards[1] % 6 == 1)
+            {
+                cardOrZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 2)
+            {
+                cardXorZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 3)
+            {
+                cardAndZero(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 4)
+            {
+                cardOrOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 5)
+            {
+                cardXorOne(pixelsX, pixelsY);
+            }
+            else if (playerTwoCards[1] % 6 == 0)
+            {
+                cardAndOne(pixelsX, pixelsY);
+            }
+
+            break;
+        }
+    }
 }
 
 void beginingOfTheGameWithTwoPLayers()
 {
     shuffleBoolCards();
-    firstPlayer();
+    shuffleCards();
+
+    takeCards(5, 1);
+    takeCards(5, 2);
+    
+    while (true)
+    {
+        firstPlayer();
+        secondPlayer();
+    }
+    
 }
