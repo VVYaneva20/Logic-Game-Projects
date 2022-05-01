@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <conio.h>
 #include <windows.h>
 #include <string>
@@ -13,8 +13,9 @@ HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition; // used for goto
 
 int cards[48];
-int playerOneCards[5], playerTwoCards[5];
+int playerOneCards[5], playerTwoCards[5], playerOneCardValues[5], playerTwoCardValues[5];
 int chosenCard;
+bool boolCardValuesP1[6], boolCardValuesP2[6];
 
 void gotoXY(int x, int y)
 {
@@ -132,16 +133,21 @@ void shuffleBoolCards()
         {
             cardZero(pixelsX, pixelsY);
             cardOne(pixelsX + 15, pixelsY);
+            boolCardValuesP1[i] = 1;
+            boolCardValuesP2[i] = 0;
         }
         else
         {
             cardOne(pixelsX, pixelsY);
             cardZero(pixelsX + 15, pixelsY);
+            boolCardValuesP1[i] = 0;
+            boolCardValuesP2[i] = 1;
         }
         pixelsY += 8;
     }
 
 }
+
 void shuffleCards()
 {
     for (int i = 0; i < 48; i++)
@@ -281,6 +287,10 @@ void displayCards(int cardsNeeded, int* player)
     int cardCounter = 0;
     int pixelsX = 191;
     int pixelsY = 2;
+    
+    gotoXY(30, 3); cout << YELLOW << "Player 2's side" << RESET;
+
+    gotoXY(139, 3); cout << YELLOW << "Player 1's side" << RESET;
 
     for (int i = 0; i < 52; i++)
     {
@@ -355,7 +365,6 @@ void firstPlayer()
     int pixelsX = 107;
     int pixelsY;
 
-    takeCards(1, playerOneCards);
     displayCards(5, playerOneCards);
     chooseCard(playerOneCards);
     while (true)
@@ -368,156 +377,197 @@ void firstPlayer()
         {
             pixelsY = 4;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP1[0] || boolCardValuesP1[1]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP1[0] ^ boolCardValuesP1[1]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && (boolCardValuesP1[0] && boolCardValuesP1[1]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP1[0] || boolCardValuesP1[1]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP1[0] ^ boolCardValuesP1[1]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP1[0] && boolCardValuesP1[1]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
+            }
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
             }
 
-            break;
         }
         if (asciiValue == 50)  // '2' ASCII code
         {
             pixelsY = 13;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP1[1] || boolCardValuesP1[2]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP1[1] ^ boolCardValuesP1[2]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP1[1] && boolCardValuesP1[2]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP1[1] || boolCardValuesP1[2]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP1[1] ^ boolCardValuesP1[2]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP1[1] && boolCardValuesP1[2]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
         if (asciiValue == 51) // '3' ASCII code
         {
             pixelsY = 22;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP1[2] || boolCardValuesP1[3]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP1[2] ^ boolCardValuesP1[3]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP1[2] && boolCardValuesP1[3]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if ((chosenCard % 6 == 4) && (boolCardValuesP1[2] || boolCardValuesP1[3]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP1[2] ^ boolCardValuesP1[3]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP1[2] && boolCardValuesP1[3]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
         if (asciiValue == 52) // '4' ASCII code
         {
             pixelsY = 31;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP1[3] || boolCardValuesP1[4]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP1[3] ^ boolCardValuesP1[4]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP1[3] && boolCardValuesP1[4]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP1[3] || boolCardValuesP1[4]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP1[3] ^ boolCardValuesP1[4]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP1[3] && boolCardValuesP1[4]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
         if (asciiValue == 53) // '5' ASCII code
         {
             pixelsY = 40;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP1[4] || boolCardValuesP1[5]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP1[4] ^ boolCardValuesP1[5]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP1[4] && boolCardValuesP1[5]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP1[4] || boolCardValuesP1[5]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP1[4] ^ boolCardValuesP1[5]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP1[4] && boolCardValuesP1[5]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
     }
 
@@ -543,156 +593,197 @@ void secondPlayer()
         {
             pixelsY = 4;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP2[0] || boolCardValuesP2[1]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP2[0] ^ boolCardValuesP2[1]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && boolCardValuesP2[0] && boolCardValuesP2[1])
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP2[0] || boolCardValuesP2[1]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP2[0] ^ boolCardValuesP2[1]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP2[0] && boolCardValuesP2[1]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
+            }
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
             }
 
-            break;
         }
         if (asciiValue == 50)  // '2' ASCII code
         {
             pixelsY = 13;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP2[1] || boolCardValuesP2[2]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP2[1] ^ boolCardValuesP2[2]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP2[1] && boolCardValuesP2[2]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP2[1] || boolCardValuesP2[2]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP2[1] ^ boolCardValuesP2[2]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP2[1] && boolCardValuesP2[2]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
         if (asciiValue == 51) // '3' ASCII code
         {
             pixelsY = 22;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP2[2] || boolCardValuesP2[3]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP2[2] ^ boolCardValuesP2[3]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP2[2] && boolCardValuesP2[3]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if ((chosenCard % 6 == 4) && (boolCardValuesP2[2] || boolCardValuesP2[3]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP2[2] ^ boolCardValuesP2[3]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP2[2] && boolCardValuesP2[3]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
         if (asciiValue == 52) // '4' ASCII code
         {
             pixelsY = 31;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP2[3] || boolCardValuesP2[4]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP2[3] ^ boolCardValuesP2[4]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP2[3] && boolCardValuesP2[4]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP2[3] || boolCardValuesP2[4]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP2[3] ^ boolCardValuesP2[4]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP2[3] && boolCardValuesP2[4]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
         if (asciiValue == 53) // '5' ASCII code
         {
             pixelsY = 40;
 
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(boolCardValuesP2[4] || boolCardValuesP2[5]))
             {
                 cardOrZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(boolCardValuesP2[4] ^ boolCardValuesP2[5]))
             {
                 cardXorZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(boolCardValuesP2[4] && boolCardValuesP2[5]))
             {
                 cardAndZero(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (boolCardValuesP2[4] || boolCardValuesP2[5]))
             {
                 cardOrOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (boolCardValuesP2[4] ^ boolCardValuesP2[5]))
             {
                 cardXorOne(pixelsX, pixelsY);
+                break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (boolCardValuesP2[4] && boolCardValuesP2[5]))
             {
                 cardAndOne(pixelsX, pixelsY);
+                break;
             }
-
-            break;
+            else
+            {
+                gotoXY(195, 50); cout << "Invalid!";
+            }
         }
     }
 
