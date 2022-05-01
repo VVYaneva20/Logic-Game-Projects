@@ -1,6 +1,2 @@
-﻿  MultyPlayer.cpp
-C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(8,1): warning C4005: 'RED': macro redefinition
-C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.h(7): message : see previous definition of 'RED'
-C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(125,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(154,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  LINK : C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\x64\Debug\LogicGame.exe not found or not built by the last incremental link; performing full link
   LogicGame.vcxproj -> C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\x64\Debug\LogicGame.exe
