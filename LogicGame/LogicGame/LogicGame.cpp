@@ -109,5 +109,7 @@ void startProgram()
 
 int main()
 {
+    system("mode con COLS=700");
+    ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
     startProgram();
 }

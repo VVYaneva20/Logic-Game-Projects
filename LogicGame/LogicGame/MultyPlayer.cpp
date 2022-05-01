@@ -1,4 +1,3 @@
-#include "MultyPlayer.h"
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
@@ -215,7 +214,7 @@ void chooseCard(int* player)
                 counter++;
             }
         }
-        if (key == '\r')// enter key
+        if (key == 's')// enter key
         {
             if (counter == 1)
             {
@@ -283,7 +282,7 @@ void displayCards(int cardsNeeded, int* player)
     int pixelsX = 191;
     int pixelsY = 2;
 
-    for (int i = 0; i < 63; i++)
+    for (int i = 0; i < 52; i++)
     {
         gotoXY(187, i); cout << "|";
     }
@@ -352,12 +351,13 @@ void takeCards(int cardsNeeded, int* player)
 
 void firstPlayer()
 {
+    gotoXY(195, 50); cout << "PLAYER 1";
     int pixelsX = 107;
     int pixelsY;
 
     takeCards(1, playerOneCards);
-    chooseCard(playerOneCards);
     displayCards(5, playerOneCards);
+    chooseCard(playerOneCards);
     while (true)
     {
         char keyPress;
@@ -521,21 +521,18 @@ void firstPlayer()
         }
     }
 
-    gotoXY(195, 50); cout << "PLAYER 1";
 }
 
 void secondPlayer()
 {
 
+    gotoXY(195, 50); cout << "PLAYER 2";
     int pixelsX = 60;
     int pixelsY;
 
     takeCards(1, playerTwoCards);
-
-
-    chooseCard(playerTwoCards);
-
     displayCards(5, playerTwoCards);
+    chooseCard(playerTwoCards);
     while (true)
     {
         char keyPress;
@@ -699,7 +696,6 @@ void secondPlayer()
         }
     }
 
-    gotoXY(195, 50); cout << "PLAYER 2";
 }
 
 void beginingOfTheGameWithTwoPLayers()
