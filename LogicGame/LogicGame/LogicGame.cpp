@@ -35,7 +35,7 @@ void menu()
         {
             if (i == pointer)
             {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
                 gotoXY(85, 16 + i);  cout << Menu[i] << endl;
             }
             else
@@ -83,6 +83,7 @@ void menu()
                 {
                     system("cls");
                     beginingOfTheGameWithTwoPLayers();
+                    break;
                 }
                 case 4:
                 {
