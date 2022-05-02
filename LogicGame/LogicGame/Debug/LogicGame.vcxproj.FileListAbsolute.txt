@@ -1,2 +1,3 @@
 C:\Users\Hakan\Logic-Game-Projects\LogicGame\LogicGame\Debug\LogicGame.exe
 C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\Debug\LogicGame.exe
+D:\Logic-Game-Projects\LogicGame\LogicGame\Debug\LogicGame.exe
