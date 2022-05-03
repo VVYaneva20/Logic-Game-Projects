@@ -1,2 +1,4 @@
-﻿  LINK : C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\x64\Debug\LogicGame.exe not found or not built by the last incremental link; performing full link
+﻿  MultyPlayer.cpp
+C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(129,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(162,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   LogicGame.vcxproj -> C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\x64\Debug\LogicGame.exe

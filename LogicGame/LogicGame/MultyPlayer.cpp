@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <string>
+#include "LogicGame.h"
 #define RESET   "\033[0m"
 #define RED     "\033[1m\033[31m" 
 #define YELLOW  "\033[1m\033[33m" 
@@ -13,8 +14,10 @@ int playerOneCards[5], playerTwoCards[5], playerOneCardValues[5], playerTwoCardV
 int chosenCard;
 int counter;
 bool  boolCardValuesP1[6], boolCardValuesP2[6];
+bool cardValuesP1[5], cardValuesP2[5];
 bool isOccupiedP1[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 bool isOccupiedP2[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
 void gotoXY(int x, int y)
 {
     CursorPosition.X = x;
@@ -160,7 +163,7 @@ void shuffleCards()
         cards[j] = temp;
     }
 }
-void removeCard(int card, int *player)
+void removeCard(int card, int* player)
 {
     for (int i = card - 1; i < 5; ++i)
     {
@@ -458,7 +461,7 @@ void displayPositions()
         gotoXY(60, 47); cout << "|               |" << endl;
         gotoXY(60, 48); cout << "|_______________|" << endl;
     }
-    if (isOccupiedP2[0] == 1 && isOccupiedP2[1] == 1 && isOccupiedP2[5]== 0)
+    if (isOccupiedP2[0] == 1 && isOccupiedP2[1] == 1 && isOccupiedP2[5] == 0)
     {
         gotoXY(122, 8); cout << " _______________" << endl;
         gotoXY(122, 9); cout << "|    POSITION   |" << endl;
@@ -699,7 +702,7 @@ void displayPositions()
         gotoXY(2, 31); cout << "|_______________|" << endl;
     }
 }
-void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions)
+void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
 {
     int pixelsX;
     int pixelsY;
@@ -709,7 +712,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
         keyPress = _getch();
         int asciiValue = keyPress;
         if (asciiValue == 49) // '1' ASCII code
-        {   
+        {
             if (occupiedPositions[0] == 0)
             {
                 if (player == 1)
@@ -725,6 +728,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[0] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -732,6 +736,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[0] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -739,6 +744,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[0] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -746,6 +752,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[0] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -753,6 +760,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[0] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -760,6 +768,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[0] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -780,45 +789,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     pixelsX = 137;
                 }
                 pixelsY = 12;
-                if (chosenCard % 6 == 1)
+                if (chosenCard % 6 == 1 && !(cardValues[0] || cardValues[1]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 2)
+                else if (chosenCard % 6 == 2 && !(cardValues[0] ^ cardValues[1]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 3)
+                else if (chosenCard % 6 == 3 && !(cardValues[0] && cardValues[1]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 4)
+                else if (chosenCard % 6 == 4 && (cardValues[0] || cardValues[1]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 5)
+                else if (chosenCard % 6 == 5 && (cardValues[0] ^ cardValues[1]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 0)
+                else if (chosenCard % 6 == 0 && (cardValues[0] && cardValues[1]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -846,6 +861,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[1] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -853,6 +869,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[1] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -860,6 +877,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[1] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -867,6 +885,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[1] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -874,6 +893,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[1] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -881,6 +901,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[1] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -901,45 +922,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     pixelsX = 137;
                 }
                 pixelsY = 23;
-                if (chosenCard % 6 == 1)
+                if (chosenCard % 6 == 1 && !(boolCardValues[1] || boolCardValues[2]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 2)
+                else if (chosenCard % 6 == 2 && !(boolCardValues[1] ^ boolCardValues[2]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 3)
+                else if (chosenCard % 6 == 3 && !(boolCardValues[1] && boolCardValues[2]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 4)
+                else if (chosenCard % 6 == 4 && (boolCardValues[1] || boolCardValues[2] && occupiedPositions[7] == 1 && occupiedPositions[6] == 1))
                 {
                     occupiedPositions[10] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 5)
+                else if (chosenCard % 6 == 5 && (boolCardValues[1] ^ boolCardValues[2]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 0)
+                else if (chosenCard % 6 == 0 && (boolCardValues[1] && boolCardValues[2]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -967,6 +994,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[2] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[2] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -974,6 +1002,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[2] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[2] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -981,6 +1010,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[2] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[2] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -988,6 +1018,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[2] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[2] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -995,6 +1026,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[2] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[2] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1002,6 +1034,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[2] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[2] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1022,45 +1055,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     pixelsX = 137;
                 }
                 pixelsY = 34;
-                if (chosenCard % 6 == 1)
+                if (chosenCard % 6 == 1 && !(boolCardValues[2] || boolCardValues[3]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[2] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 2)
+                else if (chosenCard % 6 == 2 && !(boolCardValues[2] ^ boolCardValues[3]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[2] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 3)
+                else if (chosenCard % 6 == 3 && !(boolCardValues[2] && boolCardValues[3]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[2] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 4)
+                else if (chosenCard % 6 == 4 && (boolCardValues[2] || boolCardValues[3]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[2] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 5)
+                else if (chosenCard % 6 == 5 && (boolCardValues[2] ^ boolCardValues[3]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[2] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 0)
+                else if (chosenCard % 6 == 0 && (boolCardValues[2] && boolCardValues[3]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[2] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1088,6 +1127,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[3] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[3] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1095,6 +1135,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[3] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[3] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1102,6 +1143,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[3] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[3] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1109,6 +1151,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[3] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[3] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1116,6 +1159,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[3] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[3] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1123,6 +1167,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[3] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[3] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1143,45 +1188,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     pixelsX = 152;
                 }
                 pixelsY = 17;
-                if (chosenCard % 6 == 1)
+                if (chosenCard % 6 == 1 && !(boolCardValues[0] || boolCardValues[1]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 2)
+                else if (chosenCard % 6 == 2 && !(boolCardValues[0] ^ boolCardValues[1]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 3)
+                else if (chosenCard % 6 == 3 && !(boolCardValues[0] && boolCardValues[1]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 4)
+                else if (chosenCard % 6 == 4 && (boolCardValues[0] || boolCardValues[1]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 5)
+                else if (chosenCard % 6 == 5 && (boolCardValues[0] ^ boolCardValues[1]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 0)
+                else if (chosenCard % 6 == 0 && (boolCardValues[0] && boolCardValues[1]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1209,6 +1260,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[4] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[4] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1216,6 +1268,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[4] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[4] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1223,6 +1276,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[4] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[4] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1230,6 +1284,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[4] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[4] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1237,6 +1292,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[4] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[4] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1244,6 +1300,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 {
                     occupiedPositions[4] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[4] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1264,45 +1321,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     pixelsX = 152;
                 }
                 pixelsY = 29;
-                if (chosenCard % 6 == 1)
+                if (chosenCard % 6 == 1 && !(boolCardValues[1] || boolCardValues[2]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 2)
+                else if (chosenCard % 6 == 2 && !(boolCardValues[1] ^ boolCardValues[2]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 3)
+                else if (chosenCard % 6 == 3 && !(boolCardValues[1] && boolCardValues[2]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[1] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 4)
+                else if (chosenCard % 6 == 4 && (boolCardValues[1] || boolCardValues[2]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 5)
+                else if (chosenCard % 6 == 5 && (boolCardValues[1] ^ boolCardValues[2]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 0)
+                else if (chosenCard % 6 == 0 && (boolCardValues[1] && boolCardValues[2]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[1] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1326,45 +1389,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     pixelsX = 122;
                 }
                 pixelsY = 8;
-                if (chosenCard % 6 == 1)
+                if (chosenCard % 6 == 1 && !(cardValues[0] || cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
                     cardOrZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 2)
+                else if (chosenCard % 6 == 2 && !(cardValues[0] ^ cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
                     cardXorZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 3)
+                else if (chosenCard % 6 == 3 && !(cardValues[0] && cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
                     cardAndZero(pixelsX, pixelsY);
+                    cardValues[0] = 0;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 4)
+                else if (chosenCard % 6 == 4 && (cardValues[0] || cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
                     cardOrOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 5)
+                else if (chosenCard % 6 == 5 && (cardValues[0] ^ cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
                     cardXorOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 0)
+                else if (chosenCard % 6 == 0 && (cardValues[0] && cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
                     cardAndOne(pixelsX, pixelsY);
+                    cardValues[0] = 1;
                     removeCard(counter, playersCards);
                     break;
                 }
@@ -1385,42 +1454,42 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     pixelsX = 167;
                 }
                 pixelsY = 23;
-                if (chosenCard % 6 == 1)
+                if (chosenCard % 6 == 1 && !(cardValues[0] || cardValues[1]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
                     cardOrZero(pixelsX, pixelsY);
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 2)
+                else if (chosenCard % 6 == 2 && !(cardValues[0] ^ cardValues[1]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
                     cardXorZero(pixelsX, pixelsY);
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 3)
+                else if (chosenCard % 6 == 3 && !(cardValues[0] && cardValues[1]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
                     cardAndZero(pixelsX, pixelsY);
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 4)
+                else if (chosenCard % 6 == 4 && (cardValues[0] || cardValues[1]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
                     cardOrOne(pixelsX, pixelsY);
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 5)
+                else if (chosenCard % 6 == 5 && (cardValues[0] ^ cardValues[1]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
                     cardXorOne(pixelsX, pixelsY);
                     removeCard(counter, playersCards);
                     break;
                 }
-                else if (chosenCard % 6 == 0)
+                else if (chosenCard % 6 == 0 && (cardValues[0] && cardValues[1]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
                     cardAndOne(pixelsX, pixelsY);
@@ -1445,45 +1514,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 pixelsX = 122;
             }
             pixelsY = 18;
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(cardValues[1] || cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
                 cardOrZero(pixelsX, pixelsY);
+                cardValues[1] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(cardValues[1] ^ cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
                 cardXorZero(pixelsX, pixelsY);
+                cardValues[1] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(cardValues[1] && cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
                 cardAndZero(pixelsX, pixelsY);
+                cardValues[1] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (cardValues[1] || cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
                 cardOrOne(pixelsX, pixelsY);
+                cardValues[1] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (cardValues[1] ^ cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
                 cardXorOne(pixelsX, pixelsY);
+                cardValues[1] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (cardValues[1] && cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
                 cardAndOne(pixelsX, pixelsY);
+                cardValues[1] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
@@ -1504,45 +1579,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 pixelsX = 122;
             }
             pixelsY = 28;
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardOrZero(pixelsX, pixelsY);
+                cardValues[2] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(cardValues[2] ^ cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardXorZero(pixelsX, pixelsY);
+                cardValues[2] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardAndZero(pixelsX, pixelsY);
+                cardValues[2] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardOrOne(pixelsX, pixelsY);
+                cardValues[2] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 4 && (cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardXorOne(pixelsX, pixelsY);
+                cardValues[2] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardAndOne(pixelsX, pixelsY);
+                cardValues[2] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
@@ -1563,45 +1644,51 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 pixelsX = 122;
             }
             pixelsY = 38;
-            if (chosenCard % 6 == 1)
+            if (chosenCard % 6 == 1 && !(cardValues[3] || cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
                 cardOrZero(pixelsX, pixelsY);
+                cardValues[3] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 2)
+            else if (chosenCard % 6 == 2 && !(cardValues[3] ^ cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
                 cardXorZero(pixelsX, pixelsY);
+                cardValues[3] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 3)
+            else if (chosenCard % 6 == 3 && !(cardValues[3] && cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
                 cardAndZero(pixelsX, pixelsY);
+                cardValues[3] = 0;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 4)
+            else if (chosenCard % 6 == 4 && (cardValues[3] || cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
                 cardOrOne(pixelsX, pixelsY);
+                cardValues[3] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 5)
+            else if (chosenCard % 6 == 5 && (cardValues[3] ^ cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
                 cardXorOne(pixelsX, pixelsY);
+                cardValues[3] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 0)
+            else if (chosenCard % 6 == 0 && (cardValues[3] && cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
                 cardAndOne(pixelsX, pixelsY);
+                cardValues[3] = 1;
                 removeCard(counter, playersCards);
                 break;
             }
@@ -1616,11 +1703,11 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
             chooseCard(playersCards);
             if (player == 1)
             {
-                placeCard(playersCards, boolCardValues, 1, occupiedPositions);
+                placeCard(playersCards, boolCardValues, 1, occupiedPositions, cardValues);
             }
             else
             {
-                placeCard(playersCards, boolCardValues, 2, occupiedPositions);
+                placeCard(playersCards, boolCardValues, 2, occupiedPositions, cardValues);
             }
             break;
         }
@@ -1635,13 +1722,13 @@ void firstPlayer()
 {
     displayCards(5, playerOneCards);
     chooseCard(playerOneCards);
-    placeCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1);
+    placeCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1);
 }
 void secondPlayer()
 {
     displayCards(5, playerTwoCards);
     chooseCard(playerTwoCards);
-    placeCard(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2);
+    placeCard(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2);
 }
 void beginingOfTheGameWithTwoPLayers()
 {
@@ -1659,20 +1746,33 @@ void beginingOfTheGameWithTwoPLayers()
         gotoXY(195, 50); cout << "PLAYER 2";
         takeCards(1, playerTwoCards);
         secondPlayer();
-        if (isOccupiedP1[14] == 1 && isOccupiedP2[14] == 1)
+        if (isOccupiedP1[14] == 1 || isOccupiedP2[14] == 1)
         {
             system("cls");
-            cout << "the players are equal";
-        }
-        else if (isOccupiedP1[14] == 1)
-        {
-            system("cls");
-            cout << "player 1 wins";
-        }
-        else if(isOccupiedP2[14] == 1)
-        {
-            system("cls");
-            cout << "player 2 wins";
-        }
+            break;
+        } 
+    }
+
+    if (isOccupiedP1[14] == 1 && isOccupiedP2[14] == 1)
+    {
+        system("cls");
+        
+        cout << "the players are equal";
+        system("PAUSE");
+        menu();
+    }
+    else if (isOccupiedP1[14] == 1)
+    {
+        system("cls");
+        cout << "player 1 wins";
+        system("PAUSE");
+        menu();
+    }
+    else if (isOccupiedP2[14] == 1)
+    {
+        system("cls");
+        cout << "player 2 wins";
+        system("PAUSE");
+        menu();
     }
 }

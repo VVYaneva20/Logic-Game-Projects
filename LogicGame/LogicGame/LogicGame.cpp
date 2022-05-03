@@ -11,17 +11,6 @@
 
 using namespace std;
 
-
-void twoPlayers()
-{
-    system("cls");
-    cout << "This is two players game";
-}
-void onePlayer()
-{
-    system("cls");
-    cout << "This is one player game";
-}
 void menu()
 {
     string Menu[5] = { "     Play with a computer", "Play with computer with NO card", "      Play with a friend", "Play with a friend with NO card", "	         Exit" };
@@ -71,12 +60,10 @@ void menu()
                 {
                 case 0:
                 {
-                    onePlayer();
                     break;
                 }
                 case 1:
                 {
-                    twoPlayers();
                     break;
                 }
                 case 2:
