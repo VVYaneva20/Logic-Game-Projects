@@ -1,4 +1,11 @@
-﻿  MultyPlayer.cpp
-C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(129,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(162,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  LogicGame.vcxproj -> C:\Users\Zhanet Petkova\Documents\school\Logic-Game-Projects\LogicGame\x64\Debug\LogicGame.exe
+﻿  LogicGame.cpp
+  MultyPlayer.cpp
+C:\Users\Zhanet Petkova\Desktop\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(9,1): warning C4005: 'RED': macro redefinition
+C:\Users\Zhanet Petkova\Desktop\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.h(7): message : see previous definition of 'RED'
+C:\Users\Zhanet Petkova\Desktop\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(41,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Zhanet Petkova\Desktop\Logic-Game-Projects\LogicGame\LogicGame\MultyPlayer.cpp(76,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MultyPlayerWithNoCard.cpp
+  WithComputer.cpp
+  WithComputerWhitNoCard.cpp
+  Generating Code...
+  LogicGame.vcxproj -> C:\Users\Zhanet Petkova\Desktop\Logic-Game-Projects\LogicGame\x64\Debug\LogicGame.exe
