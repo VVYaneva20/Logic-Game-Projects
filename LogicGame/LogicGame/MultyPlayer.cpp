@@ -15,11 +15,11 @@ HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition; // used for goto
 
 int cards[48];
-int playerOneCards[5], playerTwoCards[5], playerOneCardValues[15], playerTwoCardValues[15];
+int playerOneCards[5], playerTwoCards[5];
 int chosenCard;
 int counter;
 bool boolCardValuesP1[6], boolCardValuesP2[6];
-bool cardValuesP1[5], cardValuesP2[5];
+bool cardValuesP1[15], cardValuesP2[15];
 bool isOccupiedP1[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 bool isOccupiedP2[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -383,13 +383,16 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
     int pixelsX;
     int pixelsY;
 
+
+
     while (true)
     {
         char keyPress;
         keyPress = _getch();
-        int asciiValue = keyPress;
+        int asciiValue = keyPress - 48;
 
-        if (asciiValue == 49) // '1' ASCII code
+
+        if (asciiValue == 1) // '1' ASCII code
         {
             if (occupiedPositions[0] == 0)
             {
@@ -456,7 +459,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
-            else
+            else if (occupiedPositions[9] == 0)
             {
                 if (player == 1)
                 {
@@ -521,8 +524,12 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
+            else
+            {
+                gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+            }
         }
-        if (asciiValue == 50)  // '2' ASCII code
+        if (asciiValue == 2)  // '2' ASCII code
         {
             if (occupiedPositions[1] == 0)
             {
@@ -589,7 +596,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
-            else
+            else if (occupiedPositions[10] == 0)
             {
                 if (player == 1)
                 {
@@ -654,8 +661,12 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
+            else
+            {
+                gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+            }
         }
-        if (asciiValue == 51) // '3' ASCII code
+        if (asciiValue == 3) // '3' ASCII code
         {
             if (occupiedPositions[2] == 0)
             {
@@ -722,7 +733,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
-            else
+            else if (occupiedPositions[11] == 0)
             {
                 if (player == 1)
                 {
@@ -787,8 +798,12 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
+            else
+            {
+                gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+            }
         }
-        if (asciiValue == 52) // '4' ASCII code
+        if (asciiValue == 4) // '4' ASCII code
         {
             if (occupiedPositions[3] == 0)
             {
@@ -855,7 +870,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
-            else
+            else if (occupiedPositions[12] == 0)
             {
                 if (player == 1)
                 {
@@ -920,8 +935,12 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
+            else
+            {
+                gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+            }
         }
-        if (asciiValue == 53) // '5' ASCII code
+        if (asciiValue == 5) // '5' ASCII code
         {
             if (occupiedPositions[4] == 0)
             {
@@ -988,7 +1007,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
-            else
+            else if (occupiedPositions[13] == 0)
             {
                 if (player == 1)
                 {
@@ -1053,8 +1072,12 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
+            else
+            {
+                gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+            }
         }
-        if (asciiValue == 54) // '6' ASCII code
+        if (asciiValue == 6) // '6' ASCII code
         {
             if (occupiedPositions[5] == 0)
             {
@@ -1121,7 +1144,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
-            else
+            else if (occupiedPositions[14] == 0)
             {
                 if (player == 1)
                 {
@@ -1180,8 +1203,12 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                     continue;
                 }
             }
+            else
+            {
+                gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+            }
         }
-        if (asciiValue == 55) // '7' ASCII code
+        if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
         {
             if (player == 1)
             {
@@ -1246,7 +1273,11 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 continue;
             }
         }
-        if (asciiValue == 56) // '8' ASCII code
+        else
+        {
+            gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+        }
+        if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
         {
             if (player == 1)
             {
@@ -1289,7 +1320,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 removeCard(counter, playersCards);
                 break;
             }
-            else if (chosenCard % 6 == 5 && (cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+            else if (chosenCard % 6 == 5 && (cardValues[2] ^ cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardXorOne(pixelsX, pixelsY);
@@ -1311,7 +1342,11 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 continue;
             }
         }
-        if (asciiValue == 57) // '9' ASCII code
+        else
+        {
+            gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+        }
+        if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
         {
             if (player == 1)
             {
@@ -1376,9 +1411,16 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
                 continue;
             }
         }
-        if (asciiValue == 114)// 'r' ASCII value
+        else
         {
+            gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+        }
+        if (asciiValue == 66)// 'r' ASCII value
+        {
+            gotoXY(195, 50); cout << "PLAYER " << player << "  ";
+
             chooseCard(playersCards);
+
             if (player == 1)
             {
                 placeCard(playersCards, boolCardValues, 1, occupiedPositions, cardValues);
@@ -1389,7 +1431,7 @@ void placeCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
             }
             break;
         }
-        if (asciiValue == 100)// 'd' ASCII value
+        if (asciiValue == 52)// 'd' ASCII value
         {
             removeCard(counter, playersCards);
             break;
@@ -1420,6 +1462,17 @@ void secondPlayer()
 //start the game
 void beginningOfTheGameWithTwoPLayers()
 {
+    fill_n(cards, 48, 0);
+    fill_n(playerOneCards, 5, 0);
+    fill_n(playerTwoCards, 5, 0);
+    fill_n(boolCardValuesP1, 6, 0);
+    fill_n(boolCardValuesP2, 6, 0);
+    fill_n(cardValuesP1, 15, 0);
+    fill_n(cardValuesP2, 15, 0);
+    fill_n(isOccupiedP1, 15, 0);
+    fill_n(isOccupiedP2, 15, 0);
+    chosenCard = 0;
+
     shuffleBoolCards();
     shuffleCards();
 
