@@ -1,8 +1,8 @@
 <h1 align="center">Logic Game Project</h1>
 
 <p align="center">
-<img src="https://github.com/VVYaneva20/wiki/blob/main/img/logo_darkTheme.png#gh-dark-mode-only" width="500px"> 
-<img src="https://github.com/VVYaneva20/wiki/blob/main/img/logo_lightTheme.png#gh-light-mode-only" width="500px"> 
+<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/logo_darkTheme.png#gh-dark-mode-only" width="500px"> 
+<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/logo_lightTheme.png#gh-light-mode-only" width="500px"> 
  </p>
  
 
@@ -27,7 +27,7 @@
  ## 🃏 Demo of the project
 
 <p align="center">
-<img src="https://github.com/VVYaneva20/wiki/blob/main/img/demo.png" width = "1500px" >
+<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/demo.png" width = "1500px" >
 </p>
   
 ## ⚙ Installation
