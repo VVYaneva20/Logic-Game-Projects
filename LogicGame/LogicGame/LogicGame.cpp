@@ -168,10 +168,11 @@ void startProgram()
                 counter++;
             }
         }
-        if (key == '\r')// select card
+        if (key == '\r')// select option
         {
             if (counter == 1)
             {
+                beginningOfTheGameWithComputer();
                 break;
             }
             if (counter == 2)
