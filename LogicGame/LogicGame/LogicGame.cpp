@@ -110,6 +110,17 @@ void cardZero(int x, int y)
     gotoXY(x, y++); cout << "|_____________|" << endl;
 }
 
+void ShowConsoleCursor(bool showFlag)
+{
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_CURSOR_INFO     cursorInfo;
+
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = showFlag; // set the cursor visibility
+    SetConsoleCursorInfo(out, &cursorInfo);
+}
+
 void startProgram()
 {
     system("cls");
@@ -172,6 +183,7 @@ void startProgram()
         {
             if (counter == 1)
             {
+                system("cls");
                 beginningOfTheGameWithComputer();
                 break;
             }
@@ -187,6 +199,8 @@ void startProgram()
             }
             if (counter == 4)
             {
+                system("cls");
+                beginningOfTheGameWithTwoPLayersNotCard();
                 break;
             }
             if (counter == 5)
@@ -224,13 +238,12 @@ void startProgram()
     }
 
     Sleep(150);
-
-    
 }
 
 int main()
 {
     system("mode con COLS=700");
     ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+    ShowConsoleCursor(false);
     startProgram();
 }
