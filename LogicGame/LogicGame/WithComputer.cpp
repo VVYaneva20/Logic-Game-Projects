@@ -2431,11 +2431,11 @@ void beginningOfTheGameWithComputer()
     {
         system("cls");
 
-        gotoXYComputerMode(70, 20); cout << "   ___  __    _         __  __    ____     __    __ _____    __  __ " << endl;
-        gotoXYComputerMode(70, 21); cout << "  / _ \\/ /   /_\\ /\\_/\\ /__\\/__\\  |___ \\   / / /\\ \\ \\\\_   \\/\\ \\ \\/ _\\" << endl;
-        gotoXYComputerMode(70, 22); cout << " / /_)/ /   //_\\\\\\_ _//_\\ / \\//    __) |  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
-        gotoXYComputerMode(70, 23); cout << "/ ___/ /___/  _  \\/ \\//__/ _  \\   / __/    \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
-        gotoXYComputerMode(70, 24); cout << "\\/   \\____/\\_/ \\_/\\_/\\__/\\/ \\_/  |_____|    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
+        gotoXYComputerMode(67, 20); cout << "   ___   ___          ___       _____  __  __    __    __ _____    __  __ " << endl;
+        gotoXYComputerMode(67, 21); cout << "  / __\\ /___\\/\\/\\    / _ \\/\\ /\\/__   \\/__\\/__\\  / / /\\ \\ \\\\_   \\/\\ \\ \\/ _\\" << endl;
+        gotoXYComputerMode(67, 22); cout << " / /   //  //    \\  / /_)/ / \\ \\ / /\\/_\\ / \\//  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
+        gotoXYComputerMode(67, 23); cout << "/ /___/ \\_// /\\/\\ \\/ ___/\\ \\_/ // / //__/ _  \\   \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
+        gotoXYComputerMode(67, 24); cout << "\\____/\\___/\\/    \\/\\/     \\___/ \\/  \\__/\\/ \\_/    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
         Sleep(3000);
         startProgram();
     }
