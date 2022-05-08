@@ -311,6 +311,8 @@ void startProgram()
         {
             if (counter == 1)
             {
+                system("cls");
+                beginningOfTheGameWithComputer();
                 break;
             }
             if (counter == 2)
