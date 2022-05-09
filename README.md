@@ -16,7 +16,7 @@
 * **Hakan Chandar** - *Back-end developer* 
 * **Victoria Bolashikova** - *QA Engineer* 
 
-## 🛠️ Languages and tools:
+## 🛠️ Languages and tools
 
 <p align="left"> 
     
@@ -27,7 +27,7 @@
  ## 🃏 Demo of the project
 
 <p align="center">
-<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/demo.png" width = "1500px" >
+<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/computerMode.png" width = "1500px" >
 </p>
   
 ## ⚙ Installation
