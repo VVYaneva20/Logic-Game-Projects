@@ -84,13 +84,13 @@ void shufflecardsNotCard()
 void notCard(int x, int y)
 {
     gotoXYNotCard(x, y++); cout << RESET << " _______________" << endl;
-    gotoXYNotCard(x, y++); cout << "|               |" << endl;
-    gotoXYNotCard(x, y++); cout << "|               |" << endl;
-    gotoXYNotCard(x, y++); cout << "|      " << RED << "NOT" << RESET << "      |" << endl;
-    gotoXYNotCard(x, y++); cout << "|     " << RED << "CARD" << RESET << "      |" << endl;
-    gotoXYNotCard(x, y++); cout << "|               |" << endl;
-    gotoXYNotCard(x, y++); cout << "|               |" << endl;
-    gotoXYNotCard(x, y++); cout << "|               |" << endl;
+    gotoXYNotCard(x, y++); cout << "|      "<< RED << "NOT " << RESET << "     |" << endl;
+    gotoXYNotCard(x, y++); cout << "|  ___________  |" << endl;
+    gotoXYNotCard(x, y++); cout << "|  \\         /  |" << endl;
+    gotoXYNotCard(x, y++); cout << "|   \\       /   |" << endl;
+    gotoXYNotCard(x, y++); cout << "|    \\     /    |" << endl;
+    gotoXYNotCard(x, y++); cout << "|     \\   /     |" << endl;
+    gotoXYNotCard(x, y++); cout << "|      \\ /      |" << endl;
     gotoXYNotCard(x, y++); cout << "|_______________|" << endl;
 }
 //display the empty positions
