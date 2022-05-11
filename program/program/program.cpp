@@ -152,7 +152,7 @@ void instructions()
       |       with arrow up and arrow down - choose card        |
       |            with the key 'S' - select card               |
       |  with keys from '1' to '9' - choose a place for a card  |
-      |        with the key 'D' - delete selected card          |
+      |        with the key 'D' - discard selected card         |
       |       with the key 'R'- return after wrong choce        |
       |     with the key 'Esc' - stop the game and go back      |
       |                                                         |
@@ -199,42 +199,40 @@ void instructions()
     gotoXY(85, 5); cout << "|                         RULES:                          | " << endl;
     gotoXY(85, 6); cout << "|                                                         | " << endl;
     gotoXY(85, 7); cout << "|                                                         | " << endl;
-    gotoXY(85, 8); cout << "|                                                         | " << endl;
+    gotoXY(85, 8); cout << "|                       Game setup:                       | " << endl;
     gotoXY(85, 9); cout << "|                                                         | " << endl;
-    gotoXY(85, 10); cout << "|                                                         | " << endl;
-    gotoXY(85, 11); cout << "|                                                         | " << endl;
-    gotoXY(85, 12); cout << "|                                                         | " << endl;
-    gotoXY(85, 13); cout << "|                                                         | " << endl;
+    gotoXY(85, 10); cout << "|   At the beginning of the game, all cards are shuffled  | " << endl;
+    gotoXY(85, 11); cout << "|  and the six initial cards are placed so that the ‘1’   | " << endl;
+    gotoXY(85, 12); cout << "|    side is facing the first player and the ‘0’ side     | " << endl;
+    gotoXY(85, 13); cout << "|                is facing the other.                     | " << endl;
     gotoXY(85, 14); cout << "|                                                         | " << endl;
     gotoXY(85, 15); cout << "|                                                         | " << endl;
-    gotoXY(85, 16); cout << "|                                                         | " << endl;
+    gotoXY(85, 16); cout << "|                      Game play:                         | " << endl;
     gotoXY(85, 17); cout << "|                                                         | " << endl;
-    gotoXY(85, 18); cout << "|                                                         | " << endl;
-    gotoXY(85, 19); cout << "|                                                         | " << endl;
-    gotoXY(85, 20); cout << "|                                                         | " << endl;
-    gotoXY(85, 21); cout << "|                                                         | " << endl;
+    gotoXY(85, 18); cout << "|   During each turn, the player is given a random card.  | " << endl;
+    gotoXY(85, 19); cout << "| Then they can choose one of their cards and what to do  | " << endl;
+    gotoXY(85, 20); cout << "| with it – play it or discard it. When the card is being | " << endl;
+    gotoXY(85, 21); cout << "|      placed, it must resolve to a valid input.          | " << endl;
     gotoXY(85, 22); cout << "|                                                         | " << endl;
     gotoXY(85, 23); cout << "|                                                         | " << endl;
-    gotoXY(85, 24); cout << "|                                                         | " << endl;
+    gotoXY(85, 24); cout << "|                      Not card:                          | " << endl;
     gotoXY(85, 25); cout << "|                                                         | " << endl;
-    gotoXY(85, 26); cout << "|                                                         | " << endl;
-    gotoXY(85, 27); cout << "|                                                         | " << endl;
-    gotoXY(85, 28); cout << "|                                                         | " << endl;
-    gotoXY(85, 29); cout << "|                                                         | " << endl;
-    gotoXY(85, 30); cout << "|                                                         | " << endl;
-    gotoXY(85, 31); cout << "|                                                         | " << endl;
+    gotoXY(85, 26); cout << "|  To play a Not card, the player declares which initial  | " << endl;
+    gotoXY(85, 27); cout << "| bit is the target and reverses that bit card. This will | " << endl;
+    gotoXY(85, 28); cout << "|  cause the initial binaries for both players to change. | " << endl;
+    gotoXY(85, 29); cout << "|This can cause gates using this bit as an input to become| " << endl;
+    gotoXY(85, 30); cout << "|    invalid. A Not card can also be played on the        | " << endl;
+    gotoXY(85, 31); cout << "|  opponent’s turn as a reaction to cancel the Not card.  | " << endl;
     gotoXY(85, 32); cout << "|                                                         | " << endl;
     gotoXY(85, 33); cout << "|                                                         | " << endl;
-    gotoXY(85, 34); cout << "|                                                         | " << endl;
+    gotoXY(85, 34); cout << "|                         Win:                            | " << endl;
     gotoXY(85, 35); cout << "|                                                         | " << endl;
-    gotoXY(85, 36); cout << "|                                                         | " << endl;
+    gotoXY(85, 36); cout << "|      Wins the player who first finishes his pyramid.    | " << endl;
     gotoXY(85, 37); cout << "|                                                         | " << endl;
     gotoXY(85, 38); cout << "|                                                         | " << endl;
-    gotoXY(85, 39); cout << "|                                                         | " << endl;
-    gotoXY(85, 40); cout << "|                                                         | " << endl;
-    gotoXY(85, 41); cout << "|                                                         | " << endl;
-    gotoXY(85, 42); cout << "|                                                         | " << endl;
-    gotoXY(85, 43); cout << "|_________________________________________________________|" << endl;
+    gotoXY(85, 37); cout << "|                                                         | " << endl;
+    gotoXY(85, 38); cout << "|                                                         | " << endl;
+    gotoXY(85, 39); cout << "|_________________________________________________________|" << endl;
 
     char pressEscToGoBack;
     pressEscToGoBack = _getch();
