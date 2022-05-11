@@ -249,11 +249,11 @@ void startProgram()
 {
     system("cls");
 
-    gotoXY(79, 9);  cout << " _      ________   _________  __  _________" << endl;
-    gotoXY(79, 10);  cout << "| | /| / / __/ /  / ___/ __ \\/  |/  / __/ /" << endl;
-    gotoXY(79, 11);  cout << "| |/ |/ / _// /__/ /__/ /_/ / /|_/ / _//_/ " << endl;
-    gotoXY(79, 12); cout << "|__/|__/___/____/\\___/\\____/_/  /_/___(_)" << endl;
-
+    gotoXY(83, 9);  cout << "   ___    ___  __    __ " << endl;
+    gotoXY(83, 10);  cout << "  / __\\  /___\\/ /   /__\\/\\ /\\  /\\/\\" << endl;
+    gotoXY(83, 11);  cout << " /__\\// //  // /   /_\\ / / \\ \\/    \\" << endl;
+    gotoXY(83, 12); cout << "/ \\/  \\/ \\_// /___//__ \\ \\_/ / /\\/\\ \\" << endl;
+    gotoXY(83, 13); cout << "\\_____/\\___/\\____/\\__/  \\___/\\/    \\/" << endl;
     int Set[] = { 12, 7, 7, 7, 7, 7 };
     int counter = 1;
     char key;
@@ -379,10 +379,25 @@ void startProgram()
     Sleep(150);
 }
 
+void loading()
+{
+    gotoXY(79, 9);  cout << " _      ________   _________  __  _________" << endl;
+    gotoXY(79, 10);  cout << "| | /| / / __/ /  / ___/ __ \\/  |/  / __/ /" << endl;
+    gotoXY(79, 11);  cout << "| |/ |/ / _// /__/ /__/ /_/ / /|_/ / _//_/ " << endl;
+    gotoXY(79, 12); cout << "|__/|__/___/____/\\___/\\____/_/  /_/___(_)" << endl;
+
+    for (int i = 0; i < 16; i++)
+    {
+        gotoXY(84 + 2 * i, 14); cout << char(219) << " ";
+        Sleep(100);
+    }
+    startProgram();
+}
+
 int main()
 {
     system("mode con COLS=700");
     ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
     ShowConsoleCursor(false);
-    startProgram();
+    loading();
 }

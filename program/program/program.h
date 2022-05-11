@@ -19,3 +19,4 @@ void cardZero(int x, int y);
 void ShowConsoleCursor(bool showFlag);
 void instructions();
 void startProgram();
+void loading();

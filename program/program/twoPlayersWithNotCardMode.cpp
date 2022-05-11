@@ -4,16 +4,12 @@
 #include <string>
 #include "program.h"
 #include "twoPlayersWithNotCardMode.h"
-
 #define RESET   "\033[0m"
 #define RED     "\033[1m\033[31m" 
 #define YELLOW  "\033[1m\033[33m" 
-
 using namespace std;
-
 HANDLE consoleNotCard = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPositionNotCard; // used for goto
-
 int cardsNotCard[56];
 int playerOnecardsNotCard[5], playerTwocardsNotCard[5];
 int chosencard;
@@ -24,7 +20,6 @@ bool occupiedP1[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 bool occupiedP2[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 int cardsP1[15];
 int cardsP2[15];
-
 int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                           {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                           {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
@@ -565,7 +560,7 @@ void printInitialCards(int position, bool reverse, int player)
             }
             else
             {
-                gotoXYNotCard(120, 7); cout << "Do you want to use your not card?(y/n)";
+                gotoXYNotCard(130, 7); cout << "Do you want to use your not card?(y/n)";
             }
 
 
@@ -577,12 +572,27 @@ void printInitialCards(int position, bool reverse, int player)
 
             if (asciiValue == 110)
             {
+                if (player == 2)
+                {
+                    gotoXYNotCard(18, 7); cout << "                                      ";
+                }
+                else
+                {
+                    gotoXYNotCard(130, 7); cout << "                                      ";
+                }
                 initialCardValuesP1[position] = !initialCardValuesP1[position];
                 initialcardValuesP2[position] = !initialcardValuesP2[position];
             }
-            if (asciiValue == 121)
+            else if (asciiValue == 121)
             {
-
+                if (player == 2)
+                {
+                    gotoXYNotCard(18, 7); cout << "                                      ";
+                }
+                else
+                {
+                    gotoXYNotCard(130, 7); cout << "                                      ";
+                }
                 if (player == 1)
                 {
                     scipTurnP2 = 1;
@@ -1885,7 +1895,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
 
             printPositionsNotCard(1, occupiedP1, cardsP1);
             printPositionsNotCard(2, occupiedP2, cardsP2);
-            gotoXYNotCard(18, 7); cout << "                                      ";
+            
 
             gotoXYNotCard(195, 50); cout << "PLAYER 1";
             takecardsNotCard(1, playerOnecardsNotCard);
@@ -1898,7 +1908,6 @@ void beginningOfTheGameWithTwoPLayersNotCard()
 
             printPositionsNotCard(1, occupiedP1, cardsP1);
             printPositionsNotCard(2, occupiedP2, cardsP2);
-            gotoXYNotCard(120, 7); cout << "                                      ";
 
             gotoXYNotCard(195, 50); cout << "PLAYER 2";
             takecardsNotCard(1, playerTwocardsNotCard);
