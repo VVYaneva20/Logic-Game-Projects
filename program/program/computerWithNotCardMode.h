@@ -16,3 +16,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 void removeCardNotCardWithComputer(int card, int* player);
 void takeCardsWithComputer(int cardsNotCardNeeded, int* player);
 void chooseCardNotCardWithComputer(int* player, bool returned);
+void printCardsWithComputer(int cardsNotCardNeeded, int* player);
+void printInitialPositionsWithComputer();
+void printInitialCardsWithComputer(int position, bool reverse, int player);
+void placeCardNotCardWithComputer(bool* occupiedPositions, int index, int pointerIndex, int x, int y, bool* cardValues, int* cards, int cardValue, bool value, int* playersCards);

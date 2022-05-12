@@ -527,42 +527,1375 @@ void printInitialPositionsWithComputer()
     }
 }
 
-
-void chooseCardNotCardComputer(int* player)
+void printInitialCardsWithComputer(int position, bool reverse, int player)
 {
-    if (counterNotCardComputerMode == 1)
+    int pixelsX = 77;
+    int pixelsY = 2;
+
+    if (reverse)
     {
-        choosenCard = player[0];
+        bool flag = 0;
+        int temp;
+        if (player == 1)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (computerCardsNotCard[i] % 7 == 6)
+                {
+                    temp = i;
+                    flag = 1;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (playerCardsComputerNot[i] % 7 == 6)
+                {
+                    temp = i;
+                    flag = 1;
+                    break;
+                }
+            }
+        }
+
+        if (flag)
+        {
+            if (player == 2)
+            {
+                gotoXYNotCardWithComputer(18, 7); cout << "Do you want to use your not card?(y/n)";
+            }
+            else
+            {
+                gotoXYNotCardWithComputer(130, 7); cout << "Do you want to use your not card?(y/n)";
+            }
+
+            char keyPress;
+            int asciiValue;
+
+            while (true)
+            {
+                if (player == 2)
+                {
+                    keyPress = _getch();
+                    asciiValue = keyPress;
+                }
+                else
+                {
+                    asciiValue = rand() % 2;
+                    if (asciiValue == 1)
+                    {
+                        asciiValue = 121;
+                        gotoXYNotCardWithComputer(130, 7); cout << "Computer used NOT card and nothing changed!";
+                    }
+                    else
+                    {
+                        asciiValue = 110;
+                    }
+                }
+
+                if (asciiValue == 110) // n
+                {
+                    if (player == 2)
+                    {
+                        gotoXYNotCardWithComputer(18, 7); cout << "                                       ";
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(130, 7); cout << "                                           ";
+                    }
+                    initialCardValuesPlayer[position] = !initialCardValuesPlayer[position];
+                    initialcardValuesPC[position] = !initialcardValuesPC[position];
+
+                    break;
+                }
+                else if (asciiValue == 121) // y
+                {
+                    if (player == 2)
+                    {
+                        gotoXYNotCardWithComputer(18, 7); cout << "                                      ";
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(130, 7); cout << "                                      ";
+                    }
+                    if (player == 1)
+                    {
+                        skipTurnPC = 1;
+                        removeCardNotCardWithComputer(temp + 1, computerCardsNotCard);
+                    }
+                    else
+                    {
+                        skipTurnPlayer = 1;
+                        removeCardNotCardWithComputer(temp + 1, playerCardsComputerNot);
+
+                    }
+                    break;
+                }
+            }
+
+
+        }
+
     }
-    if (counterNotCardComputerMode == 2)
+
+    for (int i = 0; i < 6; i++)
     {
-        choosenCard = player[1];
-    }
-    if (counterNotCardComputerMode == 3)
-    {
-        choosenCard = player[2];
-    }
-    if (counterNotCardComputerMode == 4)
-    {
-        choosenCard = player[3];
-    }
-    if (counterNotCardComputerMode == 5)
-    {
-        choosenCard = player[4];
-    }
-    if (counterNotCardComputerMode == 6)
-    {
-        choosenCard = player[rand() % 4];
+        if (initialCardValuesPlayer[i] == 0)
+        {
+            cardZero(pixelsX, pixelsY);
+            cardOne(pixelsX + 15, pixelsY);
+            initialCardValuesPlayer[i] = 0;
+            initialcardValuesPC[i] = 1;
+        }
+        else
+        {
+            cardOne(pixelsX, pixelsY);
+            cardZero(pixelsX + 15, pixelsY);
+            initialCardValuesPlayer[i] = 1;
+            initialcardValuesPC[i] = 0;
+        }
+        pixelsY += 8;
     }
 }
 
-//Player one
-void playerOne()
+void (*pointToCardNotCardWithComputer[6])(int x, int y) = { cardOrZero, cardXorZero, cardAndZero, cardOrOne, cardXorOne, cardAndOne };
+
+void placeCardNotCardWithComputer(bool* occupiedPositions, int index, int pointerIndex, int x, int y, bool* cardValues, int* cards, int cardValue, bool value, int* playersCards)
 {
-    
+    occupiedPositions[index] = 1;
+    pointToCardNotCardWithComputer[pointerIndex](x, y);
+    cardValues[index] = value;
+    cards[index] = cardValue;
+    removeCardNotCardWithComputer(counterNotCardComputerMode, playersCards);
 }
-//Player two
-void playerTwo()
+
+//put down a card in a chosen position
+void checkCardNotCardWithComputer(int* playersallCards, bool* initialvalues, int player, bool* occupiedPositions, bool* values, int* cardValues)
+{
+    int pixelsX;
+    int pixelsY;
+
+    while (true)
+    {
+        if (choosenCard % 7 != 6)
+        {
+            isNotCardComputerMode = false;
+            char keyPress;
+            keyPress = _getch();
+            int asciiValue = keyPress - 48;
+            if (asciiValue == 1) // '1' ASCII code
+            {
+                if (occupiedPositions[0] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 60;
+                    }
+                    else
+                    {
+                        pixelsX = 107;
+                    }
+                    pixelsY = 4;
+                    if (choosenCard % 7 == 1 && !(initialvalues[0] || initialvalues[1]))
+                    {
+                        occupiedPositions[0] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[0] = 0;
+                        cardValues[0] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(initialvalues[0] ^ initialvalues[1]))
+                    {
+                        occupiedPositions[0] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[0] = 0;
+                        cardValues[0] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(initialvalues[0] && initialvalues[1]))
+                    {
+                        occupiedPositions[0] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[0] = 0;
+                        cardValues[0] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (initialvalues[0] || initialvalues[1]))
+                    {
+                        occupiedPositions[0] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[0] = 1;
+                        cardValues[0] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (initialvalues[0] ^ initialvalues[1]))
+                    {
+                        occupiedPositions[0] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[0] = 1;
+                        cardValues[0] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (initialvalues[0] && initialvalues[1]))
+                    {
+                        occupiedPositions[0] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[0] = 1;
+                        cardValues[0] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else if (occupiedPositions[9] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 32;
+                    }
+                    else
+                    {
+                        pixelsX = 137;
+                    }
+                    pixelsY = 12;
+                    if (choosenCard % 7 == 1 && !(values[5] || values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[9] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[9] = 0;
+                        cardValues[9] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(values[5] ^ values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[9] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[9] = 0;
+                        cardValues[9] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(values[5] && values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[9] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[9] = 0;
+                        cardValues[9] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (values[5] || values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[9] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[9] = 1;
+                        cardValues[9] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (values[5] ^ values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[9] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[9] = 1;
+                        cardValues[9] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (values[5] && values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[9] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[9] = 1;
+                        cardValues[9] = 0;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                }
+            }
+            if (asciiValue == 2)  // '2' ASCII code
+            {
+                if (occupiedPositions[1] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 60;
+                    }
+                    else
+                    {
+                        pixelsX = 107;
+                    }
+                    pixelsY = 13;
+                    if (choosenCard % 7 == 1 && !(initialvalues[1] || initialvalues[2]))
+                    {
+                        occupiedPositions[1] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[1] = 0;
+                        cardValues[1] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(initialvalues[1] ^ initialvalues[2]))
+                    {
+                        occupiedPositions[1] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[1] = 0;
+                        cardValues[1] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(initialvalues[1] && initialvalues[2]))
+                    {
+                        occupiedPositions[1] = 1;
+                        cardValues[1] = 10;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[1] = 0;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (initialvalues[1] || initialvalues[2]))
+                    {
+                        occupiedPositions[1] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[1] = 1;
+                        cardValues[1] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (initialvalues[1] ^ initialvalues[2]))
+                    {
+                        occupiedPositions[1] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[1] = 1;
+                        cardValues[1] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (initialvalues[1] && initialvalues[2]))
+                    {
+                        occupiedPositions[1] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[1] = 1;
+                        cardValues[1] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else if (occupiedPositions[10] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 32;
+                    }
+                    else
+                    {
+                        pixelsX = 137;
+                    }
+                    pixelsY = 23;
+                    if (choosenCard % 7 == 1 && !(values[6] || values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[10] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[10] = 0;
+                        cardValues[10] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(values[6] ^ values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[10] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[10] = 0;
+                        cardValues[10] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(values[6] && values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[10] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[10] = 0;
+                        cardValues[10] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (values[6] || values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[10] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[10] = 1;
+                        cardValues[10] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (values[6] ^ values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[10] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[10] = 1;
+                        cardValues[10] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (values[6] && values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
+                    {
+                        occupiedPositions[10] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[10] = 1;
+                        cardValues[10] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                }
+            }
+            if (asciiValue == 3) // '3' ASCII code
+            {
+                if (occupiedPositions[2] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 60;
+                    }
+                    else
+                    {
+                        pixelsX = 107;
+                    }
+                    pixelsY = 22;
+                    if (choosenCard % 7 == 1 && !(initialvalues[2] || initialvalues[3]))
+                    {
+                        occupiedPositions[2] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[2] = 0;
+                        cardValues[2] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(initialvalues[2] ^ initialvalues[3]))
+                    {
+                        occupiedPositions[2] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[2] = 0;
+                        cardValues[2] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(initialvalues[2] && initialvalues[3]))
+                    {
+                        occupiedPositions[2] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[2] = 0;
+                        cardValues[2] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (initialvalues[2] || initialvalues[3]))
+                    {
+                        occupiedPositions[2] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[2] = 1;
+                        cardValues[2] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (initialvalues[2] ^ initialvalues[3]))
+                    {
+                        occupiedPositions[2] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[2] = 1;
+                        cardValues[2] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (initialvalues[2] && initialvalues[3]))
+                    {
+                        occupiedPositions[2] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[2] = 1;
+                        cardValues[2] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else if (occupiedPositions[11] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 32;
+                    }
+                    else
+                    {
+                        pixelsX = 137;
+                    }
+                    pixelsY = 34;
+                    if (choosenCard % 7 == 1 && !(values[7] || values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
+                    {
+                        occupiedPositions[11] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[11] = 0;
+                        cardValues[11] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(values[7] ^ values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
+                    {
+                        occupiedPositions[11] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[11] = 0;
+                        cardValues[11] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(values[7] && values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
+                    {
+                        occupiedPositions[11] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[11] = 0;
+                        cardValues[11] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (values[7] || values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
+                    {
+                        occupiedPositions[11] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[11] = 1;
+                        cardValues[11] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (values[7] ^ values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
+                    {
+                        occupiedPositions[11] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[11] = 1;
+                        cardValues[11] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (values[7] && values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
+                    {
+                        occupiedPositions[11] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[11] = 1;
+                        cardValues[11] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                }
+            }
+            if (asciiValue == 4) // '4' ASCII code
+            {
+                if (occupiedPositions[3] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 60;
+                    }
+                    else
+                    {
+                        pixelsX = 107;
+                    }
+                    pixelsY = 31;
+                    if (choosenCard % 7 == 1 && !(initialvalues[3] || initialvalues[4]))
+                    {
+                        occupiedPositions[3] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[3] = 0;
+                        cardValues[3] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(initialvalues[3] ^ initialvalues[4]))
+                    {
+                        occupiedPositions[3] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[3] = 0;
+                        cardValues[3] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(initialvalues[3] && initialvalues[4]))
+                    {
+                        occupiedPositions[3] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[3] = 0;
+                        cardValues[3] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (initialvalues[3] || initialvalues[4]))
+                    {
+                        occupiedPositions[3] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[3] = 1;
+                        cardValues[3] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (initialvalues[3] ^ initialvalues[4]))
+                    {
+                        occupiedPositions[3] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[3] = 1;
+                        cardValues[3] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (initialvalues[3] && initialvalues[4]))
+                    {
+                        occupiedPositions[3] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[3] = 1;
+                        cardValues[3] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else if (occupiedPositions[12] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 17;
+                    }
+                    else
+                    {
+                        pixelsX = 152;
+                    }
+                    pixelsY = 17;
+                    if (choosenCard % 7 == 1 && !(values[9] || values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[12] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[12] = 0;
+                        cardValues[12] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(values[9] ^ values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[12] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[12] = 0;
+                        cardValues[12] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(values[9] && values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[12] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[12] = 0;
+                        cardValues[12] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (values[9] || values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[12] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[12] = 1;
+                        cardValues[12] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (values[9] ^ values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[12] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[12] = 1;
+                        cardValues[12] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (values[9] && values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[12] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[12] = 1;
+                        cardValues[12] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                }
+            }
+            if (asciiValue == 5) // '5' ASCII code
+            {
+                if (occupiedPositions[4] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 60;
+                    }
+                    else
+                    {
+                        pixelsX = 107;
+                    }
+                    pixelsY = 40;
+                    if (choosenCard % 7 == 1 && !(initialvalues[4] || initialvalues[5]))
+                    {
+                        occupiedPositions[4] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[4] = 0;
+                        cardValues[4] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(initialvalues[4] ^ initialvalues[5]))
+                    {
+                        occupiedPositions[4] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[4] = 0;
+                        cardValues[4] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(initialvalues[4] && initialvalues[5]))
+                    {
+                        occupiedPositions[4] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[4] = 0;
+                        cardValues[4] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (initialvalues[4] || initialvalues[5]))
+                    {
+                        occupiedPositions[4] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[4] = 1;
+                        cardValues[4] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (initialvalues[4] ^ initialvalues[5]))
+                    {
+                        occupiedPositions[4] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[4] = 1;
+                        cardValues[4] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (initialvalues[4] && initialvalues[5]))
+                    {
+                        occupiedPositions[4] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[4] = 1;
+                        cardValues[4] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else if (occupiedPositions[13] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 17;
+                    }
+                    else
+                    {
+                        pixelsX = 152;
+                    }
+                    pixelsY = 29;
+                    if (choosenCard % 7 == 1 && !(values[10] || values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[13] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[13] = 0;
+                        cardValues[13] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(values[10] ^ values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[13] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[13] = 0;
+                        cardValues[13] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(values[10] && values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[13] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[13] = 0;
+                        cardValues[13] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (values[10] || values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[13] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[13] = 1;
+                        cardValues[13] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (values[10] ^ values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[13] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[13] = 1;
+                        cardValues[13] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (values[10] && values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
+                    {
+                        occupiedPositions[13] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[13] = 1;
+                        cardValues[13] = 7;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                }
+            }
+            if (asciiValue == 6) // '6' ASCII code
+            {
+                if (occupiedPositions[5] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 47;
+                    }
+                    else
+                    {
+                        pixelsX = 122;
+                    }
+                    pixelsY = 8;
+                    if (choosenCard % 7 == 1 && !(values[0] || values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
+                    {
+                        occupiedPositions[5] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        values[5] = 0;
+                        cardValues[5] = 8;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(values[0] ^ values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
+                    {
+                        occupiedPositions[5] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        values[5] = 0;
+                        cardValues[5] = 9;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(values[0] && values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
+                    {
+                        occupiedPositions[5] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        values[5] = 0;
+                        cardValues[5] = 10;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (values[0] || values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
+                    {
+                        occupiedPositions[5] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        values[5] = 1;
+                        cardValues[5] = 11;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (values[0] ^ values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
+                    {
+                        occupiedPositions[5] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        values[5] = 1;
+                        cardValues[5] = 12;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (values[0] && values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
+                    {
+                        occupiedPositions[5] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        values[5] = 1;
+                        cardValues[5] = 0;
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else if (occupiedPositions[14] == 0)
+                {
+                    if (player == 1)
+                    {
+                        pixelsX = 2;
+                    }
+                    else
+                    {
+                        pixelsX = 167;
+                    }
+                    pixelsY = 23;
+                    if (choosenCard % 7 == 1 && !(values[12] || values[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
+                    {
+                        cardValues[14] = 8;
+                        occupiedPositions[14] = 1;
+                        cardOrZero(pixelsX, pixelsY);
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 2 && !(values[12] ^ values[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
+                    {
+                        cardValues[14] = 9;
+                        occupiedPositions[14] = 1;
+                        cardXorZero(pixelsX, pixelsY);
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 3 && !(values[12] && values[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
+                    {
+                        cardValues[14] = 10;
+                        occupiedPositions[14] = 1;
+                        cardAndZero(pixelsX, pixelsY);
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 4 && (values[12] || values[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
+                    {
+                        cardValues[14] = 11;
+                        occupiedPositions[14] = 1;
+                        cardOrOne(pixelsX, pixelsY);
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 5 && (values[12] ^ values[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
+                    {
+                        cardValues[14] = 12;
+                        occupiedPositions[14] = 1;
+                        cardXorOne(pixelsX, pixelsY);
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else if (choosenCard % 7 == 0 && (values[12] && values[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
+                    {
+                        cardValues[14] = 7;
+                        occupiedPositions[14] = 1;
+                        cardAndOne(pixelsX, pixelsY);
+                        removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                        break;
+                    }
+                    else
+                    {
+                        gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                        continue;
+                    }
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                }
+            }
+            if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
+            {
+                if (player == 1)
+                {
+                    pixelsX = 47;
+                }
+                else
+                {
+                    pixelsX = 122;
+                }
+                pixelsY = 18;
+                if (choosenCard % 7 == 1 && !(values[1] || values[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
+                {
+                    cardValues[6] = 8;
+                    occupiedPositions[6] = 1;
+                    cardOrZero(pixelsX, pixelsY);
+                    values[6] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 2 && !(values[1] ^ values[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
+                {
+                    cardValues[6] = 9;
+                    occupiedPositions[6] = 1;
+                    cardXorZero(pixelsX, pixelsY);
+                    values[6] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 3 && !(values[1] && values[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
+                {
+                    cardValues[6] = 10;
+                    occupiedPositions[6] = 1;
+                    cardAndZero(pixelsX, pixelsY);
+                    values[6] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 4 && (values[1] || values[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
+                {
+                    cardValues[6] = 11;
+                    occupiedPositions[6] = 1;
+                    cardOrOne(pixelsX, pixelsY);
+                    values[6] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 5 && (values[1] ^ values[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
+                {
+                    cardValues[6] = 12;
+                    occupiedPositions[6] = 1;
+                    cardXorOne(pixelsX, pixelsY);
+                    values[6] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 0 && (values[1] && values[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
+                {
+                    cardValues[6] = 7;
+                    occupiedPositions[6] = 1;
+                    cardAndOne(pixelsX, pixelsY);
+                    values[6] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                    continue;
+                }
+            }
+            else
+            {
+                gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+            }
+            if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
+            {
+                if (player == 1)
+                {
+                    pixelsX = 47;
+                }
+                else
+                {
+                    pixelsX = 122;
+                }
+                pixelsY = 28;
+                if (choosenCard % 7 == 1 && !(values[2] || values[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[7] = 8;
+                    occupiedPositions[7] = 1;
+                    cardOrZero(pixelsX, pixelsY);
+                    values[7] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 2 && !(values[2] ^ values[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[7] = 9;
+                    occupiedPositions[7] = 1;
+                    cardXorZero(pixelsX, pixelsY);
+                    values[7] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 3 && !(values[2] && values[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[7] = 10;
+                    occupiedPositions[7] = 1;
+                    cardAndZero(pixelsX, pixelsY);
+                    values[7] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 4 && (values[2] || values[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[7] = 11;
+                    occupiedPositions[7] = 1;
+                    cardOrOne(pixelsX, pixelsY);
+                    values[7] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 5 && (values[2] ^ values[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[7] = 12;
+                    occupiedPositions[7] = 1;
+                    cardXorOne(pixelsX, pixelsY);
+                    values[7] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 0 && (values[2] && values[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[7] = 7;
+                    occupiedPositions[7] = 1;
+                    cardAndOne(pixelsX, pixelsY);
+                    values[7] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                    continue;
+                }
+            }
+            else
+            {
+                gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+            }
+            if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
+            {
+                if (player == 1)
+                {
+                    pixelsX = 47;
+                }
+                else
+                {
+                    pixelsX = 122;
+                }
+                pixelsY = 38;
+                if (choosenCard % 7 == 1 && !(values[3] || values[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[8] = 8;
+                    occupiedPositions[8] = 1;
+                    cardOrZero(pixelsX, pixelsY);
+                    values[8] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 2 && !(values[3] ^ values[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[8] = 9;
+                    occupiedPositions[8] = 1;
+                    cardXorZero(pixelsX, pixelsY);
+                    values[8] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 3 && !(values[3] && values[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[8] = 10;
+                    occupiedPositions[8] = 1;
+                    cardAndZero(pixelsX, pixelsY);
+                    values[8] = 0;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 4 && (values[3] || values[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[8] = 11;
+                    occupiedPositions[8] = 1;
+                    cardOrOne(pixelsX, pixelsY);
+                    values[8] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 5 && (values[3] ^ values[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[8] = 12;
+                    occupiedPositions[8] = 1;
+                    cardXorOne(pixelsX, pixelsY);
+                    values[8] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else if (choosenCard % 7 == 0 && (values[3] && values[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
+                {
+                    cardValues[8] = 7;
+                    occupiedPositions[8] = 1;
+                    cardAndOne(pixelsX, pixelsY);
+                    values[8] = 1;
+                    removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                    break;
+                }
+                else
+                {
+                    gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+                    continue;
+                }
+            }
+            else
+            {
+                gotoXYNotCardWithComputer(195, 50); cout << RED << "Invalid!" << RESET;
+            }
+            if (asciiValue == 66)// 'r' ASCII value
+            {
+                gotoXYNotCardWithComputer(195, 50); cout << "PLAYER " << player << "  ";
+                chooseCardNotCardWithComputer(playersallCards, 1);
+                checkCardNotCardWithComputer(playersallCards, initialvalues, 1, occupiedPositions, values, cardValues);
+
+                break;
+            }
+            if (asciiValue == 52)// 'd' ASCII value
+            {
+                removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                break;
+            }
+            if (asciiValue == 27)// escape ASCII value
+            {
+                startProgram();
+                break;
+            }
+        }
+        else
+        {
+            isNotCardComputerMode = true;
+            printInitialPositionsWithComputer();
+            char press;
+            press = _getch();
+            int ascii = press - 48;
+            int cardPosition = 0;
+            if (ascii == 52)// 'd' ASCII value
+            {
+                removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+                printInitialCardsWithComputer(cardPosition, 0, player);
+                break;
+            }
+            if (ascii == 27)// escape ASCII value
+            {
+                startProgram();
+                break;
+            }
+            if (ascii == 66)// 'r' ASCII value
+            {
+                gotoXYNotCardWithComputer(195, 50); cout << "PLAYER " << player << "  ";
+                chooseCardNotCardWithComputer(playersallCards, 1);
+                checkCardNotCardWithComputer(playersallCards, initialvalues, 1, occupiedPositions, values, cardValues);
+
+                break;
+            }
+            switch (ascii)
+            {
+            case 1:
+            {
+                cardPosition = 0;
+                break;
+            }
+            case 2:
+            {
+                cardPosition = 1;
+                break;
+            }
+            case 3:
+            {
+                cardPosition = 2;
+                break;
+            }
+            case 4:
+            {
+                cardPosition = 3;
+                break;
+            }
+            case 5:
+            {
+                cardPosition = 4;
+                break;
+            }
+            case 6:
+            {
+                cardPosition = 5;
+                break;
+            }
+            }
+            removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
+            printInitialCardsWithComputer(cardPosition, 1, player);
+            notCardWithComputerCheck(cardsPlayer, occupiedPlayer, initialCardValuesPlayer, 1);
+            notCardWithComputerCheck(cardsComputer, occupiedPC, initialcardValuesPC, 2);
+            break;
+        }
+    }
+}
+
+//Player
+void playerTurn()
+{
+    printCardsWithComputer(5, playerCardsComputerNot);
+    chooseCardNotCardWithComputer(playerCardsComputerNot, 0);
+    checkCardNotCardWithComputer(playerCardsComputerNot, initialCardValuesPlayer, 1, occupiedPlayer, valuesPlayer, cardsPlayer);
+}
+//Computer
+void computerTurn()
 {
     
 }
