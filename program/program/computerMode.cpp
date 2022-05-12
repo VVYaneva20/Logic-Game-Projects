@@ -1491,7 +1491,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
     int pixelsX;
     int pixelsY;
 
-    int asciiValue = 1;
+    int asciiValue = 0;
 
     while (true)
     {
@@ -2280,7 +2280,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 removeCardComputerMode(counterComputerMode, playerscardsComputerMode);
                 break;
             }
-            else if (chosenCardComputerMode % 6 == 0 && (cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
+            else if (chosenCardComputerMode % 6 == 1 && (cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
                 cardAndOne(pixelsX, pixelsY);
@@ -2368,7 +2368,7 @@ void computer()
 void beginningOfTheGameWithComputer()
 {
     fill_n(cardsComputerMode, 48, 0);
-    fill_n(playerCards, 5, 0);
+    fill_n(playerCards, 7, 0);
     fill_n(computerCards, 5, 0);
     fill_n(boolCardValuesPlayer, 6, 0);
     fill_n(boolCardValuesPC, 6, 0);
@@ -2403,7 +2403,7 @@ void beginningOfTheGameWithComputer()
         }
     }
 
-    if (isOccupiedPlayer[14] == 1 && isOccupiedPC[14] == 1)
+    if (isOccupiedPlayer[15] == 1 && isOccupiedPC[15] == 1)
     {
         system("cls");
 

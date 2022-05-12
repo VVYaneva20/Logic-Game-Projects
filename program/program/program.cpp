@@ -370,9 +370,9 @@ void startProgram()
         {
             Set[4] = 12;
         }
-        if (counter == 5)
+        if (counter == 6)
         {
-            Set[4] = 12;
+            Set[5] = 12;
         }
     }
 

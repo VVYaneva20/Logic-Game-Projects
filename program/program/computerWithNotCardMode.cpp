@@ -90,15 +90,15 @@ void shuffleAllCards()
 
 void notCardWithComputer(int x, int y)
 {
-    gotoXYNotCardWithComputer(x, y++); cout << RESET << " _______________" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|               |" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|               |" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|      " << RED << "NOT" << RESET << "      |" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|     " << RED << "CARD" << RESET << "      |" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|               |" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|               |" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|               |" << endl;
-    gotoXYNotCardWithComputer(x, y++); cout << "|_______________|" << endl;
+    gotoXYNotCard(x, y++); cout << RESET << " _______________" << endl;
+    gotoXYNotCard(x, y++); cout << "|      " << RED << "NOT " << RESET << "     |" << endl;
+    gotoXYNotCard(x, y++); cout << "|  ___________  |" << endl;
+    gotoXYNotCard(x, y++); cout << "|  \\         /  |" << endl;
+    gotoXYNotCard(x, y++); cout << "|   \\       /   |" << endl;
+    gotoXYNotCard(x, y++); cout << "|    \\     /    |" << endl;
+    gotoXYNotCard(x, y++); cout << "|     \\   /     |" << endl;
+    gotoXYNotCard(x, y++); cout << "|      \\ /      |" << endl;
+    gotoXYNotCard(x, y++); cout << "|_______________|" << endl;
 }
 
 //display the empty positions
@@ -130,7 +130,7 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
             {
                 cardOrZero(xFirstFive, y);
             }
-            else if (values[i] % 7 == 3)
+            else if (values[i] % 7 == 2)
             {
                 cardXorZero(xFirstFive, y);
             }
@@ -605,22 +605,40 @@ void printInitialCardsWithComputer(int position, bool reverse, int player)
             }
 
             char keyPress;
+            int asciiValue;
 
             while (true)
             {
-                keyPress = _getch();
-                int asciiValue = keyPress;
+                if (player == 2)
+                {
+                    keyPress = _getch();
+                    asciiValue = keyPress;
+                }
+                else
+                {
+                    asciiValue = rand() % 2;
+                    if (asciiValue == 1)
+                    {
+                        asciiValue = 121;
+                        gotoXYNotCardWithComputer(130, 7); cout << "Computer used NOT card and nothing changed!";
+                    }
+                    else
+                    {
+                        asciiValue = 110;
+                    }
 
+                    Sleep(1000);
+                }
 
                 if (asciiValue == 110) // n
                 {
                     if (player == 2)
                     {
-                        gotoXYNotCardWithComputer(18, 7); cout << "                                      ";
+                        gotoXYNotCardWithComputer(18, 7); cout << "                                       ";
                     }
                     else
                     {
-                        gotoXYNotCardWithComputer(130, 7); cout << "                                      ";
+                        gotoXYNotCardWithComputer(130, 7); cout << "                                           ";
                     }
                     initialCardValuesPlayer[position] = !initialCardValuesPlayer[position];
                     initialcardValuesPC[position] = !initialcardValuesPC[position];
@@ -1819,14 +1837,8 @@ void checkCardNotCardWithComputer(int* playersallCards, bool* initialvalues, int
             {
                 gotoXYNotCardWithComputer(195, 50); cout << "PLAYER " << player << "  ";
                 chooseCardNotCardWithComputer(playersallCards, 1);
-                if (player == 1)
-                {
-                    checkCardNotCardWithComputer(playersallCards, initialvalues, 1, occupiedPositions, values, cardValues);
-                }
-                else
-                {
-                    checkCardNotCardWithComputer(playersallCards, initialvalues, 2, occupiedPositions, values, cardValues);
-                }
+                checkCardNotCardWithComputer(playersallCards, initialvalues, 1, occupiedPositions, values, cardValues);
+
                 break;
             }
             if (asciiValue == 52)// 'd' ASCII value
@@ -1857,6 +1869,14 @@ void checkCardNotCardWithComputer(int* playersallCards, bool* initialvalues, int
             if (ascii == 27)// escape ASCII value
             {
                 startProgram();
+                break;
+            }
+            if (ascii == 66)// 'r' ASCII value
+            {
+                gotoXYNotCardWithComputer(195, 50); cout << "PLAYER " << player << "  ";
+                chooseCardNotCardWithComputer(playersallCards, 1);
+                checkCardNotCardWithComputer(playersallCards, initialvalues, 1, occupiedPositions, values, cardValues);
+
                 break;
             }
             switch (ascii)
@@ -1907,8 +1927,99 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
     int pixelsX;
     int pixelsY;
 
-
     int asciiValue = 0;
+
+    int placedCards[6] = { 0, 0, 0, 0, 0, 0 };
+
+    if (occupiedPlayer[0] == 1)
+    {
+        placedCards[0]++;
+        placedCards[1]++;
+    }
+    else if (occupiedPlayer[1] == 1)
+    {
+        placedCards[1]++;
+        placedCards[2]++;
+    }
+    else if (occupiedPlayer[2] == 1)
+    {
+        placedCards[2]++;
+        placedCards[3]++;
+    }
+    else if (occupiedPlayer[3] == 1)
+    {
+        placedCards[3]++;
+        placedCards[4]++;
+    }
+    else if (occupiedPlayer[4] == 1)
+    {
+        placedCards[4]++;
+        placedCards[5]++;
+    }
+    else if (occupiedPlayer[5] == 1)
+    {
+        placedCards[0]++;
+        placedCards[1]++;
+    }
+    else if (occupiedPlayer[6] == 1)
+    {
+        placedCards[1]++;
+        placedCards[2]++;
+        placedCards[3]++;
+    }
+    else if (occupiedPlayer[7] == 1)
+    {
+        placedCards[2]++;
+        placedCards[3]++;
+        placedCards[4]++;
+    }
+    else if (occupiedPlayer[8] == 1)
+    {
+        placedCards[3]++;
+        placedCards[4]++;
+        placedCards[5]++;
+    }
+    else if (occupiedPlayer[9] == 1)
+    {
+        placedCards[0]++;
+        placedCards[1]++;
+        placedCards[2]++;
+        placedCards[3]++;
+    }
+    else if (occupiedPlayer[10] == 1)
+    {
+        placedCards[1]++;
+        placedCards[2]++;
+        placedCards[3]++;
+        placedCards[4]++;
+    }
+    else if (occupiedPlayer[11] == 1)
+    {
+        placedCards[2]++;
+        placedCards[3]++;
+        placedCards[4]++;
+        placedCards[5]++;
+    }
+    else if (occupiedPlayer[12] == 1)
+    {
+
+        placedCards[0]++;
+        placedCards[1]++;
+        placedCards[2]++;
+        placedCards[3]++;
+        placedCards[4]++;
+    }
+    else if (occupiedPlayer[13] == 1)
+    {
+        placedCards[1]++;
+        placedCards[2]++;
+        placedCards[3]++;
+        placedCards[4]++;
+        placedCards[5]++;
+    }
+
+    int flag = 0;
+    int max = placedCards[0];
 
     while (true)
     {
@@ -1927,6 +2038,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
             {
                 counterNotCardComputerMode++;
                 chooseCardNotCardComputer(computerCardsNotCard);
+                asciiValue = 1;
             }
 
             if (asciiValue == 1) // '1' ASCII code
@@ -2939,11 +3051,19 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
             isNotCardComputerMode = true;
 
             int cardPosition = 0;
-            srand(time(NULL));
 
-            int ascii = rand() % 6 + 1;
+            for (int i = 0; i < 6; i++)
+            {
+                if (placedCards[i] >= max)
+                {
+                    max = placedCards[i];
+                    flag = i + 1;
+                }
+            }
 
-            switch (ascii)
+            asciiValue = flag;
+
+            switch (asciiValue)
             {
             case 1:
             {
@@ -3001,7 +3121,7 @@ void computerTurn()
 
     counterNotCardComputerMode = 1;
     chooseCardNotCardComputer(computerCardsNotCard);
-    Sleep(2500);
+    Sleep(3500);
     checkCardComputer(computerCardsNotCard, initialcardValuesPC, 2, occupiedPC, valuesPC, cardsComputer);
 
 }
