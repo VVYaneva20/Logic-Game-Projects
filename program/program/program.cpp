@@ -377,25 +377,11 @@ void startProgram()
     Sleep(150);
 }
 
-void loading()
-{
-    gotoXY(79, 9);  cout << " _      ________   _________  __  _________" << endl;
-    gotoXY(79, 10);  cout << "| | /| / / __/ /  / ___/ __ \\/  |/  / __/ /" << endl;
-    gotoXY(79, 11);  cout << "| |/ |/ / _// /__/ /__/ /_/ / /|_/ / _//_/ " << endl;
-    gotoXY(79, 12); cout << "|__/|__/___/____/\\___/\\____/_/  /_/___(_)" << endl;
-
-    for (int i = 0; i < 16; i++)
-    {
-        gotoXY(84 + 2 * i, 14); cout << char(219) << " ";
-        Sleep(100);
-    }
-    startProgram();
-}
 
 int main()
 {
     system("mode con COLS=700");
     ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
     ShowConsoleCursor(false);
-    loading();
+    startProgram();
 }

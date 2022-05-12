@@ -7,7 +7,6 @@
 
 using namespace std;
 
-//display cards
 void cardOrZero(int x, int y);
 void cardAndZero(int x, int y);
 void cardXorZero(int x, int y);
@@ -19,4 +18,3 @@ void cardZero(int x, int y);
 void ShowConsoleCursor(bool showFlag);
 void instructions();
 void startProgram();
-void loading();

@@ -84,7 +84,7 @@ void shufflecardsNotCard()
 void notCard(int x, int y)
 {
     gotoXYNotCard(x, y++); cout << RESET << " _______________" << endl;
-    gotoXYNotCard(x, y++); cout << "|      "<< RED << "NOT " << RESET << "     |" << endl;
+    gotoXYNotCard(x, y++); cout << "|      " << RED << "NOT " << RESET << "     |" << endl;
     gotoXYNotCard(x, y++); cout << "|  ___________  |" << endl;
     gotoXYNotCard(x, y++); cout << "|  \\         /  |" << endl;
     gotoXYNotCard(x, y++); cout << "|   \\       /   |" << endl;
@@ -606,6 +606,11 @@ void printInitialCards(int position, bool reverse, int player)
                 }
             }
 
+        }
+        else
+        {
+            initialCardValuesP1[position] = !initialCardValuesP1[position];
+            initialcardValuesP2[position] = !initialcardValuesP2[position];
         }
 
     }
@@ -1895,7 +1900,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
 
             printPositionsNotCard(1, occupiedP1, cardsP1);
             printPositionsNotCard(2, occupiedP2, cardsP2);
-            
+
 
             gotoXYNotCard(195, 50); cout << "PLAYER 1";
             takecardsNotCard(1, playerOnecardsNotCard);
