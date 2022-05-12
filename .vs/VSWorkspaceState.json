@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\LogicGame",
-    "\\LogicGame\\LogicGame"
+    "\\program",
+    "\\program\\program"
   ],
-  "SelectedNode": "\\LogicGame\\LogicGame\\MultyPlayer.cpp",
+  "SelectedNode": "\\program\\program\\computerWithNotCardMode.h",
   "PreviewInSolutionExplorer": false
 }
