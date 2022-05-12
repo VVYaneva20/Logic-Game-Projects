@@ -1,8 +1,8 @@
 <h1 align="center">Logic Game Project</h1>
 
 <p align="center">
-<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/logo_darkTheme.png#gh-dark-mode-only" width="500px"> 
-<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/logo_lightTheme.png#gh-light-mode-only" width="500px"> 
+<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documents/Images/logo_darkTheme.png#gh-dark-mode-only" width="500px"> 
+<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documents/Images/logo_lightTheme.png#gh-light-mode-only" width="500px"> 
  </p>
  
 
@@ -24,10 +24,14 @@
  <img src="https://img.icons8.com/fluency/48/000000/visual-studio-2019.png"/>
 </p>
 
+## 🗎 Documents
+* <a href="https://codingburgas-my.sharepoint.com/:w:/g/personal/vvyaneva20_codingburgas_bg/ESjRATFHhX9DqwfzJoAnK7oBWc2l6JJAtc_ozpGzg41UvQ?e=2yuGUe">Documentation
+* <a href="https://codingburgas-my.sharepoint.com/:p:/g/personal/vvyaneva20_codingburgas_bg/EdlyzBVovXtKps65zHnyT6kBOMCb_j0qkwTKaGuY_yEvqQ?e=HQEl7e">Presentation
+
  ## 🃏 Demo of the project
 
 <p align="center">
-<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documentation/Images/computerMode.png" width = "1500px" >
+<img src="https://github.com/VVYaneva20/Logic-Game-Projects/blob/main/Documents/Images/computerMode.png" width = "1500px" >
 </p>
   
 ## ⚙ Installation
