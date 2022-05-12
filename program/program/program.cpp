@@ -315,6 +315,8 @@ void startProgram()
             }
             if (counter == 2)
             {
+                system("cls");
+                beginningOfTheGameWithComputerNotCard();
                 break;
             }
             if (counter == 3)

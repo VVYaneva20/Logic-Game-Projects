@@ -20,3 +20,7 @@ void printCardsWithComputer(int cardsNotCardNeeded, int* player);
 void printInitialPositionsWithComputer();
 void printInitialCardsWithComputer(int position, bool reverse, int player);
 void placeCardNotCardWithComputer(bool* occupiedPositions, int index, int pointerIndex, int x, int y, bool* cardValues, int* cards, int cardValue, bool value, int* playersCards);
+void checkCardNotCardWithComputer(int* playersCards, bool* initialValues, int player, bool* occupiedPositions, bool* boolValues, int* cardValues);
+void playerTurn();
+void computerTurn();
+void beginningOfTheGameWithComputerNotCard();
