@@ -10,3 +10,4 @@ using namespace std;
 void gotoXYNotCardWithComputer(int x, int y);
 void shuffleBooleanCards();
 void shuffleAllCards();
+void notCardWithComputer(int x, int y);

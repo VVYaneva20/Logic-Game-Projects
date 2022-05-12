@@ -87,6 +87,20 @@ void shuffleAllCards()
         allCards[j] = temp;
     }
 }
+
+void notCardWithComputer(int x, int y)
+{
+    gotoXYNotCardWithComputer(x, y++); cout << RESET << " _______________" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|      " << RED << "NOT " << RESET << "     |" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|  ___________  |" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|  \\         /  |" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|   \\       /   |" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|    \\     /    |" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|     \\   /     |" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|      \\ /      |" << endl;
+    gotoXYNotCardWithComputer(x, y++); cout << "|_______________|" << endl;
+}
+
 //Player one
 void playerOne()
 {
