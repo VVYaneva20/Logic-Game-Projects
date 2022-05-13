@@ -166,7 +166,7 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
         {
             position = 1;
         }
-        if ((isOccupied[i - inColumn] and isOccupied[i - inColumn - 2] and (!isOccupied[i])))
+        if ((isOccupied[i - inColumn] and isOccupied[i - inColumn - 1] and (!isOccupied[i])))
         {
             gotoXYNotCardWithComputer(x, y++); cout << " _______________" << endl;
             gotoXYNotCardWithComputer(x, y++); cout << "|    POSITION   |" << endl;
