@@ -664,6 +664,11 @@ void printInitialCardsWithComputer(int position, bool reverse, int player)
 
 
         }
+        else
+        {
+            initialCardValuesPlayer[position] = !initialCardValuesPlayer[position];
+            initialcardValuesPC[position] = !initialcardValuesPC[position];
+        }
 
     }
 
@@ -3120,7 +3125,7 @@ void computerTurn()
 //start the game
 void beginningOfTheGameWithComputerNotCard()
 {
-    fill_n(allCards, 48, 0);
+    fill_n(allCards, 56, 0);
     fill_n(playerCardsComputerNot, 5, 0);
     fill_n(computerCardsNotCard, 5, 0);
     fill_n(initialCardValuesPlayer, 6, 0);

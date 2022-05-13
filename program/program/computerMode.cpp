@@ -2403,7 +2403,7 @@ void beginningOfTheGameWithComputer()
         }
     }
 
-    if (isOccupiedPlayer[15] == 1 && isOccupiedPC[15] == 1)
+    if (isOccupiedPlayer[14] == 1 && isOccupiedPC[14] == 1)
     {
         system("cls");
 
