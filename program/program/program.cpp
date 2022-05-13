@@ -109,6 +109,14 @@ void cardZero(int x, int y)
     gotoXY(x, y++); cout << "|    " << YELLOW << "\\___/" << RESET << "    |" << endl;
     gotoXY(x, y++); cout << "|_____________|" << endl;
 }
+void displayGoodbye()
+{
+    gotoXY(83, 15); cout << RESET << "   ___   ___  ___  ___  ___        __" << endl;
+    gotoXY(83, 16); cout << "  / _ \\ /___\\/___\\/   \\/ __\\/\\_/\\ /__\\" << endl;
+    gotoXY(83, 17); cout << " / /_\\///  ///  // /\\ /__\\//\\_ _//_\\" << endl;
+    gotoXY(83, 18); cout << "/ /_\\\\/ \\_// \\_// /_// \\/  \\ / \\//__" << endl;
+    gotoXY(83, 19); cout << "\\____/\\___/\\___/___/ \\_____/ \\_/\\__/" << endl;
+}
 
 void ShowConsoleCursor(bool showFlag)
 {
@@ -339,6 +347,8 @@ void startProgram()
             }
             if (counter == 6)
             {
+                system("cls");
+                displayGoodbye();
                 break;
             }
         }
