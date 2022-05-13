@@ -222,7 +222,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
     int pixelsX;
     int pixelsY;
 
-    //notCardWithComputerCheck(cardsPlayer, occupiedPlayer, initialCardValuesPlayer, 1);
+    //notCardCheck(cardsP1, occupiedP1, initialCardValuesP1, 1);
     for (int i = 0; i < 5; i++)
     {
         if ((values[i] == 8 and isOccupied[i] == 1 and (initialCardValues[i] || initialCardValues[i + 1])) or
@@ -234,7 +234,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
         {
             isOccupied[i] = 0;
             values[i] = 0;
-            printPositionsNotCardWithComputer(playerNum, isOccupied, values);
+            printPositionsNotCard(playerNum, isOccupied, values);
         }
     }
 
@@ -249,7 +249,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXYNotCardWithComputer(pixelsX, pixelsY++); cout << "                 ";
+                gotoXYNotCard(pixelsX, pixelsY++); cout << "                 ";
             }
         }
     }
@@ -265,7 +265,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXYNotCardWithComputer(pixelsX, pixelsY++); cout << "                 ";
+                gotoXYNotCard(pixelsX, pixelsY++); cout << "                 ";
             }
         }
     }
@@ -281,7 +281,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXYNotCardWithComputer(pixelsX, pixelsY++); cout << "                 ";
+                gotoXYNotCard(pixelsX, pixelsY++); cout << "                 ";
             }
         }
     }
@@ -297,7 +297,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXYNotCardWithComputer(pixelsX, pixelsY++); cout << "                 ";
+                gotoXYNotCard(pixelsX, pixelsY++); cout << "                 ";
             }
         }
     }
@@ -305,7 +305,6 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
     printPositionsNotCardWithComputer(1, occupiedPlayer, cardsPlayer);
     printPositionsNotCardWithComputer(2, occupiedPC, cardsComputer);
 }
-
 //discard a card
 void removeCardNotCardWithComputer(int card, int* player)
 {
@@ -647,14 +646,7 @@ void printInitialCardsWithComputer(int position, bool reverse, int player)
                 }
                 else if (asciiValue == 121) // y
                 {
-                    if (player == 2)
-                    {
-                        gotoXYNotCardWithComputer(18, 7); cout << "                                      ";
-                    }
-                    else
-                    {
-                        gotoXYNotCardWithComputer(130, 7); cout << "                                      ";
-                    }
+                    
                     if (player == 1)
                     {
                         skipTurnPC = 1;
@@ -3065,36 +3057,36 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
 
             switch (asciiValue)
             {
-            case 1:
-            {
-                cardPosition = 0;
-                break;
-            }
-            case 2:
-            {
-                cardPosition = 1;
-                break;
-            }
-            case 3:
-            {
-                cardPosition = 2;
-                break;
-            }
-            case 4:
-            {
-                cardPosition = 3;
-                break;
-            }
-            case 5:
-            {
-                cardPosition = 4;
-                break;
-            }
-            case 6:
-            {
-                cardPosition = 5;
-                break;
-            }
+                case 1:
+                {
+                    cardPosition = 0;
+                    break;
+                }
+                case 2:
+                {
+                    cardPosition = 1;
+                    break;
+                }
+                case 3:
+                {
+                    cardPosition = 2;
+                    break;
+                }
+                case 4:
+                {
+                    cardPosition = 3;
+                    break;
+                }
+                case 5:
+                {
+                    cardPosition = 4;
+                    break;
+                }
+                case 6:
+                {
+                    cardPosition = 5;
+                    break;
+                }
             }
 
             removeCardNotCardWithComputer(counterNotCardComputerMode, playersallCards);
