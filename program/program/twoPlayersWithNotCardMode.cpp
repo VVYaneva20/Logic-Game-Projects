@@ -34,7 +34,7 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
     for (int i = 0; i < 5; i++)
     {
         y = posCoordinatesNotCard[i][2];
-        if (!isOccupied[i] && isNotCard)
+        if (!isOccupied[i] or isNotCard)
         {
             gotoXY(xFirstFive, y++); cout << " _______________" << endl;
             gotoXY(xFirstFive, y++); cout << "|    POSITION   |" << endl;
@@ -46,7 +46,7 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
             gotoXY(xFirstFive, y++); cout << "|               |" << endl;
             gotoXY(xFirstFive, y++); cout << "|_______________|" << endl;
         }
-        else if (isOccupied[i])
+        else if (isOccupied[i] && isNotCard)
         {
             if (values[i] % 7 == 1)
             {
@@ -143,6 +143,8 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
     int pixelsX;
     int pixelsY;
 
+    int inColumn;
+
     //notCardCheck(cardsP1, occupiedP1, initialCardValuesP1, 1);
     for (int i = 0; i < 5; i++)
     {
@@ -155,66 +157,29 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
         {
             isOccupied[i] = 0;
             values[i] = 0;
-            printPositionsNotCard(playerNum, isOccupied, values);
         }
     }
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 13; i++)
     {
-        pixelsX = posCoordinatesNotCard[i + 5][playerNum - 1];
-        pixelsY = posCoordinatesNotCard[i + 5][2];
+        if (i < 5)
+            inColumn = 5;
+        else if (i < 9)
+            inColumn = 4;
+        else if (i < 12)
+            inColumn = 3;
+        else
+            inColumn = 2;
+
+        if (i == 4 or i == 8 or i == 11)
+            continue;
+
+        pixelsX = posCoordinatesNotCard[i + inColumn][playerNum - 1];
+        pixelsY = posCoordinatesNotCard[i + inColumn][2];
 
         if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
         {
-            isOccupied[i + 5] = 0;
-
-            for (int i = 0; i < 9; i++)
-            {
-                gotoXY(pixelsX, pixelsY++); cout << "                 ";
-            }
-        }
-    }
-
-    for (int i = 5; i < 8; i++)
-    {
-        pixelsX = posCoordinatesNotCard[i + 4][playerNum - 1];
-        pixelsY = posCoordinatesNotCard[i + 4][2];
-
-        if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
-        {
-            isOccupied[i + 4] = 0;
-
-            for (int i = 0; i < 9; i++)
-            {
-                gotoXY(pixelsX, pixelsY++); cout << "                 ";
-            }
-        }
-    }
-
-    for (int i = 9; i < 11; i++)
-    {
-        pixelsX = posCoordinatesNotCard[i + 3][playerNum - 1];
-        pixelsY = posCoordinatesNotCard[i + 3][2];
-
-        if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
-        {
-            isOccupied[i + 3] = 0;
-
-            for (int i = 0; i < 9; i++)
-            {
-                gotoXY(pixelsX, pixelsY++); cout << "                 ";
-            }
-        }
-    }
-
-    for (int i = 12; i < 13; i++)
-    {
-        pixelsX = posCoordinatesNotCard[i + 2][playerNum - 1];
-        pixelsY = posCoordinatesNotCard[i + 2][2];
-
-        if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
-        {
-            isOccupied[i + 2] = 0;
+            isOccupied[i + inColumn] = 0;
 
             for (int i = 0; i < 9; i++)
             {
