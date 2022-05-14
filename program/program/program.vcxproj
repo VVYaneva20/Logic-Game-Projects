@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="computerMode.cpp" />
     <ClCompile Include="computerWithNotCardMode.cpp" />
+    <ClCompile Include="functions.cpp" />
     <ClCompile Include="program.cpp" />
     <ClCompile Include="twoPlayersMode.cpp" />
     <ClCompile Include="twoPlayersWithNotCardMode.cpp" />

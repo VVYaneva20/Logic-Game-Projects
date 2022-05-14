@@ -7,11 +7,10 @@ using namespace std;
 #define RED     "\033[31m"
 #define YELLOW  "\033[1m\033[33m" 
 
-void gotoXYComputerMode(int x, int y);
-void shuffleBoolCardsComputerMode();
-void shuffleCardsComputerMode();
-void removeCardComputerMode(int card, int* player);
-void takeCardsComputerMode(int cardsNeeded, int* player);
+void shuffleBoolCards();
+void shuffleCards();
+void removeCard(int card, int* player);
+void takeCards(int cardsNeeded, int* player);
 void chooseCardComputerMode(int* player);
 void printCardsComputerMode(int cardsNeeded, int* player);
 void printPositionsComputerMode();

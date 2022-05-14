@@ -7,25 +7,11 @@
 
 #define RESET   "\033[0m"
 #define RED     "\033[1m\033[31m" 
-#define YELLOW  "\033[1m\033[33m" 
+#define YELLOW  "\033[1m\033[33m"
+
 using namespace std;
 
-HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-COORD CursorPosition;
 
-int cards[48];
-int playerOneCards[5], playerTwoCards[5];
-int chosenCard;
-int counter;
-
-bool boolCardValuesP1[6], boolCardValuesP2[6];
-bool cardValuesP1[15], cardValuesP2[15];
-bool isOccupiedP1[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-bool isOccupiedP2[15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-void (*pointToCard[6])(int x, int y) = { cardOrZero, cardXorZero, cardAndZero, cardOrOne, cardXorOne, cardAndOne };
-
-int yCoords[5] = { 6, 15, 24, 33, 44 };
 
 int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                               {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
@@ -33,162 +19,11 @@ int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 1
                               {17, 152, 17}, {17, 152, 29},
                               {2, 167, 23} };
 
-//takes coordinates
-void gotoXY(int x, int y)
-{
-    CursorPosition.X = x;
-    CursorPosition.Y = y;
-    SetConsoleCursorPosition(console, CursorPosition);
-}
+void (*pointToCard[6])(int x, int y) = { cardOrZero, cardXorZero, cardAndZero, cardOrOne, cardXorOne, cardAndOne };
 
-//reorders all cards
-void shuffleBoolCards()
-{
-    bool cards[6];
-    int pixelsX = 77;
-    int pixelsY = 2;
-    srand(time(NULL));
-    for (int i = 0; i < 6; i++)
-    {
-        cards[i] = rand() % 2;
-    }
-    for (int i = 0; i < 6; i++)
-    {
-        if (cards[i] == 0)
-        {
-            cardZero(pixelsX, pixelsY);
-            cardOne(pixelsX + 15, pixelsY);
-            boolCardValuesP1[i] = 0;
-            boolCardValuesP2[i] = 1;
-        }
-        else
-        {
-            cardOne(pixelsX, pixelsY);
-            cardZero(pixelsX + 15, pixelsY);
-            boolCardValuesP1[i] = 1;
-            boolCardValuesP2[i] = 0;
-        }
-        pixelsY += 8;
-    }
-}
 
-//reorders bool cards
-void shuffleCards()
-{
-    for (int i = 0; i < 48; i++)
-    {
-        cards[i] = i + 1;
-    }
-    int temp;
-    srand(time(NULL));
-    for (int i = 47; i > 0; --i)
-    {
-        int j = rand() % i;
-        temp = cards[i];
-        cards[i] = cards[j];
-        cards[j] = temp;
-    }
-}
 
-//discard a card
-void removeCard(int card, int* player)
-{
-    for (int i = card - 1; i < 5; ++i)
-    {
-        player[i] = player[i + 1];
-    }
-}
 
-//the player gets cards
-void takeCards(int cardsNeeded, int* player)
-{
-    if (cardsNeeded != 1)
-    {
-        for (int i = 0; i < cardsNeeded; i++)
-        {
-            player[i] = cards[i];
-        }
-    }
-    else
-    {
-        player[4] = cards[0];
-    }
-    for (int i = 0; i < cardsNeeded; i++)
-    {
-        int temp = cards[0];
-        for (int j = 0; j < 47; j++)
-        {
-            cards[j] = cards[j + 1];
-        }
-        cards[47] = temp;
-    }
-}
-
-//the player selects a card
-void chooseCard(int* player, bool returned)
-{
-    int y;
-
-    if (!returned)
-        counter = 2;
-
-    y = yCoords[counter];
-
-    gotoXY(189, y); cout << RED << ">" << RESET;
-
-    while (true)
-    {
-        system("pause>nul");
-
-        if (GetAsyncKeyState(0x53)) // 's' key pressed
-        {
-            chosenCard = player[counter];
-            break;
-        }
-        if (GetAsyncKeyState(VK_DOWN))
-        {
-            gotoXY(189, y); cout << " ";
-            if (y != 44)
-            {
-                y += 9;
-                if (y == 42)
-                    y += 2;
-                counter++;
-            }
-            else
-            {
-                y = y - 38;
-                counter -= 4;
-            }
-            gotoXY(189, y); cout << RED << ">" << RESET;
-        }
-        if (GetAsyncKeyState(VK_UP))
-        {
-            gotoXY(189, y); cout << " ";
-
-            if (y != 6)
-            {
-                y -= 9;
-                if (y == 35)
-                    y -= 2;
-                counter--;
-            }
-            else
-            {
-                y += 38;
-                counter += 4;
-            }
-
-            gotoXY(189, y); cout << RED << ">" << RESET;
-        }
-        if (GetAsyncKeyState(VK_ESCAPE)) // ESCAPE
-        {
-            startProgram();
-            break;
-        }
-    }
-    Sleep(150);
-}
 
 //display cards 
 void printCards(int cardsNeeded, int* player)
@@ -498,11 +333,13 @@ void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
 // implements the players' turns
 void executeTurn(int* playerCards, bool* boolCardValues, int player, bool* isOccupied, bool* cardValues)
 {
+    int yCoords[5] = { 6, 15, 24, 33, 44 };
+
     printPositions(1, isOccupiedP1);   // printPositions(player, isOccupied);
     printPositions(2, isOccupiedP2);
     gotoXY(195, 50); cout << "PLAYER " << player;
 
-    takeCards(1, playerCards);
+    takeCards(1, playerCards, 48);
     printCards(5, playerCards);
 
     chooseCard(playerCards, 0);
@@ -530,9 +367,9 @@ void beginningOfTheGameWithTwoPLayers()
     chosenCard = 0;
 
     shuffleBoolCards();
-    shuffleCards();
-    takeCards(5, playerOneCards);
-    takeCards(5, playerTwoCards);
+    shuffleCards(48);
+    takeCards(5, playerOneCards, 48);
+    takeCards(5, playerTwoCards, 48);
 
     while (true)
     {

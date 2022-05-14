@@ -7,15 +7,14 @@
 
 using namespace std;
 
-void gotoXYNotCardWithComputer(int x, int y);
-void shuffleBooleanCards();
-void shuffleAllCards();
-void notCardWithComputer(int x, int y);
+void shuffleBoolCards();
+void shuffleCards();
+void notCard(int x, int y);
 void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values);
 void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardValues, int playerNum);
-void removeCardNotCardWithComputer(int card, int* player);
-void takeCardsWithComputer(int cardsNotCardNeeded, int* player);
-void chooseCardNotCardWithComputer(int* player, bool returned);
+void removeCard(int card, int* player);
+void takeCards(int cardsNotCardNeeded, int* player);
+void chooseCard(int* player, bool returned);
 void printCardsWithComputer(int cardsNotCardNeeded, int* player);
 void printInitialPositionsWithComputer();
 void printInitialCardsWithComputer(int position, bool reverse, int player);
