@@ -49,31 +49,27 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
         }
         else if (isOccupied[i])
         {
-            if (values[i] % 7 == 1)
+            if (values[i] == 8)
             {
                 cardOrZero(xFirstFive, y);
             }
-            else if (values[i] % 7 == 2)
+            else if (values[i] == 9)
             {
                 cardXorZero(xFirstFive, y);
             }
-            else if (values[i] % 7 == 3)
+            else if (values[i] == 10)
             {
                 cardAndZero(xFirstFive, y);
             }
-            else if (values[i] % 7 == 4)
+            else if (values[i] == 11)
             {
                 cardOrOne(xFirstFive, y);
             }
-            else if (values[i] % 7 == 5)
+            else if (values[i] == 12)
             {
                 cardXorOne(xFirstFive, y);
             }
-            else if (values[i] % 7 == 6)
-            {
-                notCard(xFirstFive, y);
-            }
-            else if (values[i] % 7 == 1)
+            else if (values[i] == 7)
             {
                 cardAndOne(xFirstFive, y);
             }

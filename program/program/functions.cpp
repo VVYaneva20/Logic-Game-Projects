@@ -616,7 +616,7 @@ void startProgram()
             {
                 system("cls");
                 displayGoodbye();
-                break;
+                exit(EXIT_FAILURE);
             }
         }
 
