@@ -7,14 +7,10 @@ using namespace std;
 #define RED     "\033[31m"
 #define YELLOW  "\033[1m\033[33m" 
 
-void shuffleBoolCards();
-void shuffleCards();
-void removeCard(int card, int* player);
-void takeCards(int cardsNeeded, int* player);
-void chooseCardComputerMode(int* player);
-void printCards(int cardsNeeded, int* player);
+void chooseCardComputer(int* player);
 void printPositionsComputerMode();
-void placeCardComputerMode(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues);
+void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues);
+void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues);
 void player();
 void computer();
 void beginningOfTheGameWithComputer();

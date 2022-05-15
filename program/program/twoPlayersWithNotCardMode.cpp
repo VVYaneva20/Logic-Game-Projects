@@ -5,36 +5,37 @@
 #include "program.h"
 #include "twoPlayersWithNotCardMode.h"
 
-#define RESET   "\033[0m"
-#define RED     "\033[1m\033[31m" 
-#define YELLOW  "\033[1m\033[33m" 
-
 using namespace std;
 
-int cardsP1[15];
-int cardsP2[15];
-
-
-bool isNotCard = true;
+int cardsP1[15], cardsP2[15];
 bool skipTurnP1 = 0, skipTurnP2 = 0;
 
 void printPositionsNotCard(int player, bool* isOccupied, int* values)
 {
+    int inColumn = 4;
+    int position = 6;
+    int xFirstFive, y, x, xP2;
     int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                           {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                           {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                           {17, 152, 17}, {17, 152, 29},
                           {2, 167, 23}
     };
-    int xFirstFive, y, x, xP2;
+
     if (player == 1)
+    {
         xFirstFive = 60;
+    }
     else
+    {
         xFirstFive = 107;
+    }
+
     for (int i = 0; i < 5; i++)
     {
         y = posCoordinatesNotCard[i][2];
-        if (!isOccupied[i] && isNotCard)
+
+        if (!isOccupied[i])
         {
             gotoXY(xFirstFive, y++); cout << " _______________" << endl;
             gotoXY(xFirstFive, y++); cout << "|    POSITION   |" << endl;
@@ -74,16 +75,17 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
             }
         }
     }
-    int inColumn = 4;
-    int position = 6;
+
     for (int i = 5; i < 15; i++)
     {
         x = posCoordinatesNotCard[i][player - 1];
         y = posCoordinatesNotCard[i][2];
+
         if (i == 9)
         {
             position = 1;
         }
+
         if ((isOccupied[i - inColumn] and isOccupied[i - inColumn - 1] and (!isOccupied[i])))
         {
             gotoXY(x, y++); cout << " _______________" << endl;
@@ -124,6 +126,7 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
             }
         }
         position++;
+
         if (i == 8 or i == 11 or i == 13)
         {
             inColumn--;
@@ -133,16 +136,15 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
 
 void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int playerNum)
 {
+    int pixelsX;
+    int pixelsY;
     int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                              {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                              {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                              {17, 152, 17}, {17, 152, 29},
                              {2, 167, 23}
     };
-    int pixelsX;
-    int pixelsY;
 
-    //notCardCheck(cardsP1, occupiedP1, initialCardValuesP1, 1);
     for (int i = 0; i < 5; i++)
     {
         if ((values[i] == 8 and isOccupied[i] == 1 and (initialCardValues[i] || initialCardValues[i + 1])) or
@@ -154,6 +156,7 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
         {
             isOccupied[i] = 0;
             values[i] = 0;
+
             printPositionsNotCard(playerNum, isOccupied, values);
         }
     }
@@ -226,40 +229,10 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
     printPositionsNotCard(2, isOccupiedP2, cardsP2);
 }
 
-
-void printInitialPositions()
-{
-    int pixelsX = 77;
-    int pixelsY = 2;
-    int position = 1;
-    for (int i = 0; i < 6; i++)
-    {
-        gotoXY(pixelsX, pixelsY++); cout << RESET << " _____________";
-        gotoXY(pixelsX, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX, pixelsY++); cout << "|      " << position << "      |";
-        gotoXY(pixelsX, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX, pixelsY++); cout << "|_____________|";
-        pixelsY -= 8;
-        gotoXY(pixelsX + 15, pixelsY++); cout << RESET << " _____________";
-        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX + 15, pixelsY++); cout << "|      " << position << "      |";
-        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
-        gotoXY(pixelsX + 15, pixelsY++); cout << "|_____________|";
-        position++;
-    }
-}
-
 void printInitialCards(int position, bool reverse, int player)
 {
     int pixelsX = 77;
     int pixelsY = 2;
-
 
     if (reverse)
     {
@@ -302,12 +275,9 @@ void printInitialCards(int position, bool reverse, int player)
                 gotoXY(130, 7); cout << "Do you want to use your not card?(y/n)";
             }
 
-
-
             char keyPress;
             keyPress = _getch();
             int asciiValue = keyPress;
-
 
             if (asciiValue == 110)
             {
@@ -319,6 +289,7 @@ void printInitialCards(int position, bool reverse, int player)
                 {
                     gotoXY(130, 7); cout << "                                      ";
                 }
+
                 boolCardValuesP1[position] = !boolCardValuesP1[position];
                 boolCardValuesP2[position] = !boolCardValuesP2[position];
             }
@@ -332,6 +303,7 @@ void printInitialCards(int position, bool reverse, int player)
                 {
                     gotoXY(130, 7); cout << "                                      ";
                 }
+
                 if (player == 1)
                 {
                     skipTurnP2 = 1;
@@ -341,17 +313,14 @@ void printInitialCards(int position, bool reverse, int player)
                 {
                     skipTurnP1 = 1;
                     removeCard(temp + 1, playerOneCards);
-
                 }
             }
-
         }
         else
         {
             boolCardValuesP1[position] = !boolCardValuesP1[position];
             boolCardValuesP2[position] = !boolCardValuesP2[position];
         }
-
     }
 
     for (int i = 0; i < 6; i++)
@@ -384,14 +353,16 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
     {
         if (chosenCard % 7 != 6)
         {
-            isNotCard = false;
             char keyPress;
             keyPress = _getch();
             int asciiValue = keyPress - 48;
+
             if (asciiValue == 1) // '1' ASCII code
             {
                 if (occupiedPositions[0] == 0)
                 {
+                    pixelsY = 4;
+
                     if (player == 1)
                     {
                         pixelsX = 60;
@@ -400,7 +371,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 107;
                     }
-                    pixelsY = 4;
+
                     if (chosenCard % 7 == 1 && !(initialvalues[0] || initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
@@ -463,6 +434,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 else if (occupiedPositions[9] == 0)
                 {
+                    pixelsY = 12;
+
                     if (player == 1)
                     {
                         pixelsX = 32;
@@ -471,7 +444,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 137;
                     }
-                    pixelsY = 12;
+                    
                     if (chosenCard % 7 == 1 && !(values[5] || values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
@@ -541,6 +514,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 if (occupiedPositions[1] == 0)
                 {
+                    pixelsY = 13;
+
                     if (player == 1)
                     {
                         pixelsX = 60;
@@ -549,7 +524,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 107;
                     }
-                    pixelsY = 13;
+                    
                     if (chosenCard % 7 == 1 && !(initialvalues[1] || initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
@@ -612,6 +587,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 else if (occupiedPositions[10] == 0)
                 {
+                    pixelsY = 23;
+
                     if (player == 1)
                     {
                         pixelsX = 32;
@@ -620,7 +597,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 137;
                     }
-                    pixelsY = 23;
+                    
                     if (chosenCard % 7 == 1 && !(values[6] || values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
@@ -690,6 +667,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 if (occupiedPositions[2] == 0)
                 {
+                    pixelsY = 22;
+
                     if (player == 1)
                     {
                         pixelsX = 60;
@@ -698,7 +677,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 107;
                     }
-                    pixelsY = 22;
+                    
                     if (chosenCard % 7 == 1 && !(initialvalues[2] || initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
@@ -761,6 +740,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 else if (occupiedPositions[11] == 0)
                 {
+                    pixelsY = 34;
+
                     if (player == 1)
                     {
                         pixelsX = 32;
@@ -769,7 +750,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 137;
                     }
-                    pixelsY = 34;
+                    
                     if (chosenCard % 7 == 1 && !(values[7] || values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
@@ -839,6 +820,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 if (occupiedPositions[3] == 0)
                 {
+                    pixelsY = 31;
+
                     if (player == 1)
                     {
                         pixelsX = 60;
@@ -847,7 +830,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 107;
                     }
-                    pixelsY = 31;
+                    
                     if (chosenCard % 7 == 1 && !(initialvalues[3] || initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
@@ -910,6 +893,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 else if (occupiedPositions[12] == 0)
                 {
+                    pixelsY = 17;
+
                     if (player == 1)
                     {
                         pixelsX = 17;
@@ -918,7 +903,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 152;
                     }
-                    pixelsY = 17;
+                    
                     if (chosenCard % 7 == 1 && !(values[9] || values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
@@ -988,6 +973,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 if (occupiedPositions[4] == 0)
                 {
+                    pixelsY = 40;
+
                     if (player == 1)
                     {
                         pixelsX = 60;
@@ -996,7 +983,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 107;
                     }
-                    pixelsY = 40;
+                    
                     if (chosenCard % 7 == 1 && !(initialvalues[4] || initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
@@ -1059,6 +1046,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 else if (occupiedPositions[13] == 0)
                 {
+                    pixelsY = 29;
+
                     if (player == 1)
                     {
                         pixelsX = 17;
@@ -1067,7 +1056,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 152;
                     }
-                    pixelsY = 29;
+                    
                     if (chosenCard % 7 == 1 && !(values[10] || values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
@@ -1137,6 +1126,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 if (occupiedPositions[5] == 0)
                 {
+                    pixelsY = 8;
+
                     if (player == 1)
                     {
                         pixelsX = 47;
@@ -1145,7 +1136,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 122;
                     }
-                    pixelsY = 8;
+                    
                     if (chosenCard % 7 == 1 && !(values[0] || values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
@@ -1208,6 +1199,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 else if (occupiedPositions[14] == 0)
                 {
+                    pixelsY = 23;
+
                     if (player == 1)
                     {
                         pixelsX = 2;
@@ -1216,7 +1209,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         pixelsX = 167;
                     }
-                    pixelsY = 23;
+                    
                     if (chosenCard % 7 == 1 && !(values[12] || values[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                     {
                         cardValues[14] = 8;
@@ -1278,6 +1271,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             }
             if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
             {
+                pixelsY = 18;
+
                 if (player == 1)
                 {
                     pixelsX = 47;
@@ -1286,7 +1281,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 {
                     pixelsX = 122;
                 }
-                pixelsY = 18;
+                
                 if (chosenCard % 7 == 1 && !(values[1] || values[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
                 {
                     cardValues[6] = 8;
@@ -1353,6 +1348,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             }
             if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
             {
+                pixelsY = 28;
+
                 if (player == 1)
                 {
                     pixelsX = 47;
@@ -1361,7 +1358,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 {
                     pixelsX = 122;
                 }
-                pixelsY = 28;
+                
                 if (chosenCard % 7 == 1 && !(values[2] || values[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
                 {
                     cardValues[7] = 8;
@@ -1428,6 +1425,8 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             }
             if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
             {
+                pixelsY = 38;
+
                 if (player == 1)
                 {
                     pixelsX = 47;
@@ -1436,7 +1435,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 {
                     pixelsX = 122;
                 }
-                pixelsY = 38;
+                
                 if (chosenCard % 7 == 1 && !(values[3] || values[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
                 {
                     cardValues[8] = 8;
@@ -1501,10 +1500,12 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
             }
+
             if (asciiValue == 66)// 'r' ASCII value
             {
                 gotoXY(195, 50); cout << "PLAYER " << player << "  ";
                 chooseCard(playerscardsNotCard, 1, 1);
+
                 if (player == 1)
                 {
                     checkCardNotCard(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
@@ -1515,11 +1516,13 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 break;
             }
+
             if (asciiValue == 52)// 'd' ASCII value
             {
                 removeCard(counter, playerscardsNotCard);
                 break;
             }
+
             if (asciiValue == 27)// escape ASCII value
             {
                 startProgram();
@@ -1528,14 +1531,11 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
         }
         else
         {
-            isNotCard = true;
             printInitialPositions();
 
             char press;
-
             int ascii;
             int cardPosition = 10;
-
 
             while (true)
             {
@@ -1575,7 +1575,6 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                 }
                 else if (ascii == 66 || ascii == -21)// 'r' is pressed
                 {
-
                     printInitialCards(cardPosition, 1, player);
                     gotoXY(195, 50); cout << "PLAYER " << player << "  ";
                     chooseCard(playerscardsNotCard, 1, 1);
@@ -1588,6 +1587,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
                     {
                         checkCardNotCard(playerscardsNotCard, initialvalues, 2, occupiedPositions, values, cardValues);
                     }
+
                     break;
                 }
                 else
@@ -1609,22 +1609,21 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
 void playerOne()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printCards(playerOneCards);
+
+    printCardsWithNotCard(playerOneCards);
     chooseCard(playerOneCards, 0, 1);
     checkCardNotCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsP1);
-
-    gotoXY(189, yCoords[counter]); cout << " ";
 }
 //Player two
 void playerTwo()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printCards(playerTwoCards);
+
+    printCardsWithNotCard(playerTwoCards);
     chooseCard(playerTwoCards, 0, 1);
     checkCardNotCard(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2, cardsP2);
-
-    gotoXY(189, yCoords[counter]); cout << " ";
 }
+
 //start the game
 void beginningOfTheGameWithTwoPLayersNotCard()
 {
@@ -1638,6 +1637,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
     fill_n(isOccupiedP1, 15, 0);
     fill_n(isOccupiedP2, 15, 0);
     chosenCard = 0;
+
     shuffleBoolCards();
     shuffleCards(56);
     takeCards(5, playerOneCards, 56);
@@ -1675,15 +1675,13 @@ void beginningOfTheGameWithTwoPLayersNotCard()
             playerTwo();
         }
 
-
-
-
         if (isOccupiedP1[14] == 1 || isOccupiedP2[14] == 1)
         {
             system("cls");
             break;
         }
     }
+
     if (isOccupiedP1[14] == 1 && isOccupiedP2[14] == 1)
     {
         system("cls");
@@ -1692,6 +1690,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
         gotoXY(90, 22); cout << "  / /\\ / \\// //_\\\\ \\/  \\/ /" << endl;
         gotoXY(90, 23); cout << " / /_// _  \\/  _  \\  /\\  / " << endl;
         gotoXY(90, 24); cout << "/___,'\\/ \\_/\\_/ \\_/\\/  \\/" << endl;
+
         Sleep(3000);
         startProgram();
     }
@@ -1703,6 +1702,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
         gotoXY(73, 22); cout << " / /_)/ /   //_\\\\\\_ _//_\\ / \\//  | |  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
         gotoXY(73, 23); cout << "/ ___/ /___/  _  \\/ \\//__/ _  \\  | |   \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
         gotoXY(73, 24); cout << "\\/   \\____/\\_/ \\_/\\_/\\__/\\/ \\_/  |_|    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
+
         Sleep(3000);
         startProgram();
     }
@@ -1714,6 +1714,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
         gotoXY(70, 22); cout << " / /_)/ /   //_\\\\\\_ _//_\\ / \\//    __) |  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
         gotoXY(70, 23); cout << "/ ___/ /___/  _  \\/ \\//__/ _  \\   / __/    \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
         gotoXY(70, 24); cout << "\\/   \\____/\\_/ \\_/\\_/\\__/\\/ \\_/  |_____|    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
+
         Sleep(3000);
         startProgram();
     }

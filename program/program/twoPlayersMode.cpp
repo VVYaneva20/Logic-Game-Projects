@@ -5,34 +5,36 @@
 #include "program.h"
 #include "twoPlayersMode.h"
 
-#define RESET   "\033[0m"
-#define RED     "\033[1m\033[31m" 
-#define YELLOW  "\033[1m\033[33m"
-
 using namespace std;
 
 void (*pointToCard[6])(int x, int y) = { cardOrZero, cardXorZero, cardAndZero, cardOrOne, cardXorOne, cardAndOne };
 
-
-
 //display the empty positions
 void printPositions(int player, bool* isOccupied)
 {
+    int inColumn = 4;
+    int position = 6;
+    int xFirstFive, y, x;
     int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                                  {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                                  {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                                  {17, 152, 17}, {17, 152, 29},
-                                 {2, 167, 23} };
-    int xFirstFive, y, x, xP2;
-    if (player == 1)
-        xFirstFive = 60;
-    else
-        xFirstFive = 107;
+                                 {2, 167, 23} 
+    };
 
+    if (player == 1)
+    {
+        xFirstFive = 60;
+    }
+    else
+    {
+        xFirstFive = 107;
+    }
 
     for (int i = 0; i < 5; i++)
     {
         y = posCoordinates[i][2];
+
         if (!isOccupied[i])
         {
             gotoXY(xFirstFive, y++); cout << " _______________" << endl;
@@ -46,17 +48,17 @@ void printPositions(int player, bool* isOccupied)
             gotoXY(xFirstFive, y++); cout << "|_______________|" << endl;
         }
     }
-    int inColumn = 4;
-    int position = 6;
 
     for (int i = 5; i < 15; i++)
     {
         x = posCoordinates[i][player - 1];
         y = posCoordinates[i][2];
+
         if (i == 9)
         {
             position = 1;
         }
+
         if (isOccupied[i - inColumn] and isOccupied[i - inColumn - 1] and (!isOccupied[i]))
         {
             gotoXY(x, y++); cout << " _______________" << endl;
@@ -69,7 +71,9 @@ void printPositions(int player, bool* isOccupied)
             gotoXY(x, y++); cout << "|               |" << endl;
             gotoXY(x, y++); cout << "|_______________|" << endl;
         }
+
         position++;
+
         if (i == 8 or i == 11 or i == 13)
         {
             inColumn--;
@@ -89,18 +93,18 @@ void placeCard(bool* occupiedPositions, int index, int pointerIndex, int x, int 
 //put down a card in a chosen position
 void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
 {
+    int pixelsX;
+    int pixelsY;
+    int x = 2;
+    int inColumn[15] = { 5, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 1 };
     int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                                  {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                                  {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                                  {17, 152, 17}, {17, 152, 29},
-                                 {2, 167, 23} };
-    int pixelsX;
-    int pixelsY;
-    int inColumn[15] = { 5, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 1 };
-    int x = 2;
+                                 {2, 167, 23} 
+    };
 
     //bool isNum = 0; 
-
     while (true)
     {
         char keyPress = _getch();
@@ -111,16 +115,15 @@ void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
         for (int i = 0; i < 9; i++)
         {
             if (choice != i)
+            {
                 flag = false;
+            }
             else
             {
-                //isNum = true;
                 flag = true;
                 break;
             }
         }
-
-        //gotoXY(2, x++); cout << flag;
 
         for (int i = 0; i < 9; i++)
         {
@@ -266,11 +269,13 @@ void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
             checkCard(playersCards, boolCardValues, player, occupiedPositions, cardValues);
             break;
         }
+
         if (choice == 51 or choice == 19 or choice == -141 or choice == -173)
         {
             removeCard(counter, playersCards);
             break;
         }
+
         if (GetAsyncKeyState(VK_ESCAPE))// escape ASCII value
         {
             startProgram();
@@ -286,8 +291,9 @@ void executeTurn(int* playerCards, bool* boolCardValues, int player, bool* isOcc
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
 
-    printPositions(1, isOccupiedP1);   // printPositions(player, isOccupied);
+    printPositions(1, isOccupiedP1); 
     printPositions(2, isOccupiedP2);
+
     gotoXY(195, 50); cout << "PLAYER " << player;
 
     takeCards(1, playerCards, 48);
@@ -295,7 +301,6 @@ void executeTurn(int* playerCards, bool* boolCardValues, int player, bool* isOcc
 
     chooseCard(playerCards, 0, 0);
     checkCard(playerCards, boolCardValues, player, isOccupied, cardValues);
-    gotoXY(189, yCoords[counter]); cout << " ";
 }
 
 //start the game
@@ -319,6 +324,7 @@ void beginningOfTheGameWithTwoPLayers()
 
     shuffleBoolCards();
     shuffleCards(48);
+
     takeCards(5, playerOneCards, 48);
     takeCards(5, playerTwoCards, 48);
 
@@ -336,6 +342,7 @@ void beginningOfTheGameWithTwoPLayers()
             break;
         }
     }
+
     if (isOccupiedP1[14] == 1 && isOccupiedP2[14] == 1)
     {
         system("cls");
@@ -344,9 +351,11 @@ void beginningOfTheGameWithTwoPLayers()
         gotoXY(90, 22); cout << "  / /\\ / \\// //_\\\\ \\/  \\/ /" << endl;
         gotoXY(90, 23); cout << " / /_// _  \\/  _  \\  /\\  / " << endl;
         gotoXY(90, 24); cout << "/___,'\\/ \\_/\\_/ \\_/\\/  \\/" << endl;
+
         Sleep(3000);
         startProgram();
     }
+
     else if (isOccupiedP1[14] == 1)
     {
         system("cls");
@@ -355,9 +364,11 @@ void beginningOfTheGameWithTwoPLayers()
         gotoXY(73, 22); cout << " / /_)/ /   //_\\\\\\_ _//_\\ / \\//  | |  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
         gotoXY(73, 23); cout << "/ ___/ /___/  _  \\/ \\//__/ _  \\  | |   \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
         gotoXY(73, 24); cout << "\\/   \\____/\\_/ \\_/\\_/\\__/\\/ \\_/  |_|    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
+
         Sleep(3000);
         startProgram();
     }
+
     else if (isOccupiedP2[14] == 1)
     {
         system("cls");
@@ -366,6 +377,7 @@ void beginningOfTheGameWithTwoPLayers()
         gotoXY(70, 22); cout << " / /_)/ /   //_\\\\\\_ _//_\\ / \\//    __) |  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
         gotoXY(70, 23); cout << "/ ___/ /___/  _  \\/ \\//__/ _  \\   / __/    \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
         gotoXY(70, 24); cout << "\\/   \\____/\\_/ \\_/\\_/\\__/\\/ \\_/  |_____|    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
+
         Sleep(3000);
         startProgram();
     }

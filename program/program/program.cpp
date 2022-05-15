@@ -14,6 +14,6 @@ int main()
 {
     system("mode con COLS=700");
     ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
-    ShowConsoleCursor(false);
+    showConsoleCursor(false);
     startProgram();
 }

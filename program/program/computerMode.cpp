@@ -5,10 +5,6 @@
 #include "computerMode.h"
 #include "program.h"
 
-#define RESET   "\033[0m"
-#define RED     "\033[1m\033[31m" 
-#define YELLOW  "\033[1m\033[33m" 
-
 using namespace std;
 
 //computer selects a card
@@ -20,26 +16,32 @@ void chooseCardComputer(int* player)
     {
         gotoXY(189, yCoordinates[i]); cout << " ";
     }
+
     if (counter == 1)
     {
         chosenCard = player[0];
     }
+
     if (counter == 2)
     {
         chosenCard = player[1];
     }
+
     if (counter == 3)
     {
         chosenCard = player[2];
     }
+
     if (counter == 4)
     {
         chosenCard = player[3];
     }
+
     if (counter == 5)
     {
         chosenCard = player[4];
     }
+
     if (counter == 6)
     {
         chosenCard = player[rand() % 4];
@@ -48,14 +50,15 @@ void chooseCardComputer(int* player)
 //display the empty positions
 void printPositionsComputerMode()
 {
+    int inColumn = 4;
+    int posP1 = 6, posPC = 6;
+    int xP1, xPC, y;
     int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                               {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                               {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                               {17, 152, 17}, {17, 152, 29},
                               {2, 167, 23}
     };
-
-    int xP1, xPC, y;
 
     for (int i = 0; i < 5; i++)
     {
@@ -89,9 +92,6 @@ void printPositionsComputerMode()
             gotoXY(107, y++); cout << "|_______________|" << endl;
         }
     }
-
-    int inColumn = 4;
-    int posP1 = 6, posPC = 6;
 
     for (int i = 5; i < 15; i++)
     {
@@ -164,11 +164,13 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
 
             break;
         }
+
         if (asciiValue == 52)// 'd' ASCII value
         {
             removeCard(counter, playerscardsComputerMode);
             break;
         }
+
         if (asciiValue == 27)// esc ASCII value
         {
             startProgram();
@@ -187,7 +189,9 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 107;
                 }
+
                 pixelsY = 4;
+
                 if (chosenCard % 6 == 1 && !(boolCardValues[0] || boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
@@ -239,12 +243,13 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-
                     continue;
                 }
             }
             else if (occupiedPositions[9] == 0)
             {
+                pixelsY = 12;
+
                 if (player == 1)
                 {
                     pixelsX = 32;
@@ -253,7 +258,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 137;
                 }
-                pixelsY = 12;
+
                 if (chosenCard % 6 == 1 && !(cardValues[5] || cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
@@ -305,7 +310,6 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
@@ -383,6 +387,8 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
             }
             else if (occupiedPositions[10] == 0)
             {
+                pixelsY = 23;
+
                 if (player == 1)
                 {
                     pixelsX = 32;
@@ -391,7 +397,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 137;
                 }
-                pixelsY = 23;
+
                 if (chosenCard % 6 == 1 && !(cardValues[6] || cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
@@ -443,7 +449,6 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
@@ -456,6 +461,8 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
         {
             if (occupiedPositions[2] == 0)
             {
+                pixelsY = 22;
+
                 if (player == 1)
                 {
                     pixelsX = 60;
@@ -464,7 +471,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 107;
                 }
-                pixelsY = 22;
+
                 if (chosenCard % 6 == 1 && !(boolCardValues[2] || boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
@@ -516,12 +523,13 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else if (occupiedPositions[11] == 0)
             {
+                pixelsY = 34;
+
                 if (player == 1)
                 {
                     pixelsX = 32;
@@ -530,7 +538,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 137;
                 }
-                pixelsY = 34;
+
                 if (chosenCard % 6 == 1 && !(cardValues[7] || cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
@@ -582,20 +590,20 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                ;
             }
         }
         else if (asciiValue == 4) // '4' ASCII code
         {
             if (occupiedPositions[3] == 0)
             {
+                pixelsY = 31;
+
                 if (player == 1)
                 {
                     pixelsX = 60;
@@ -604,7 +612,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 107;
                 }
-                pixelsY = 31;
+                
                 if (chosenCard % 6 == 1 && !(boolCardValues[3] || boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
@@ -656,12 +664,13 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else if (occupiedPositions[12] == 0)
             {
+                pixelsY = 17;
+
                 if (player == 1)
                 {
                     pixelsX = 17;
@@ -670,7 +679,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 152;
                 }
-                pixelsY = 17;
+
                 if (chosenCard % 6 == 1 && !(cardValues[9] || cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
@@ -722,20 +731,20 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                ;
             }
         }
         else if (asciiValue == 5) // '5' ASCII code
         {
             if (occupiedPositions[4] == 0)
             {
+                pixelsY = 40;
+
                 if (player == 1)
                 {
                     pixelsX = 60;
@@ -744,7 +753,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 107;
                 }
-                pixelsY = 40;
+
                 if (chosenCard % 6 == 1 && !(boolCardValues[4] || boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
@@ -796,12 +805,13 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else if (occupiedPositions[13] == 0)
             {
+                pixelsY = 29;
+
                 if (player == 1)
                 {
                     pixelsX = 17;
@@ -810,7 +820,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 152;
                 }
-                pixelsY = 29;
+
                 if (chosenCard % 6 == 1 && !(cardValues[10] || cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
@@ -862,20 +872,20 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                ;
             }
         }
         else if (asciiValue == 6) // '6' ASCII code
         {
             if (occupiedPositions[5] == 0)
             {
+                pixelsY = 8;
+
                 if (player == 1)
                 {
                     pixelsX = 47;
@@ -884,7 +894,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 122;
                 }
-                pixelsY = 8;
+
                 if (chosenCard % 6 == 1 && !(cardValues[0] || cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
@@ -936,12 +946,13 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else if (occupiedPositions[14] == 0)
             {
+                pixelsY = 23;
+
                 if (player == 1)
                 {
                     pixelsX = 2;
@@ -950,7 +961,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 {
                     pixelsX = 167;
                 }
-                pixelsY = 23;
+
                 if (chosenCard % 6 == 1 && !(cardValues[12] || cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
@@ -996,18 +1007,18 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 else
                 {
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                    ;
                     continue;
                 }
             }
             else
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
-                ;
             }
         }
         if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
         {
+            pixelsY = 18;
+
             if (player == 1)
             {
                 pixelsX = 47;
@@ -1016,7 +1027,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
             {
                 pixelsX = 122;
             }
-            pixelsY = 18;
+
             if (chosenCard % 6 == 1 && !(cardValues[1] || cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
@@ -1077,6 +1088,8 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
         }
         if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
         {
+            pixelsY = 28;
+
             if (player == 1)
             {
                 pixelsX = 47;
@@ -1085,7 +1098,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
             {
                 pixelsX = 122;
             }
-            pixelsY = 28;
+
             if (chosenCard % 6 == 1 && !(cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
@@ -1146,6 +1159,8 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
         }
         if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
         {
+            pixelsY = 38;
+
             if (player == 1)
             {
                 pixelsX = 47;
@@ -1154,7 +1169,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
             {
                 pixelsX = 122;
             }
-            pixelsY = 38;
+
             if (chosenCard % 6 == 1 && !(cardValues[3] || cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
@@ -1216,7 +1231,6 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
 
     }
 }
-
 void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
 {
     int pixelsX;
@@ -1233,6 +1247,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
             removeCard(counter, playerscardsComputerMode);
             break;
         }
+
         if (asciiValue == 10)
         {
             counter++;
@@ -1355,6 +1370,8 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
         {
             if (occupiedPositions[1] == 0)
             {
+                pixelsY = 13;
+
                 if (player == 1)
                 {
                     pixelsX = 60;
@@ -1363,7 +1380,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 {
                     pixelsX = 107;
                 }
-                pixelsY = 13;
+
                 if (chosenCard % 6 == 1 && !(boolCardValues[1] || boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
@@ -1415,6 +1432,8 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
             }
             else if (occupiedPositions[10] == 0)
             {
+                pixelsY = 23;
+
                 if (player == 1)
                 {
                     pixelsX = 32;
@@ -1423,7 +1442,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 {
                     pixelsX = 137;
                 }
-                pixelsY = 23;
+
                 if (chosenCard % 6 == 1 && !(cardValues[6] || cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
@@ -1912,6 +1931,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 }
             }
         }
+
         if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
         {
             pixelsX = 122;
@@ -1966,6 +1986,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 break;
             }
         }
+
         if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
         {
             pixelsX = 122;
@@ -2020,6 +2041,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 break;
             }
         }
+
         if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
         {
             pixelsX = 122;
@@ -2074,7 +2096,6 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 break;
             }
         }
-
     }
 }
 
@@ -2082,24 +2103,23 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
 void player()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
+
     printCards(playerOneCards);
     chooseCard(playerOneCards, 0, 0);
     placeCardComputerMode(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1);
-
-    gotoXY(189, yCoords[counter]); cout << " ";
 }
 //Computer
 void computer()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printCards(playerTwoCards);
     counter = 1;
-    
-    chooseCardComputer(playerTwoCards);
-    Sleep(2000);
-    placeCardComputer(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2);
 
-    gotoXY(189, yCoords[counter]); cout << " ";
+    printCards(playerTwoCards);
+    chooseCardComputer(playerTwoCards);
+
+    Sleep(2000);
+
+    placeCardComputer(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2);
 }
 
 //start the game
@@ -2154,6 +2174,7 @@ void beginningOfTheGameWithComputer()
         gotoXY(90, 22); cout << "  / /\\ / \\// //_\\\\ \\/  \\/ /" << endl;
         gotoXY(90, 23); cout << " / /_// _  \\/  _  \\  /\\  / " << endl;
         gotoXY(90, 24); cout << "/___,'\\/ \\_/\\_/ \\_/\\/  \\/" << endl;
+
         Sleep(3000);
         startProgram();
     }
@@ -2166,6 +2187,7 @@ void beginningOfTheGameWithComputer()
         gotoXY(73, 22); cout << " / /_)/ /   //_\\\\\\_ _//_\\ / \\//  | |  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
         gotoXY(73, 23); cout << "/ ___/ /___/  _  \\/ \\//__/ _  \\  | |   \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
         gotoXY(73, 24); cout << "\\/   \\____/\\_/ \\_/\\_/\\__/\\/ \\_/  |_|    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
+
         Sleep(3000);
         startProgram();
     }
@@ -2178,6 +2200,7 @@ void beginningOfTheGameWithComputer()
         gotoXY(67, 22); cout << " / /   //  //    \\  / /_)/ / \\ \\ / /\\/_\\ / \\//  \\ \\/  \\/ / / /\\/  \\/ /\\ \\" << endl;
         gotoXY(67, 23); cout << "/ /___/ \\_// /\\/\\ \\/ ___/\\ \\_/ // / //__/ _  \\   \\  /\\  /\\/ /_/ /\\  / _\\ \\" << endl;
         gotoXY(67, 24); cout << "\\____/\\___/\\/    \\/\\/     \\___/ \\/  \\__/\\/ \\_/    \\/  \\/\\____/\\_\\ \\/  \\__/" << endl;
+
         Sleep(3000);
         startProgram();
     }

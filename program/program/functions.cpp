@@ -8,10 +8,6 @@
 #include "computerMode.h"
 #include "computerWithNotCardMode.h"
 
-#define RESET   "\033[0m"
-#define RED     "\033[31m"
-#define YELLOW  "\033[1m\033[33m" 
-
 using namespace std;
 
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -140,6 +136,7 @@ void notCard(int x, int y)
     gotoXY(x, y++); cout << "|      \\ /      |" << endl;
     gotoXY(x, y++); cout << "|_______________|" << endl;
 }
+
 void displayGoodbye()
 {
     gotoXY(83, 15); cout << RESET << "   ___   ___  ___  ___  ___        __" << endl;
@@ -149,7 +146,7 @@ void displayGoodbye()
     gotoXY(83, 19); cout << "\\____/\\___/\\___/___/ \\_____/ \\_/\\__/" << endl;
 }
 
-void ShowConsoleCursor(bool showFlag)
+void showConsoleCursor(bool showFlag)
 {
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -165,7 +162,9 @@ void shuffleBoolCards()
     bool cards[6];
     int pixelsX = 77;
     int pixelsY = 2;
+
     srand(time(NULL));
+
     for (int i = 0; i < 6; i++)
     {
         cards[i] = rand() % 2;
@@ -191,12 +190,15 @@ void shuffleBoolCards()
 }
 void shuffleCards(int numberOfCards)
 {
+    int temp;
+
     for (int i = 0; i < numberOfCards; i++)
     {
         cards[i] = i + 1;
     }
-    int temp;
+    
     srand(time(NULL));
+
     for (int i = numberOfCards - 1; i > 0; --i)
     {
         int j = rand() % i;
@@ -229,13 +231,16 @@ void takeCards(int cardsNeeded, int* player, int numberOfCards)
     {
         player[4] = cards[0];
     }
+
     for (int i = 0; i < cardsNeeded; i++)
     {
         int temp = cards[0];
+
         for (int j = 0; j < numberOfCards - 1; j++)
         {
             cards[j] = cards[j + 1];
         }
+
         cards[numberOfCards - 1] = temp;
     }
 }
@@ -251,6 +256,7 @@ void printCards(int* player)
     {
         gotoXY(187, i); cout << "|";
     }
+
     for (int i = 0; i < 5; i++)
     {
         if (player[i] % 6 == 1)
@@ -277,24 +283,27 @@ void printCards(int* player)
         {
             cardAndOne(pixelsX, pixelsY);
         }
+
         cardCounter++;
         pixelsY += 9;
+
         if (cardCounter == 4)
         {
             pixelsY += 2;
         }
     }
 }
-
 void printCardsWithNotCard(int* player)
 {
     int counter = 0;
     int pixelsX = 191;
     int pixelsY = 2;
+
     for (int i = 0; i < 52; i++)
     {
         gotoXY(187, i); cout << "|";
     }
+
     for (int i = 0; i < 5; i++)
     {
         if (player[i] % 7 == 1)
@@ -325,8 +334,10 @@ void printCardsWithNotCard(int* player)
         {
             cardAndOne(pixelsX, pixelsY);
         }
+
         counter++;
         pixelsY += 9;
+
         if (counter == 4)
         {
             pixelsY += 2;
@@ -342,6 +353,7 @@ void printTruthTable(int x, int y)
     {
         gotoXY(189, yCoordinates[i]); cout << " ";
     }
+
     for (int i = 0; i < 10; i++)
     {
         gotoXY(x, y++); cout << "                     ";
@@ -372,27 +384,38 @@ void printTruthTable(int x, int y)
     gotoXY(x, y++); cout << " | 1 ^ 0  | 1 |      ";
     gotoXY(x, y++); cout << " | 1 ^ 1  | 0 |      ";
     gotoXY(x, y++); cout << " |____________|      ";
+
     for (int i = 0; i < 12; i++)
     {
         gotoXY(x, y++); cout << "                     ";
     }
 }
+
 void printPositionsWithNotCard(int player, bool* isOccupied, int* values)
 {
-    int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+    int inColumn = 4;
+    int position = 6;
+    int xFirstFive, y, x;
+    int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                           {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                           {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                           {17, 152, 17}, {17, 152, 29},
                           {2, 167, 23}
     };
-    int xFirstFive, y, x;
+
     if (player == 1)
+    {
         xFirstFive = 60;
+    }
     else
+    {
         xFirstFive = 107;
+    }
+
     for (int i = 0; i < 5; i++)
     {
-        y = posCoordinatesNotCard[i][2];
+        y = posCoordinates[i][2];
+
         if (!isOccupied[i])
         {
             gotoXY(xFirstFive, y++); cout << " _______________" << endl;
@@ -433,16 +456,17 @@ void printPositionsWithNotCard(int player, bool* isOccupied, int* values)
             }
         }
     }
-    int inColumn = 4;
-    int position = 6;
+    
     for (int i = 5; i < 15; i++)
     {
-        x = posCoordinatesNotCard[i][player - 1];
-        y = posCoordinatesNotCard[i][2];
+        x = posCoordinates[i][player - 1];
+        y = posCoordinates[i][2];
+
         if (i == 9)
         {
             position = 1;
         }
+
         if ((isOccupied[i - inColumn] and isOccupied[i - inColumn - 1] and (!isOccupied[i])))
         {
             gotoXY(x, y++); cout << " _______________" << endl;
@@ -482,7 +506,9 @@ void printPositionsWithNotCard(int player, bool* isOccupied, int* values)
                 cardAndOne(x, y);
             }
         }
+
         position++;
+
         if (i == 8 or i == 11 or i == 13)
         {
             inColumn--;
@@ -490,33 +516,65 @@ void printPositionsWithNotCard(int player, bool* isOccupied, int* values)
     }
 }
 
+void printInitialPositions()
+{
+    int pixelsX = 77;
+    int pixelsY = 2;
+    int position = 1;
+
+    for (int i = 0; i < 6; i++)
+    {
+        gotoXY(pixelsX, pixelsY++); cout << RESET << " _____________";
+        gotoXY(pixelsX, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX, pixelsY++); cout << "|      " << position << "      |";
+        gotoXY(pixelsX, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX, pixelsY++); cout << "|_____________|";
+
+        pixelsY -= 8;
+
+        gotoXY(pixelsX + 15, pixelsY++); cout << RESET << " _____________";
+        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX + 15, pixelsY++); cout << "|      " << position << "      |";
+        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX + 15, pixelsY++); cout << "|             |";
+        gotoXY(pixelsX + 15, pixelsY++); cout << "|_____________|";
+
+        position++;
+    }
+}
+
 //the player selects a card
 void chooseCard(int* player, bool returned, bool notCard)
 {
-    int Set[] = { 12, 7, 7, 7, 7 };
     counter = 1;
     char key;
+    int set[] = { 12, 7, 7, 7, 7 };
 
     while (true)
     {
         gotoXY(189, 6);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[0]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[0]);
         cout << ">";
 
         gotoXY(189, 15);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[1]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[1]);
         cout << ">";
 
         gotoXY(189, 24);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[2]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[2]);
         cout << ">";
 
         gotoXY(189, 33);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[3]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[3]);
         cout << ">";
 
         gotoXY(189, 44);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[4]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[4]);
         cout << ">";
 
         key = _getch();
@@ -532,6 +590,7 @@ void chooseCard(int* player, bool returned, bool notCard)
                 counter--;
             }
         }
+
         if (key == 80) // down arrow key
         {
             if (counter == 5)
@@ -543,6 +602,7 @@ void chooseCard(int* player, bool returned, bool notCard)
                 counter++;
             }
         }
+
         if (key == 's')// select card
         {
             if (counter == 1)
@@ -571,14 +631,17 @@ void chooseCard(int* player, bool returned, bool notCard)
                 break;
             }
         }
+
         if (key == 27)// esc key ASCII value
         {
             startProgram();
             break;
         }
+
         if (key == 105)// 'i' esc key ASCII value
         {
             printTruthTable(191, 2);
+
             while (true)
             {
                 char pressI;
@@ -600,31 +663,35 @@ void chooseCard(int* player, bool returned, bool notCard)
             
         }
 
-        Set[0] = 7;
-        Set[1] = 7;
-        Set[2] = 7;
-        Set[3] = 7;
-        Set[4] = 7;
+        set[0] = 7;
+        set[1] = 7;
+        set[2] = 7;
+        set[3] = 7;
+        set[4] = 7;
 
         if (counter == 1)
         {
-            Set[0] = 12;
+            set[0] = 12;
         }
+
         if (counter == 2)
         {
-            Set[1] = 12;
+            set[1] = 12;
         }
+
         if (counter == 3)
         {
-            Set[2] = 12;
+            set[2] = 12;
         }
+
         if (counter == 4)
         {
-            Set[3] = 12;
+            set[3] = 12;
         }
+
         if (counter == 5)
         {
-            Set[4] = 12;
+            set[4] = 12;
         }
     }
 
@@ -687,7 +754,6 @@ void instructions()
     cardOrOne(191, 21);
     cardOrZero(191, 30);
 
-
     gotoXY(191, 41); cout << RESET << " _______________" << endl;
     gotoXY(191, 42); cout << "|    " << RED << "  ____  " << RESET << "   |" << endl;
     gotoXY(191, 43); cout << "|    " << RED << " / __ `." << RESET << "   |" << endl;
@@ -699,6 +765,7 @@ void instructions()
 
     gotoXY(188, 3); cout << "/" << endl;
     gotoXY(187, 4); cout << "/" << endl;
+
     for (int i = 5; i <= 37; i++)
     {
         switch (i)
@@ -719,6 +786,7 @@ void instructions()
             gotoXY(186, i); cout << "|" << endl;
         }
     }
+
     gotoXY(187, 38); cout << "\\" << endl;
     gotoXY(188, 39); cout << "\\" << endl;
 
@@ -782,40 +850,42 @@ void instructions()
 
 void startProgram()
 {
+    int counter = 1;
+    char key;
+    int set[] = { 12, 7, 7, 7, 7, 7 };
+
     system("cls");
 
-    gotoXY(83, 9);  cout << "   ___    ___  __    __ " << endl;
+    gotoXY(83, 9);  cout << RESET << "   ___    ___  __    __ " << endl;
     gotoXY(83, 10);  cout << "  / __\\  /___\\/ /   /__\\/\\ /\\  /\\/\\" << endl;
     gotoXY(83, 11);  cout << " /__\\// //  // /   /_\\ / / \\ \\/    \\" << endl;
     gotoXY(83, 12); cout << "/ \\/  \\/ \\_// /___//__ \\ \\_/ / /\\/\\ \\" << endl;
     gotoXY(83, 13); cout << "\\_____/\\___/\\____/\\__/  \\___/\\/    \\/" << endl;
-    int Set[] = { 12, 7, 7, 7, 7, 7 };
-    int counter = 1;
-    char key;
+
     while (true)
     {
         gotoXY(85, 16);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[0]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[0]);
         cout << "     Play with a computer";
 
         gotoXY(85, 17);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[1]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[1]);
         cout << "Play with computer with NOT card";
 
         gotoXY(85, 18);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[2]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[2]);
         cout << "      Play with a friend";
 
         gotoXY(85, 19);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[3]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[3]);
         cout << "Play with a friend with NOT card";
 
         gotoXY(85, 20);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[4]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[4]);
         cout << "	      Instructions";
 
         gotoXY(85, 21);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Set[5]);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), set[5]);
         cout << "	          Exit";
 
         key = _getch();
@@ -831,6 +901,7 @@ void startProgram()
                 counter--;
             }
         }
+
         if (key == 80) // down arrow key
         {
             if (counter == 6)
@@ -842,6 +913,7 @@ void startProgram()
                 counter++;
             }
         }
+
         if (key == '\r')// enter
         {
             if (counter == 1)
@@ -882,36 +954,41 @@ void startProgram()
             }
         }
 
-        Set[0] = 7;
-        Set[1] = 7;
-        Set[2] = 7;
-        Set[3] = 7;
-        Set[4] = 7;
-        Set[5] = 7;
+        set[0] = 7;
+        set[1] = 7;
+        set[2] = 7;
+        set[3] = 7;
+        set[4] = 7;
+        set[5] = 7;
 
         if (counter == 1)
         {
-            Set[0] = 12;
+            set[0] = 12;
         }
+
         if (counter == 2)
         {
-            Set[1] = 12;
+            set[1] = 12;
         }
+
         if (counter == 3)
         {
-            Set[2] = 12;
+            set[2] = 12;
         }
+
         if (counter == 4)
         {
-            Set[3] = 12;
+            set[3] = 12;
         }
+
         if (counter == 5)
         {
-            Set[4] = 12;
+            set[4] = 12;
         }
+
         if (counter == 6)
         {
-            Set[5] = 12;
+            set[5] = 12;
         }
     }
 
