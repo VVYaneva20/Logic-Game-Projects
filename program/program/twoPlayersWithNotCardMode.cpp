@@ -99,7 +99,7 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
             gotoXY(x, y++); cout << "|               |" << endl;
             gotoXY(x, y++); cout << "|_______________|" << endl;
         }
-        else if (isOccupied[i] && isNotCard)
+        else if (isOccupied[i])
         {
             if (values[i] % 7 == 1)
             {
