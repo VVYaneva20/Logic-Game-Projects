@@ -277,7 +277,7 @@ void chooseCardNotCardComputer(int* player)
     }
 }
 
-//print Initial cards after Not card has been used
+//display Initial cards after Not card has been used
 void printInitialCardsWithComputer(int position, bool reverse, int player)
 {
     int pixelsX = 77;
