@@ -27,7 +27,7 @@ bool skipTurnPlayer = 0, skipTurnPC = 0;
 //display the empty positions
 void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values)
 {
-    int xFirstFive, y, x, xP2;
+    int xFirstFive, y, x;
     if (player == 1)
         xFirstFive = 60;
     else
@@ -35,7 +35,7 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
     for (int i = 0; i < 5; i++)
     {
         y = posCoordinatesNotCardWithComputer[i][2];
-        if (!isOccupied[i] && isNotCardComputerMode)
+        if (!isOccupied[i])
         {
             gotoXY(xFirstFive, y++); cout << " _______________" << endl;
             gotoXY(xFirstFive, y++); cout << "|    POSITION   |" << endl;
@@ -101,33 +101,29 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
             gotoXY(x, y++); cout << "|               |" << endl;
             gotoXY(x, y++); cout << "|_______________|" << endl;
         }
-        else if (isOccupied[i] && isNotCardComputerMode)
+        else if (isOccupied[i])
         {
-            if (values[i] % 7 == 1)
+            if (values[i] == 8)
             {
                 cardOrZero(x, y);
             }
-            else if (values[i] % 7 == 2)
+            else if (values[i] == 9)
             {
                 cardXorZero(x, y);
             }
-            else if (values[i] % 7 == 3)
+            else if (values[i] == 10)
             {
                 cardAndZero(x, y);
             }
-            else if (values[i] % 7 == 4)
+            else if (values[i] == 11)
             {
                 cardOrOne(x, y);
             }
-            else if (values[i] % 7 == 5)
+            else if (values[i] == 12)
             {
                 cardXorOne(x, y);
             }
-            else if (values[i] % 7 == 10)
-            {
-                notCard(x, y);
-            }
-            else if (values[i] % 7 == 0)
+            else if (values[i] == 7)
             {
                 cardAndOne(x, y);
             }
@@ -428,17 +424,17 @@ void printInitialCardsWithComputer(int position, bool reverse, int player)
                 }
                 else if (asciiValue == 121) // y
                 {
-                    
                     if (player == 1)
                     {
+                        gotoXY(130, 7); cout << "                                           ";
                         skipTurnPC = 1;
                         removeCard(temp + 1, playerTwoCards);
                     }
                     else
                     {
+                        gotoXY(18, 7); cout << "                                             ";
                         skipTurnPlayer = 1;
                         removeCard(temp + 1, playerOneCards);
-
                     }
                     break;
                 }
