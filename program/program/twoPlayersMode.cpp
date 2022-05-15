@@ -7,7 +7,8 @@
 
 using namespace std;
 
-void (*pointToCard[6])(int x, int y) = { cardOrZero, cardXorZero, cardAndZero, cardOrOne, cardXorOne, cardAndOne };
+//array of pointers to the card functions
+void (*pointToCard[6])(int x, int y) = { printCardOrZero, printCardXorZero, printCardAndZero, printCardOrOne, printCardXorOne, printCardAndOne };
 
 //display the empty positions
 void printPositions(int player, bool* isOccupied)
@@ -15,7 +16,7 @@ void printPositions(int player, bool* isOccupied)
     int inColumn = 4;
     int position = 6;
     int xFirstFive, y, x;
-    int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+    int positionCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                                  {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                                  {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                                  {17, 152, 17}, {17, 152, 29},
@@ -26,14 +27,14 @@ void printPositions(int player, bool* isOccupied)
     {
         xFirstFive = 60;
     }
-    else
+    else if(player == 2)
     {
         xFirstFive = 107;
     }
 
     for (int i = 0; i < 5; i++)
     {
-        y = posCoordinates[i][2];
+        y = positionCoordinates[i][2];
 
         if (!isOccupied[i])
         {
@@ -51,8 +52,8 @@ void printPositions(int player, bool* isOccupied)
 
     for (int i = 5; i < 15; i++)
     {
-        x = posCoordinates[i][player - 1];
-        y = posCoordinates[i][2];
+        x = positionCoordinates[i][player - 1];
+        y = positionCoordinates[i][2];
 
         if (i == 9)
         {
@@ -90,21 +91,20 @@ void placeCard(bool* occupiedPositions, int index, int pointerIndex, int x, int 
     removeCard(counter, playersCards);
 }
 
-//put down a card in a chosen position
+//check if a card is valid for the chosen position
 void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
 {
+    int x = 2;
     int pixelsX;
     int pixelsY;
-    int x = 2;
     int inColumn[15] = { 5, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 1 };
-    int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+    int positionCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                                  {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                                  {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
                                  {17, 152, 17}, {17, 152, 29},
                                  {2, 167, 23} 
     };
 
-    //bool isNum = 0; 
     while (true)
     {
         char keyPress = _getch();
@@ -131,13 +131,13 @@ void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
             {
                 if (occupiedPositions[i] == 0 or i >= 6)
                 {
-                    pixelsX = posCoordinates[i][player - 1];
-                    pixelsY = posCoordinates[i][2];
+                    pixelsX = positionCoordinates[i][player - 1];
+                    pixelsY = positionCoordinates[i][2];
                 }
                 else
                 {
-                    pixelsX = posCoordinates[i + 9][player - 1];
-                    pixelsY = posCoordinates[i + 9][2];
+                    pixelsX = positionCoordinates[i + 9][player - 1];
+                    pixelsY = positionCoordinates[i + 9][2];
                 }
 
                 if (occupiedPositions[i] == 0 && i <= 4)
@@ -276,17 +276,20 @@ void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
             break;
         }
 
-        if (GetAsyncKeyState(VK_ESCAPE))// escape ASCII value
+        if (GetAsyncKeyState(VK_ESCAPE))// escape 
         {
             startProgram();
             break;
         }
 
-        if (flag) break;
+        if (flag)
+        {
+            break;
+        }
     }
 }
 
-// implements the players' turns
+//implements the players' turns
 void executeTurn(int* playerCards, bool* boolCardValues, int player, bool* isOccupied, bool* cardValues)
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
@@ -306,23 +309,11 @@ void executeTurn(int* playerCards, bool* boolCardValues, int player, bool* isOcc
 //start the game
 void beginningOfTheGameWithTwoPLayers()
 {
-    fill_n(cards, 48, 0);
-
-    fill_n(playerOneCards, 5, 0);
-    fill_n(playerTwoCards, 5, 0);
-
-    fill_n(boolCardValuesP1, 6, 0);
-    fill_n(boolCardValuesP2, 6, 0);
-
-    fill_n(cardValuesP1, 15, 0);
-    fill_n(cardValuesP2, 15, 0);
-
-    fill_n(isOccupiedP1, 15, 0);
-    fill_n(isOccupiedP2, 15, 0);
+    emptyVariables(48);
 
     chosenCard = 0;
 
-    shuffleBoolCards();
+    shuffleInitialCards();
     shuffleCards(48);
 
     takeCards(5, playerOneCards, 48);

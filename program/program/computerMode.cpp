@@ -11,7 +11,7 @@ using namespace std;
 void chooseCardComputer(int* player)
 {
     int yCoordinates[5] = { 6, 15, 24, 33, 44 };
-
+    
     for (int i = 0; i < 5; i++)
     {
         gotoXY(189, yCoordinates[i]); cout << " ";
@@ -47,6 +47,7 @@ void chooseCardComputer(int* player)
         chosenCard = player[rand() % 4];
     }
 }
+
 //display the empty positions
 void printPositionsComputerMode()
 {
@@ -141,8 +142,9 @@ void printPositionsComputerMode()
         }
     }
 }
+
 //put down a card in a chosen position
-void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
+void placeCardPlayer(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
 {
     int pixelsX;
     int pixelsY;
@@ -159,19 +161,19 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
         {
             gotoXY(195, 50); cout << "PLAYER " << player << "  ";
 
-            chooseCard(playerscardsComputerMode, 1, 1);
-            placeCardComputerMode(playerscardsComputerMode, boolCardValues, 1, occupiedPositions, cardValues);
+            chooseCard(playersCards, 1, 1);
+            placeCardPlayer(playersCards, boolCardValues, 1, occupiedPositions, cardValues);
 
             break;
         }
 
         if (asciiValue == 52)// 'd' ASCII value
         {
-            removeCard(counter, playerscardsComputerMode);
+            removeCard(counter, playersCards);
             break;
         }
 
-        if (asciiValue == 27)// esc ASCII value
+        if (asciiValue == -21)//return
         {
             startProgram();
             break;
@@ -195,49 +197,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(boolCardValues[0] || boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[0] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[0] ^ boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[0] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[0] && boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[0] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[0] || boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[0] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[0] ^ boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[0] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[0] && boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[0] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -262,49 +264,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(cardValues[5] || cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[9] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[5] ^ cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[9] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[5] && cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[9] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[5] || cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[9] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[5] ^ cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[9] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[5] && cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[9] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -334,49 +336,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(boolCardValues[1] || boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[1] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[1] ^ boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[1] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[1] && boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[1] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[1] || boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[1] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[1] ^ boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[1] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[1] && boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[1] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -401,49 +403,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(cardValues[6] || cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[10] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[6] ^ cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[10] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[6] && cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[10] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[6] || cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[10] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[6] ^ cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[10] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[6] && cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[10] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -475,49 +477,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(boolCardValues[2] || boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[2] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[2] ^ boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[2] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[2] && boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[2] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[2] || boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[2] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[2] ^ boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[2] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[2] && boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[2] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -542,49 +544,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(cardValues[7] || cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[11] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[7] ^ cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[11] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[7] && cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[11] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[7] || cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[11] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[7] ^ cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[11] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[7] && cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[11] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -616,49 +618,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(boolCardValues[3] || boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[3] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[3] ^ boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[3] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[3] && boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[3] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[3] || boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[3] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[3] ^ boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[3] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[3] && boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[3] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -683,49 +685,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(cardValues[9] || cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[12] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[9] ^ cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[12] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[9] && cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[12] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[9] || cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[12] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[9] ^ cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[12] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[9] && cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[12] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -757,49 +759,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(boolCardValues[4] || boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[4] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[4] ^ boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[4] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[4] && boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[4] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[4] || boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[4] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[4] ^ boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[4] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[4] && boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[4] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -824,49 +826,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(cardValues[10] || cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[13] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[10] ^ cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[13] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[10] && cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[13] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[10] || cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[13] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[10] ^ cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[13] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[10] && cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[13] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -898,49 +900,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(cardValues[0] || cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[5] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[0] ^ cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[5] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[0] && cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[5] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[0] || cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[5] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[0] ^ cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[5] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[0] && cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[5] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -965,43 +967,43 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
                 if (chosenCard % 6 == 1 && !(cardValues[12] || cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardOrZero(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardOrZero(pixelsX, pixelsY);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[12] ^ cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardXorZero(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardXorZero(pixelsX, pixelsY);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[12] && cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardAndZero(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardAndZero(pixelsX, pixelsY);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[12] || cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardOrOne(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardOrOne(pixelsX, pixelsY);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[12] ^ cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardXorOne(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardXorOne(pixelsX, pixelsY);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[12] && cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardAndOne(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardAndOne(pixelsX, pixelsY);
+                    removeCard(counter, playersCards);
                     break;
                 }
                 else
@@ -1031,49 +1033,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
             if (chosenCard % 6 == 1 && !(cardValues[1] || cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardOrZero(pixelsX, pixelsY);
+                printCardOrZero(pixelsX, pixelsY);
                 cardValues[6] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 2 && !(cardValues[1] ^ cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardXorZero(pixelsX, pixelsY);
+                printCardXorZero(pixelsX, pixelsY);
                 cardValues[6] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 3 && !(cardValues[1] && cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardAndZero(pixelsX, pixelsY);
+                printCardAndZero(pixelsX, pixelsY);
                 cardValues[6] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 4 && (cardValues[1] || cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardOrOne(pixelsX, pixelsY);
+                printCardOrOne(pixelsX, pixelsY);
                 cardValues[6] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 5 && (cardValues[1] ^ cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardXorOne(pixelsX, pixelsY);
+                printCardXorOne(pixelsX, pixelsY);
                 cardValues[6] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 0 && (cardValues[1] && cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardAndOne(pixelsX, pixelsY);
+                printCardAndOne(pixelsX, pixelsY);
                 cardValues[6] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else
@@ -1102,49 +1104,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
             if (chosenCard % 6 == 1 && !(cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardOrZero(pixelsX, pixelsY);
+                printCardOrZero(pixelsX, pixelsY);
                 cardValues[7] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 2 && !(cardValues[2] ^ cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardXorZero(pixelsX, pixelsY);
+                printCardXorZero(pixelsX, pixelsY);
                 cardValues[7] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 3 && !(cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardAndZero(pixelsX, pixelsY);
+                printCardAndZero(pixelsX, pixelsY);
                 cardValues[7] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 4 && (cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardOrOne(pixelsX, pixelsY);
+                printCardOrOne(pixelsX, pixelsY);
                 cardValues[7] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 5 && (cardValues[2] ^ cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardXorOne(pixelsX, pixelsY);
+                printCardXorOne(pixelsX, pixelsY);
                 cardValues[7] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 0 && (cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardAndOne(pixelsX, pixelsY);
+                printCardAndOne(pixelsX, pixelsY);
                 cardValues[7] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else
@@ -1173,49 +1175,49 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
             if (chosenCard % 6 == 1 && !(cardValues[3] || cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardOrZero(pixelsX, pixelsY);
+                printCardOrZero(pixelsX, pixelsY);
                 cardValues[8] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 2 && !(cardValues[3] ^ cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardXorZero(pixelsX, pixelsY);
+                printCardXorZero(pixelsX, pixelsY);
                 cardValues[8] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 3 && !(cardValues[3] && cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardAndZero(pixelsX, pixelsY);
+                printCardAndZero(pixelsX, pixelsY);
                 cardValues[8] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 4 && (cardValues[3] || cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardOrOne(pixelsX, pixelsY);
+                printCardOrOne(pixelsX, pixelsY);
                 cardValues[8] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 5 && (cardValues[3] ^ cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardXorOne(pixelsX, pixelsY);
+                printCardXorOne(pixelsX, pixelsY);
                 cardValues[8] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else if (chosenCard % 6 == 0 && (cardValues[3] && cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardAndOne(pixelsX, pixelsY);
+                printCardAndOne(pixelsX, pixelsY);
                 cardValues[8] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, playersCards);
                 break;
             }
             else
@@ -1231,7 +1233,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
 
     }
 }
-void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
+void placeCardComputer(int* computersCard, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
 {
     int pixelsX;
     int pixelsY;
@@ -1244,7 +1246,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
 
         if (counter == 6)
         {
-            removeCard(counter, playerscardsComputerMode);
+            removeCard(counter, computersCard);
             break;
         }
 
@@ -1255,7 +1257,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
             asciiValue = 1;
         }
 
-        if (asciiValue == 1) // '1' ASCII code
+        if (asciiValue == 1) 
         {
             if (occupiedPositions[0] == 0)
             {
@@ -1265,49 +1267,49 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(boolCardValues[0] || boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[0] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[0] ^ boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[0] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[0] && boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[0] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[0] || boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[0] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[0] ^ boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[0] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[0] && boolCardValues[1]))
                 {
                     occupiedPositions[0] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[0] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
@@ -1319,54 +1321,54 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(cardValues[5] || cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[9] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[5] ^ cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[9] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[5] && cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[9] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[5] || cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[9] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[5] ^ cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[9] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[5] && cardValues[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[9] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[9] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
         }
-        else if (asciiValue == 2)  // '2' ASCII code
+        else if (asciiValue == 2) 
         {
             if (occupiedPositions[1] == 0)
             {
@@ -1384,49 +1386,49 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(boolCardValues[1] || boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[1] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[1] ^ boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[1] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[1] && boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[1] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[1] || boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[1] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[1] ^ boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[1] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[1] && boolCardValues[2]))
                 {
                     occupiedPositions[1] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[1] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
@@ -1446,54 +1448,54 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(cardValues[6] || cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[10] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[6] ^ cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[10] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[6] && cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[10] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[6] || cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[10] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[6] ^ cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[10] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[6] && cardValues[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                 {
                     occupiedPositions[10] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[10] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
         }
-        else if (asciiValue == 3) // '3' ASCII code
+        else if (asciiValue == 3) 
         {
             if (occupiedPositions[2] == 0)
             {
@@ -1503,49 +1505,49 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(boolCardValues[2] || boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[2] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[2] ^ boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[2] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[2] && boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[2] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[2] || boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[2] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[2] ^ boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[2] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[2] && boolCardValues[3]))
                 {
                     occupiedPositions[2] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[2] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
@@ -1557,54 +1559,54 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(cardValues[7] || cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[11] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[7] ^ cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[11] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[7] && cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[11] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[7] || cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[11] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[7] ^ cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[11] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[7] && cardValues[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                 {
                     occupiedPositions[11] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[11] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
         }
-        else if (asciiValue == 4) // '4' ASCII code
+        else if (asciiValue == 4) 
         {
             if (occupiedPositions[3] == 0)
             {
@@ -1614,49 +1616,49 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(boolCardValues[3] || boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[3] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[3] ^ boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[3] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[3] && boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[3] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[3] || boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[3] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[3] ^ boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[3] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[3] && boolCardValues[4]))
                 {
                     occupiedPositions[3] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[3] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
@@ -1668,54 +1670,54 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(cardValues[9] || cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[12] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[9] ^ cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[12] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[9] && cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[12] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[9] || cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[12] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[9] ^ cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[12] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[9] && cardValues[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[12] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[12] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
         }
-        else if (asciiValue == 5) // '5' ASCII code
+        else if (asciiValue == 5) 
         {
             if (occupiedPositions[4] == 0)
             {
@@ -1725,49 +1727,49 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(boolCardValues[4] || boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[4] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(boolCardValues[4] ^ boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[4] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(boolCardValues[4] && boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[4] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (boolCardValues[4] || boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[4] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (boolCardValues[4] ^ boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[4] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (boolCardValues[4] && boolCardValues[5]))
                 {
                     occupiedPositions[4] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[4] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
@@ -1779,54 +1781,54 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(cardValues[10] || cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[13] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[10] ^ cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[13] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[10] && cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[13] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[10] || cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[13] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[10] ^ cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[13] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[10] && cardValues[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                 {
                     occupiedPositions[13] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[13] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
         }
-        else if (asciiValue == 6) // '6' ASCII code
+        else if (asciiValue == 6) 
         {
             if (occupiedPositions[5] == 0)
             {
@@ -1836,49 +1838,49 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(cardValues[0] || cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     cardValues[5] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[0] ^ cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     cardValues[5] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[0] && cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     cardValues[5] = 0;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[0] || cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     cardValues[5] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[0] ^ cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     cardValues[5] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[0] && cardValues[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                 {
                     occupiedPositions[5] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     cardValues[5] = 1;
-                    removeCard(counter, playerscardsComputerMode);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
@@ -1890,49 +1892,49 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
                 if (chosenCard % 6 == 1 && !(cardValues[12] || cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardOrZero(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardOrZero(pixelsX, pixelsY);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 2 && !(cardValues[12] ^ cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardXorZero(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardXorZero(pixelsX, pixelsY);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 3 && !(cardValues[12] && cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardAndZero(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardAndZero(pixelsX, pixelsY);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 4 && (cardValues[12] || cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardOrOne(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardOrOne(pixelsX, pixelsY);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 5 && (cardValues[12] ^ cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardXorOne(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardXorOne(pixelsX, pixelsY);
+                    removeCard(counter, computersCard);
                     break;
                 }
                 else if (chosenCard % 6 == 0 && (cardValues[12] && cardValues[13]) && occupiedPositions[12] == 1 && occupiedPositions[13] == 1)
                 {
                     occupiedPositions[14] = 1;
-                    cardAndOne(pixelsX, pixelsY);
-                    removeCard(counter, playerscardsComputerMode);
+                    printCardAndOne(pixelsX, pixelsY);
+                    removeCard(counter, computersCard);
                     break;
                 }
             }
         }
 
-        if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
+        if (asciiValue == 7 && occupiedPositions[6] == 0)
         {
             pixelsX = 122;
             pixelsY = 18;
@@ -1940,54 +1942,54 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
             if (chosenCard % 6 == 1 && !(cardValues[1] || cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardOrZero(pixelsX, pixelsY);
+                printCardOrZero(pixelsX, pixelsY);
                 cardValues[6] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 2 && !(cardValues[1] ^ cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardXorZero(pixelsX, pixelsY);
+                printCardXorZero(pixelsX, pixelsY);
                 cardValues[6] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 3 && !(cardValues[1] && cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardAndZero(pixelsX, pixelsY);
+                printCardAndZero(pixelsX, pixelsY);
                 cardValues[6] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 4 && (cardValues[1] || cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardOrOne(pixelsX, pixelsY);
+                printCardOrOne(pixelsX, pixelsY);
                 cardValues[6] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 5 && (cardValues[1] ^ cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardXorOne(pixelsX, pixelsY);
+                printCardXorOne(pixelsX, pixelsY);
                 cardValues[6] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 0 && (cardValues[1] && cardValues[2]) && occupiedPositions[2] == 1 && occupiedPositions[1] == 1)
             {
                 occupiedPositions[6] = 1;
-                cardAndOne(pixelsX, pixelsY);
+                printCardAndOne(pixelsX, pixelsY);
                 cardValues[6] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
         }
 
-        if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
+        if (asciiValue == 8 && occupiedPositions[7] == 0) 
         {
             pixelsX = 122;
             pixelsY = 28;
@@ -1995,54 +1997,54 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
             if (chosenCard % 6 == 1 && !(cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardOrZero(pixelsX, pixelsY);
+                printCardOrZero(pixelsX, pixelsY);
                 cardValues[7] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 2 && !(cardValues[2] ^ cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardXorZero(pixelsX, pixelsY);
+                printCardXorZero(pixelsX, pixelsY);
                 cardValues[7] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 3 && !(cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardAndZero(pixelsX, pixelsY);
+                printCardAndZero(pixelsX, pixelsY);
                 cardValues[7] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 4 && (cardValues[2] || cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardOrOne(pixelsX, pixelsY);
+                printCardOrOne(pixelsX, pixelsY);
                 cardValues[7] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 5 && (cardValues[2] ^ cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardXorOne(pixelsX, pixelsY);
+                printCardXorOne(pixelsX, pixelsY);
                 cardValues[7] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 1 && (cardValues[2] && cardValues[3]) && occupiedPositions[2] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[7] = 1;
-                cardAndOne(pixelsX, pixelsY);
+                printCardAndOne(pixelsX, pixelsY);
                 cardValues[7] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
         }
 
-        if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
+        if (asciiValue == 9 && occupiedPositions[8] == 0) 
         {
             pixelsX = 122;
             pixelsY = 38;
@@ -2050,65 +2052,65 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
             if (chosenCard % 6 == 1 && !(cardValues[3] || cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardOrZero(pixelsX, pixelsY);
+                printCardOrZero(pixelsX, pixelsY);
                 cardValues[8] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 2 && !(cardValues[3] ^ cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardXorZero(pixelsX, pixelsY);
+                printCardXorZero(pixelsX, pixelsY);
                 cardValues[8] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 3 && !(cardValues[3] && cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardAndZero(pixelsX, pixelsY);
+                printCardAndZero(pixelsX, pixelsY);
                 cardValues[8] = 0;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 4 && (cardValues[3] || cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardOrOne(pixelsX, pixelsY);
+                printCardOrOne(pixelsX, pixelsY);
                 cardValues[8] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 5 && (cardValues[3] ^ cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardXorOne(pixelsX, pixelsY);
+                printCardXorOne(pixelsX, pixelsY);
                 cardValues[8] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
             else if (chosenCard % 6 == 0 && (cardValues[3] && cardValues[4]) && occupiedPositions[4] == 1 && occupiedPositions[3] == 1)
             {
                 occupiedPositions[8] = 1;
-                cardAndOne(pixelsX, pixelsY);
+                printCardAndOne(pixelsX, pixelsY);
                 cardValues[8] = 1;
-                removeCard(counter, playerscardsComputerMode);
+                removeCard(counter, computersCard);
                 break;
             }
         }
     }
 }
 
-//Player
+//Player's turn
 void player()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
 
     printCards(playerOneCards);
     chooseCard(playerOneCards, 0, 0);
-    placeCardComputerMode(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1);
+    placeCardPlayer(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1);
 }
-//Computer
+//Computer's turn
 void computer()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
@@ -2122,21 +2124,14 @@ void computer()
     placeCardComputer(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2);
 }
 
-//start the game
-void beginningOfTheGameWithComputer()
+//beginning of the game with computer
+void startTheGameWithComputer()
 {
-    fill_n(cards, 48, 0);
-    fill_n(playerOneCards, 7, 0);
-    fill_n(playerTwoCards, 5, 0);
-    fill_n(boolCardValuesP1, 6, 0);
-    fill_n(boolCardValuesP2, 6, 0);
-    fill_n(cardValuesP1, 15, 0);
-    fill_n(cardValuesP2, 15, 0);
-    fill_n(isOccupiedP1, 15, 0);
-    fill_n(isOccupiedP2, 15, 0);
+    emptyVariables(48);
+
     chosenCard = 0;
 
-    shuffleBoolCards();
+    shuffleInitialCards();
     shuffleCards(48);
 
     takeCards(4, playerOneCards, 48);

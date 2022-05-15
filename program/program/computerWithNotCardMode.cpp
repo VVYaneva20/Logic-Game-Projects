@@ -5,13 +5,13 @@
 #include "program.h"
 #include "computerWithNotCardMode.h"
 
-
 using namespace std;
 
 int cardsPlayer[15], cardsComputer[15];
 bool skipTurnPlayer = 0, skipTurnPC = 0;
 
-void (*pointToCardNotCardWithComputer[6])(int x, int y) = { cardOrZero, cardXorZero, cardAndZero, cardOrOne, cardXorOne, cardAndOne };
+//array of pointers to the card functions
+void (*pointToCardNotCardWithComputer[6])(int x, int y) = { printCardOrZero, printCardXorZero, printCardAndZero, printCardOrOne, printCardXorOne, printCardAndOne };
 
 //display the empty positions
 void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values)
@@ -55,27 +55,27 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
         {
             if (values[i] == 8)
             {
-                cardOrZero(xFirstFive, y);
+                printCardOrZero(xFirstFive, y);
             }
             else if (values[i] == 9)
             {
-                cardXorZero(xFirstFive, y);
+                printCardXorZero(xFirstFive, y);
             }
             else if (values[i] == 10)
             {
-                cardAndZero(xFirstFive, y);
+                printCardAndZero(xFirstFive, y);
             }
             else if (values[i] == 11)
             {
-                cardOrOne(xFirstFive, y);
+                printCardOrOne(xFirstFive, y);
             }
             else if (values[i] == 12)
             {
-                cardXorOne(xFirstFive, y);
+                printCardXorOne(xFirstFive, y);
             }
             else if (values[i] == 7)
             {
-                cardAndOne(xFirstFive, y);
+                printCardAndOne(xFirstFive, y);
             }
         }
     }
@@ -106,27 +106,27 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
         {
             if (values[i] == 8)
             {
-                cardOrZero(x, y);
+                printCardOrZero(x, y);
             }
             else if (values[i] == 9)
             {
-                cardXorZero(x, y);
+                printCardXorZero(x, y);
             }
             else if (values[i] == 10)
             {
-                cardAndZero(x, y);
+                printCardAndZero(x, y);
             }
             else if (values[i] == 11)
             {
-                cardOrOne(x, y);
+                printCardOrOne(x, y);
             }
             else if (values[i] == 12)
             {
-                cardXorOne(x, y);
+                printCardXorOne(x, y);
             }
             else if (values[i] == 7)
             {
-                cardAndOne(x, y);
+                printCardAndOne(x, y);
             }
         }
 
@@ -139,10 +139,12 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
     }
 }
 
+//check if the placed cards are valid after Not card has been used
 void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardValues, int playerNum)
 {
     int pixelsX;
     int pixelsY;
+    string spaces = "                 ";
     int posCoordinatesNotCardWithComputer[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                           {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
                           {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
@@ -177,7 +179,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXY(pixelsX, pixelsY++); cout << "                 ";
+                gotoXY(pixelsX, pixelsY++); cout << spaces;
             }
         }
     }
@@ -193,7 +195,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXY(pixelsX, pixelsY++); cout << "                 ";
+                gotoXY(pixelsX, pixelsY++); cout << spaces;
             }
         }
     }
@@ -209,7 +211,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXY(pixelsX, pixelsY++); cout << "                 ";
+                gotoXY(pixelsX, pixelsY++); cout << spaces;
             }
         }
     }
@@ -225,7 +227,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
 
             for (int i = 0; i < 9; i++)
             {
-                gotoXY(pixelsX, pixelsY++); cout << "                 ";
+                gotoXY(pixelsX, pixelsY++); cout << spaces;
             }
         }
     }
@@ -234,6 +236,7 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
     printPositionsNotCardWithComputer(2, isOccupiedP2, cardsComputer);
 }
 
+//the computer chooses a card
 void chooseCardNotCardComputer(int* player)
 {
     int yCoordinates[5] = { 6, 15, 24, 33, 44 };
@@ -274,6 +277,7 @@ void chooseCardNotCardComputer(int* player)
     }
 }
 
+//print Initial cards after Not card has been used
 void printInitialCardsWithComputer(int position, bool reverse, int player)
 {
     int pixelsX = 77;
@@ -390,15 +394,15 @@ void printInitialCardsWithComputer(int position, bool reverse, int player)
     {
         if (boolCardValuesP1[i] == 0)
         {
-            cardZero(pixelsX, pixelsY);
-            cardOne(pixelsX + 15, pixelsY);
+            printInitialCardZero(pixelsX, pixelsY);
+            printInitialCardOne(pixelsX + 15, pixelsY);
             boolCardValuesP1[i] = 0;
             boolCardValuesP2[i] = 1;
         }
         else
         {
-            cardOne(pixelsX, pixelsY);
-            cardZero(pixelsX + 15, pixelsY);
+            printInitialCardOne(pixelsX, pixelsY);
+            printInitialCardZero(pixelsX + 15, pixelsY);
             boolCardValuesP1[i] = 1;
             boolCardValuesP2[i] = 0;
         }
@@ -407,6 +411,7 @@ void printInitialCardsWithComputer(int position, bool reverse, int player)
     }
 }
 
+//put down a card in a chosen position
 void placeCardNotCardWithComputer(bool* occupiedPositions, int index, int pointerIndex, int x, int y, bool* boolValues, bool value, int* cardValues, int cardValue, int* playersCards)
 {
     occupiedPositions[index] = 1;
@@ -417,7 +422,7 @@ void placeCardNotCardWithComputer(bool* occupiedPositions, int index, int pointe
 }
 
 //put down a card in a chosen position
-void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues, int player, bool* occupiedPositions, bool* values, int* cardValues)
+void checkCardPlayer(int* playerscardsNotCard, bool* initialvalues, int player, bool* occupiedPositions, bool* values, int* cardValues)
 {
     int pixelsX;
     int pixelsY;
@@ -428,8 +433,8 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
         {
             char keyPress;
             keyPress = _getch();
-            int asciiValue = keyPress - 48;
-            if (asciiValue == 1) // '1' ASCII code
+            int asciiValue = keyPress - 48;//discard 48 from key's ASCII value
+            if (asciiValue == 1)
             {
                 if (occupiedPositions[0] == 0)
                 {
@@ -445,7 +450,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(initialvalues[0] || initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[0] = 0;
                         cardValues[0] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -454,7 +459,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(initialvalues[0] ^ initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[0] = 0;
                         cardValues[0] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -463,7 +468,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(initialvalues[0] && initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[0] = 0;
                         cardValues[0] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -472,7 +477,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (initialvalues[0] || initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[0] = 1;
                         cardValues[0] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -481,7 +486,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (initialvalues[0] ^ initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[0] = 1;
                         cardValues[0] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -490,7 +495,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (initialvalues[0] && initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[0] = 1;
                         cardValues[0] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -516,7 +521,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(values[5] || values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[9] = 0;
                         cardValues[9] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -525,7 +530,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(values[5] ^ values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[9] = 0;
                         cardValues[9] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -534,7 +539,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(values[5] && values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[9] = 0;
                         cardValues[9] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -543,7 +548,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (values[5] || values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[9] = 1;
                         cardValues[9] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -552,7 +557,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (values[5] ^ values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[9] = 1;
                         cardValues[9] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -561,7 +566,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (values[5] && values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[9] = 1;
                         cardValues[9] = 0;
                         removeCard(counter, playerscardsNotCard);
@@ -578,7 +583,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
                 }
             }
-            if (asciiValue == 2)  // '2' ASCII code
+            if (asciiValue == 2) 
             {
                 if (occupiedPositions[1] == 0)
                 {
@@ -594,7 +599,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(initialvalues[1] || initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[1] = 0;
                         cardValues[1] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -603,7 +608,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(initialvalues[1] ^ initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[1] = 0;
                         cardValues[1] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -613,7 +618,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     {
                         occupiedPositions[1] = 1;
                         cardValues[1] = 10;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[1] = 0;
                         removeCard(counter, playerscardsNotCard);
                         break;
@@ -621,7 +626,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (initialvalues[1] || initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[1] = 1;
                         cardValues[1] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -630,7 +635,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (initialvalues[1] ^ initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[1] = 1;
                         cardValues[1] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -639,7 +644,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (initialvalues[1] && initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[1] = 1;
                         cardValues[1] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -665,7 +670,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(values[6] || values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[10] = 0;
                         cardValues[10] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -674,7 +679,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(values[6] ^ values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[10] = 0;
                         cardValues[10] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -683,7 +688,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(values[6] && values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[10] = 0;
                         cardValues[10] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -692,7 +697,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (values[6] || values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[10] = 1;
                         cardValues[10] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -701,7 +706,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (values[6] ^ values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[10] = 1;
                         cardValues[10] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -710,7 +715,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (values[6] && values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[10] = 1;
                         cardValues[10] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -727,7 +732,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
                 }
             }
-            if (asciiValue == 3) // '3' ASCII code
+            if (asciiValue == 3) 
             {
                 if (occupiedPositions[2] == 0)
                 {
@@ -743,7 +748,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(initialvalues[2] || initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[2] = 0;
                         cardValues[2] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -752,7 +757,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(initialvalues[2] ^ initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[2] = 0;
                         cardValues[2] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -761,7 +766,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(initialvalues[2] && initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[2] = 0;
                         cardValues[2] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -770,7 +775,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (initialvalues[2] || initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[2] = 1;
                         cardValues[2] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -779,7 +784,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (initialvalues[2] ^ initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[2] = 1;
                         cardValues[2] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -788,7 +793,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (initialvalues[2] && initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[2] = 1;
                         cardValues[2] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -814,7 +819,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(values[7] || values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[11] = 0;
                         cardValues[11] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -823,7 +828,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(values[7] ^ values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[11] = 0;
                         cardValues[11] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -832,7 +837,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(values[7] && values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[11] = 0;
                         cardValues[11] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -841,7 +846,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (values[7] || values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[11] = 1;
                         cardValues[11] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -850,7 +855,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (values[7] ^ values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[11] = 1;
                         cardValues[11] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -859,7 +864,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (values[7] && values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[11] = 1;
                         cardValues[11] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -876,7 +881,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
                 }
             }
-            if (asciiValue == 4) // '4' ASCII code
+            if (asciiValue == 4)
             {
                 if (occupiedPositions[3] == 0)
                 {
@@ -892,7 +897,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(initialvalues[3] || initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[3] = 0;
                         cardValues[3] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -901,7 +906,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(initialvalues[3] ^ initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[3] = 0;
                         cardValues[3] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -910,7 +915,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(initialvalues[3] && initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[3] = 0;
                         cardValues[3] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -919,7 +924,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (initialvalues[3] || initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[3] = 1;
                         cardValues[3] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -928,7 +933,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (initialvalues[3] ^ initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[3] = 1;
                         cardValues[3] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -937,7 +942,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (initialvalues[3] && initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[3] = 1;
                         cardValues[3] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -963,7 +968,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(values[9] || values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[12] = 0;
                         cardValues[12] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -972,7 +977,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(values[9] ^ values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[12] = 0;
                         cardValues[12] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -981,7 +986,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(values[9] && values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[12] = 0;
                         cardValues[12] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -990,7 +995,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (values[9] || values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[12] = 1;
                         cardValues[12] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -999,7 +1004,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (values[9] ^ values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[12] = 1;
                         cardValues[12] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -1008,7 +1013,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (values[9] && values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[12] = 1;
                         cardValues[12] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -1025,7 +1030,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
                 }
             }
-            if (asciiValue == 5) // '5' ASCII code
+            if (asciiValue == 5)
             {
                 if (occupiedPositions[4] == 0)
                 {
@@ -1041,7 +1046,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(initialvalues[4] || initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[4] = 0;
                         cardValues[4] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -1050,7 +1055,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(initialvalues[4] ^ initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[4] = 0;
                         cardValues[4] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -1059,7 +1064,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(initialvalues[4] && initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[4] = 0;
                         cardValues[4] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -1068,7 +1073,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (initialvalues[4] || initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[4] = 1;
                         cardValues[4] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -1077,7 +1082,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (initialvalues[4] ^ initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[4] = 1;
                         cardValues[4] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -1086,7 +1091,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (initialvalues[4] && initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[4] = 1;
                         cardValues[4] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -1112,7 +1117,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(values[10] || values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[13] = 0;
                         cardValues[13] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -1121,7 +1126,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(values[10] ^ values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[13] = 0;
                         cardValues[13] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -1130,7 +1135,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(values[10] && values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[13] = 0;
                         cardValues[13] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -1139,7 +1144,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (values[10] || values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[13] = 1;
                         cardValues[13] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -1148,7 +1153,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (values[10] ^ values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[13] = 1;
                         cardValues[13] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -1157,7 +1162,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (values[10] && values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[13] = 1;
                         cardValues[13] = 7;
                         removeCard(counter, playerscardsNotCard);
@@ -1174,7 +1179,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
                 }
             }
-            if (asciiValue == 6) // '6' ASCII code
+            if (asciiValue == 6)
             {
                 if (occupiedPositions[5] == 0)
                 {
@@ -1190,7 +1195,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     if (chosenCard % 7 == 1 && !(values[0] || values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[5] = 0;
                         cardValues[5] = 8;
                         removeCard(counter, playerscardsNotCard);
@@ -1199,7 +1204,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 2 && !(values[0] ^ values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[5] = 0;
                         cardValues[5] = 9;
                         removeCard(counter, playerscardsNotCard);
@@ -1208,7 +1213,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 3 && !(values[0] && values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[5] = 0;
                         cardValues[5] = 10;
                         removeCard(counter, playerscardsNotCard);
@@ -1217,7 +1222,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 4 && (values[0] || values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[5] = 1;
                         cardValues[5] = 11;
                         removeCard(counter, playerscardsNotCard);
@@ -1226,7 +1231,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 5 && (values[0] ^ values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[5] = 1;
                         cardValues[5] = 12;
                         removeCard(counter, playerscardsNotCard);
@@ -1235,7 +1240,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     else if (chosenCard % 7 == 0 && (values[0] && values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[5] = 1;
                         cardValues[5] = 0;
                         removeCard(counter, playerscardsNotCard);
@@ -1262,7 +1267,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     {
                         cardValues[14] = 8;
                         occupiedPositions[14] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         removeCard(counter, playerscardsNotCard);
                         break;
                     }
@@ -1270,7 +1275,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     {
                         cardValues[14] = 9;
                         occupiedPositions[14] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         removeCard(counter, playerscardsNotCard);
                         break;
                     }
@@ -1278,7 +1283,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     {
                         cardValues[14] = 10;
                         occupiedPositions[14] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         removeCard(counter, playerscardsNotCard);
                         break;
                     }
@@ -1286,7 +1291,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     {
                         cardValues[14] = 11;
                         occupiedPositions[14] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         removeCard(counter, playerscardsNotCard);
                         break;
                     }
@@ -1294,7 +1299,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     {
                         cardValues[14] = 12;
                         occupiedPositions[14] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         removeCard(counter, playerscardsNotCard);
                         break;
                     }
@@ -1302,7 +1307,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     {
                         cardValues[14] = 7;
                         occupiedPositions[14] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         removeCard(counter, playerscardsNotCard);
                         break;
                     }
@@ -1317,7 +1322,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
                 }
             }
-            if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
+            if (asciiValue == 7 && occupiedPositions[6] == 0)
             {
                 if (player == 1)
                 {
@@ -1332,7 +1337,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[6] = 8;
                     occupiedPositions[6] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     values[6] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1341,7 +1346,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[6] = 9;
                     occupiedPositions[6] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     values[6] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1350,7 +1355,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[6] = 10;
                     occupiedPositions[6] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     values[6] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1359,7 +1364,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[6] = 11;
                     occupiedPositions[6] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     values[6] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1368,7 +1373,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[6] = 12;
                     occupiedPositions[6] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     values[6] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1377,7 +1382,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[6] = 7;
                     occupiedPositions[6] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     values[6] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1392,7 +1397,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
             }
-            if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
+            if (asciiValue == 8 && occupiedPositions[7] == 0) 
             {
                 if (player == 1)
                 {
@@ -1407,7 +1412,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[7] = 8;
                     occupiedPositions[7] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     values[7] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1416,7 +1421,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[7] = 9;
                     occupiedPositions[7] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     values[7] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1425,7 +1430,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[7] = 10;
                     occupiedPositions[7] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     values[7] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1434,7 +1439,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[7] = 11;
                     occupiedPositions[7] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     values[7] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1443,7 +1448,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[7] = 12;
                     occupiedPositions[7] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     values[7] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1452,7 +1457,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[7] = 7;
                     occupiedPositions[7] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     values[7] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1467,7 +1472,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
             }
-            if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
+            if (asciiValue == 9 && occupiedPositions[8] == 0)
             {
                 if (player == 1)
                 {
@@ -1482,7 +1487,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[8] = 8;
                     occupiedPositions[8] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     values[8] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1491,7 +1496,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[8] = 9;
                     occupiedPositions[8] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     values[8] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1500,7 +1505,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[8] = 10;
                     occupiedPositions[8] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     values[8] = 0;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1509,7 +1514,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[8] = 11;
                     occupiedPositions[8] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     values[8] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1518,7 +1523,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[8] = 12;
                     occupiedPositions[8] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     values[8] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1527,7 +1532,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                 {
                     cardValues[8] = 7;
                     occupiedPositions[8] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     values[8] = 1;
                     removeCard(counter, playerscardsNotCard);
                     break;
@@ -1542,26 +1547,26 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
             {
                 gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
             }
-            if (asciiValue == 66)// 'r' ASCII value
+            if (asciiValue == 66)// 'r' 
             {
                 gotoXY(195, 50); cout << " PLAYER   ";
                 chooseCard(playerscardsNotCard, 1, 1);
                 if (player == 1)
                 {
-                    checkCardNotCardWithComputer(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
+                    checkCardPlayer(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
                 }
                 else
                 {
-                    checkCardNotCardWithComputer(playerscardsNotCard, initialvalues, 2, occupiedPositions, values, cardValues);
+                    checkCardPlayer(playerscardsNotCard, initialvalues, 2, occupiedPositions, values, cardValues);
                 }
                 break;
             }
-            if (asciiValue == 52)// 'd' ASCII value
+            if (asciiValue == 52)// 'd' 
             {
                 removeCard(counter, playerscardsNotCard);
                 break;
             }
-            if (asciiValue == 27)// escape ASCII value
+            if (asciiValue == -21)
             {
                 startProgram();
                 break;
@@ -1580,9 +1585,9 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
             while (true)
             {
                 press = _getch();
-                ascii = press - 48;
+                ascii = press - 48;//discard 48 from key's ASCII value
 
-                if (ascii == 1) // 1 ascii code
+                if (ascii == 1) 
                 {
                     cardPosition = 0;
                     break;
@@ -1612,7 +1617,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     cardPosition = 5;
                     break;
                 }
-                else if (ascii == 52) // d is pressed
+                else if (ascii == 52) // 'd' is pressed
                 {
                     x = 0;
                     removeCard(counter, playerscardsNotCard);
@@ -1626,7 +1631,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     gotoXY(195, 50); cout << " PLAYER ";
                     chooseCard(playerscardsNotCard, 1, 1);
 
-                    checkCardNotCardWithComputer(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
+                    checkCardPlayer(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
                     
                     break;
                 }
@@ -1649,7 +1654,6 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
         }
     }
 }
-
 void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bool* occupiedPositions, bool* values, int* cardValues)
 {
     int placedCards[6] = { 0, 0, 0, 0, 0, 0 };
@@ -1769,7 +1773,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 asciiValue = 1;
             }
 
-            if (asciiValue == 1) // '1' ASCII code
+            if (asciiValue == 1) 
             {
                 if (occupiedPositions[0] == 0)
                 {
@@ -1787,7 +1791,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(initialvalues[0] || initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[0] = 0;
                         cardValues[0] = 8;
                         removeCard(counter, playersallCards);
@@ -1796,7 +1800,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(initialvalues[0] ^ initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[0] = 0;
                         cardValues[0] = 9;
                         removeCard(counter, playersallCards);
@@ -1805,7 +1809,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(initialvalues[0] && initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[0] = 0;
                         cardValues[0] = 10;
                         removeCard(counter, playersallCards);
@@ -1814,7 +1818,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (initialvalues[0] || initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[0] = 1;
                         cardValues[0] = 11;
                         removeCard(counter, playersallCards);
@@ -1823,7 +1827,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (initialvalues[0] ^ initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[0] = 1;
                         cardValues[0] = 12;
                         removeCard(counter, playersallCards);
@@ -1832,7 +1836,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (initialvalues[0] && initialvalues[1]))
                     {
                         occupiedPositions[0] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[0] = 1;
                         cardValues[0] = 7;
                         removeCard(counter, playersallCards);
@@ -1855,7 +1859,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(values[5] || values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[9] = 0;
                         cardValues[9] = 8;
                         removeCard(counter, playersallCards);
@@ -1864,7 +1868,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(values[5] ^ values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[9] = 0;
                         cardValues[9] = 9;
                         removeCard(counter, playersallCards);
@@ -1873,7 +1877,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(values[5] && values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[9] = 0;
                         cardValues[9] = 10;
                         removeCard(counter, playersallCards);
@@ -1882,7 +1886,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (values[5] || values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[9] = 1;
                         cardValues[9] = 11;
                         removeCard(counter, playersallCards);
@@ -1891,7 +1895,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (values[5] ^ values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[9] = 1;
                         cardValues[9] = 12;
                         removeCard(counter, playersallCards);
@@ -1900,7 +1904,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (values[5] && values[6]) && occupiedPositions[5] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[9] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[9] = 1;
                         cardValues[9] = 0;
                         removeCard(counter, playersallCards);
@@ -1908,7 +1912,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     }
                 }
             }
-            if (asciiValue == 2)  // '2' ASCII code
+            if (asciiValue == 2) 
             {
                 if (occupiedPositions[1] == 0)
                 {
@@ -1926,7 +1930,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(initialvalues[1] || initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[1] = 0;
                         cardValues[1] = 8;
                         removeCard(counter, playersallCards);
@@ -1935,7 +1939,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(initialvalues[1] ^ initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[1] = 0;
                         cardValues[1] = 9;
                         removeCard(counter, playersallCards);
@@ -1945,7 +1949,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     {
                         occupiedPositions[1] = 1;
                         cardValues[1] = 10;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[1] = 0;
                         removeCard(counter, playersallCards);
                         break;
@@ -1953,7 +1957,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (initialvalues[1] || initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[1] = 1;
                         cardValues[1] = 11;
                         removeCard(counter, playersallCards);
@@ -1962,7 +1966,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (initialvalues[1] ^ initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[1] = 1;
                         cardValues[1] = 12;
                         removeCard(counter, playersallCards);
@@ -1971,7 +1975,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (initialvalues[1] && initialvalues[2]))
                     {
                         occupiedPositions[1] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[1] = 1;
                         cardValues[1] = 7;
                         removeCard(counter, playersallCards);
@@ -1994,7 +1998,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(values[6] || values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[10] = 0;
                         cardValues[10] = 8;
                         removeCard(counter, playersallCards);
@@ -2003,7 +2007,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(values[6] ^ values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[10] = 0;
                         cardValues[10] = 9;
                         removeCard(counter, playersallCards);
@@ -2012,7 +2016,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(values[6] && values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[10] = 0;
                         cardValues[10] = 10;
                         removeCard(counter, playersallCards);
@@ -2021,7 +2025,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (values[6] || values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[10] = 1;
                         cardValues[10] = 11;
                         removeCard(counter, playersallCards);
@@ -2030,7 +2034,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (values[6] ^ values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[10] = 1;
                         cardValues[10] = 12;
                         removeCard(counter, playersallCards);
@@ -2039,7 +2043,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (values[6] && values[7]) && occupiedPositions[7] == 1 && occupiedPositions[6] == 1)
                     {
                         occupiedPositions[10] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[10] = 1;
                         cardValues[10] = 7;
                         removeCard(counter, playersallCards);
@@ -2047,7 +2051,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     }
                 }
             }
-            if (asciiValue == 3) // '3' ASCII code
+            if (asciiValue == 3) 
             {
                 if (occupiedPositions[2] == 0)
                 {
@@ -2065,7 +2069,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(initialvalues[2] || initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[2] = 0;
                         cardValues[2] = 8;
                         removeCard(counter, playersallCards);
@@ -2074,7 +2078,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(initialvalues[2] ^ initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[2] = 0;
                         cardValues[2] = 9;
                         removeCard(counter, playersallCards);
@@ -2083,7 +2087,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(initialvalues[2] && initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[2] = 0;
                         cardValues[2] = 10;
                         removeCard(counter, playersallCards);
@@ -2092,7 +2096,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (initialvalues[2] || initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[2] = 1;
                         cardValues[2] = 11;
                         removeCard(counter, playersallCards);
@@ -2101,7 +2105,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (initialvalues[2] ^ initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[2] = 1;
                         cardValues[2] = 12;
                         removeCard(counter, playersallCards);
@@ -2110,7 +2114,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (initialvalues[2] && initialvalues[3]))
                     {
                         occupiedPositions[2] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[2] = 1;
                         cardValues[2] = 7;
                         removeCard(counter, playersallCards);
@@ -2133,7 +2137,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(values[7] || values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[11] = 0;
                         cardValues[11] = 8;
                         removeCard(counter, playersallCards);
@@ -2142,7 +2146,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(values[7] ^ values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[11] = 0;
                         cardValues[11] = 9;
                         removeCard(counter, playersallCards);
@@ -2151,7 +2155,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(values[7] && values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[11] = 0;
                         cardValues[11] = 10;
                         removeCard(counter, playersallCards);
@@ -2160,7 +2164,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (values[7] || values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[11] = 1;
                         cardValues[11] = 11;
                         removeCard(counter, playersallCards);
@@ -2169,7 +2173,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (values[7] ^ values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[11] = 1;
                         cardValues[11] = 12;
                         removeCard(counter, playersallCards);
@@ -2178,7 +2182,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (values[7] && values[8]) && occupiedPositions[7] == 1 && occupiedPositions[8] == 1)
                     {
                         occupiedPositions[11] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[11] = 1;
                         cardValues[11] = 7;
                         removeCard(counter, playersallCards);
@@ -2186,7 +2190,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     }
                 }
             }
-            if (asciiValue == 4) // '4' ASCII code
+            if (asciiValue == 4) 
             {
                 if (occupiedPositions[3] == 0)
                 {
@@ -2204,7 +2208,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(initialvalues[3] || initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[3] = 0;
                         cardValues[3] = 8;
                         removeCard(counter, playersallCards);
@@ -2213,7 +2217,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(initialvalues[3] ^ initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[3] = 0;
                         cardValues[3] = 9;
                         removeCard(counter, playersallCards);
@@ -2222,7 +2226,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(initialvalues[3] && initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[3] = 0;
                         cardValues[3] = 10;
                         removeCard(counter, playersallCards);
@@ -2231,7 +2235,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (initialvalues[3] || initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[3] = 1;
                         cardValues[3] = 11;
                         removeCard(counter, playersallCards);
@@ -2240,7 +2244,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (initialvalues[3] ^ initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[3] = 1;
                         cardValues[3] = 12;
                         removeCard(counter, playersallCards);
@@ -2249,7 +2253,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (initialvalues[3] && initialvalues[4]))
                     {
                         occupiedPositions[3] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[3] = 1;
                         cardValues[3] = 7;
                         removeCard(counter, playersallCards);
@@ -2272,7 +2276,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(values[9] || values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[12] = 0;
                         cardValues[12] = 8;
                         removeCard(counter, playersallCards);
@@ -2281,7 +2285,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(values[9] ^ values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[12] = 0;
                         cardValues[12] = 9;
                         removeCard(counter, playersallCards);
@@ -2290,7 +2294,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(values[9] && values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[12] = 0;
                         cardValues[12] = 10;
                         removeCard(counter, playersallCards);
@@ -2299,7 +2303,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (values[9] || values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[12] = 1;
                         cardValues[12] = 11;
                         removeCard(counter, playersallCards);
@@ -2308,7 +2312,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (values[9] ^ values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[12] = 1;
                         cardValues[12] = 12;
                         removeCard(counter, playersallCards);
@@ -2317,7 +2321,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (values[9] && values[10]) && occupiedPositions[9] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[12] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[12] = 1;
                         cardValues[12] = 7;
                         removeCard(counter, playersallCards);
@@ -2325,7 +2329,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     }
                 }
             }
-            if (asciiValue == 5) // '5' ASCII code
+            if (asciiValue == 5) 
             {
                 if (occupiedPositions[4] == 0)
                 {
@@ -2343,7 +2347,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(initialvalues[4] || initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[4] = 0;
                         cardValues[4] = 8;
                         removeCard(counter, playersallCards);
@@ -2352,7 +2356,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(initialvalues[4] ^ initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[4] = 0;
                         cardValues[4] = 9;
                         removeCard(counter, playersallCards);
@@ -2361,7 +2365,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(initialvalues[4] && initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[4] = 0;
                         cardValues[4] = 10;
                         removeCard(counter, playersallCards);
@@ -2370,7 +2374,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (initialvalues[4] || initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[4] = 1;
                         cardValues[4] = 11;
                         removeCard(counter, playersallCards);
@@ -2379,7 +2383,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (initialvalues[4] ^ initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[4] = 1;
                         cardValues[4] = 12;
                         removeCard(counter, playersallCards);
@@ -2388,7 +2392,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (initialvalues[4] && initialvalues[5]))
                     {
                         occupiedPositions[4] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[4] = 1;
                         cardValues[4] = 7;
                         removeCard(counter, playersallCards);
@@ -2409,7 +2413,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(values[10] || values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[13] = 0;
                         cardValues[13] = 8;
                         removeCard(counter, playersallCards);
@@ -2418,7 +2422,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(values[10] ^ values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[13] = 0;
                         cardValues[13] = 9;
                         removeCard(counter, playersallCards);
@@ -2427,7 +2431,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(values[10] && values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[13] = 0;
                         cardValues[13] = 10;
                         removeCard(counter, playersallCards);
@@ -2436,7 +2440,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (values[10] || values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[13] = 1;
                         cardValues[13] = 11;
                         removeCard(counter, playersallCards);
@@ -2445,7 +2449,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (values[10] ^ values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[13] = 1;
                         cardValues[13] = 12;
                         removeCard(counter, playersallCards);
@@ -2454,7 +2458,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (values[10] && values[11]) && occupiedPositions[11] == 1 && occupiedPositions[10] == 1)
                     {
                         occupiedPositions[13] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[13] = 1;
                         cardValues[13] = 7;
                         removeCard(counter, playersallCards);
@@ -2462,7 +2466,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     }
                 }
             }
-            if (asciiValue == 6) // '6' ASCII code
+            if (asciiValue == 6) 
             {
                 if (occupiedPositions[5] == 0)
                 {
@@ -2480,7 +2484,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     if (chosenCard % 7 == 1 && !(values[0] || values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         values[5] = 0;
                         cardValues[5] = 8;
                         removeCard(counter, playersallCards);
@@ -2489,7 +2493,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 2 && !(values[0] ^ values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         values[5] = 0;
                         cardValues[5] = 9;
                         removeCard(counter, playersallCards);
@@ -2498,7 +2502,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 3 && !(values[0] && values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         values[5] = 0;
                         cardValues[5] = 10;
                         removeCard(counter, playersallCards);
@@ -2507,7 +2511,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 4 && (values[0] || values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         values[5] = 1;
                         cardValues[5] = 11;
                         removeCard(counter, playersallCards);
@@ -2516,7 +2520,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 5 && (values[0] ^ values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         values[5] = 1;
                         cardValues[5] = 12;
                         removeCard(counter, playersallCards);
@@ -2525,7 +2529,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     else if (chosenCard % 7 == 0 && (values[0] && values[1]) && occupiedPositions[0] == 1 && occupiedPositions[1] == 1)
                     {
                         occupiedPositions[5] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         values[5] = 1;
                         cardValues[5] = 0;
                         removeCard(counter, playersallCards);
@@ -2549,7 +2553,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     {
                         cardValues[14] = 8;
                         occupiedPositions[14] = 1;
-                        cardOrZero(pixelsX, pixelsY);
+                        printCardOrZero(pixelsX, pixelsY);
                         removeCard(counter, playersallCards);
                         break;
                     }
@@ -2557,7 +2561,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     {
                         cardValues[14] = 9;
                         occupiedPositions[14] = 1;
-                        cardXorZero(pixelsX, pixelsY);
+                        printCardXorZero(pixelsX, pixelsY);
                         removeCard(counter, playersallCards);
                         break;
                     }
@@ -2565,7 +2569,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     {
                         cardValues[14] = 10;
                         occupiedPositions[14] = 1;
-                        cardAndZero(pixelsX, pixelsY);
+                        printCardAndZero(pixelsX, pixelsY);
                         removeCard(counter, playersallCards);
                         break;
                     }
@@ -2573,7 +2577,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     {
                         cardValues[14] = 11;
                         occupiedPositions[14] = 1;
-                        cardOrOne(pixelsX, pixelsY);
+                        printCardOrOne(pixelsX, pixelsY);
                         removeCard(counter, playersallCards);
                         break;
                     }
@@ -2581,7 +2585,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     {
                         cardValues[14] = 12;
                         occupiedPositions[14] = 1;
-                        cardXorOne(pixelsX, pixelsY);
+                        printCardXorOne(pixelsX, pixelsY);
                         removeCard(counter, playersallCards);
                         break;
                     }
@@ -2589,13 +2593,13 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                     {
                         cardValues[14] = 7;
                         occupiedPositions[14] = 1;
-                        cardAndOne(pixelsX, pixelsY);
+                        printCardAndOne(pixelsX, pixelsY);
                         removeCard(counter, playersallCards);
                         break;
                     }
                 }
             }
-            if (asciiValue == 7 && occupiedPositions[6] == 0) // '7' ASCII code
+            if (asciiValue == 7 && occupiedPositions[6] == 0) 
             {
                 pixelsY = 18;
 
@@ -2612,7 +2616,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[6] = 8;
                     occupiedPositions[6] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     values[6] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2621,7 +2625,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[6] = 9;
                     occupiedPositions[6] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     values[6] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2630,7 +2634,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[6] = 10;
                     occupiedPositions[6] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     values[6] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2639,7 +2643,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[6] = 11;
                     occupiedPositions[6] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     values[6] = 1;
                     removeCard(counter, playersallCards);
                     break;
@@ -2648,7 +2652,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[6] = 12;
                     occupiedPositions[6] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     values[6] = 1;
                     removeCard(counter, playersallCards);
                     break;
@@ -2657,13 +2661,13 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[6] = 7;
                     occupiedPositions[6] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     values[6] = 1;
                     removeCard(counter, playersallCards);
                     break;
                 }
             }
-            if (asciiValue == 8 && occupiedPositions[7] == 0) // '8' ASCII code
+            if (asciiValue == 8 && occupiedPositions[7] == 0) 
             {
                 pixelsY = 28;
 
@@ -2680,7 +2684,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[7] = 8;
                     occupiedPositions[7] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     values[7] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2689,7 +2693,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[7] = 9;
                     occupiedPositions[7] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     values[7] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2698,7 +2702,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[7] = 10;
                     occupiedPositions[7] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     values[7] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2707,7 +2711,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[7] = 11;
                     occupiedPositions[7] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     values[7] = 1;
                     removeCard(counter, playersallCards);
                     break;
@@ -2716,7 +2720,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[7] = 12;
                     occupiedPositions[7] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     values[7] = 1;
                     removeCard(counter, playersallCards);
                     break;
@@ -2725,13 +2729,13 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[7] = 7;
                     occupiedPositions[7] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     values[7] = 1;
                     removeCard(counter, playersallCards);
                     break;
                 }
             }
-            if (asciiValue == 9 && occupiedPositions[8] == 0) // '9' ASCII code
+            if (asciiValue == 9 && occupiedPositions[8] == 0) 
             {
                 pixelsY = 38;
 
@@ -2748,7 +2752,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[8] = 8;
                     occupiedPositions[8] = 1;
-                    cardOrZero(pixelsX, pixelsY);
+                    printCardOrZero(pixelsX, pixelsY);
                     values[8] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2757,7 +2761,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[8] = 9;
                     occupiedPositions[8] = 1;
-                    cardXorZero(pixelsX, pixelsY);
+                    printCardXorZero(pixelsX, pixelsY);
                     values[8] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2766,7 +2770,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[8] = 10;
                     occupiedPositions[8] = 1;
-                    cardAndZero(pixelsX, pixelsY);
+                    printCardAndZero(pixelsX, pixelsY);
                     values[8] = 0;
                     removeCard(counter, playersallCards);
                     break;
@@ -2775,7 +2779,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[8] = 11;
                     occupiedPositions[8] = 1;
-                    cardOrOne(pixelsX, pixelsY);
+                    printCardOrOne(pixelsX, pixelsY);
                     values[8] = 1;
                     removeCard(counter, playersallCards);
                     break;
@@ -2784,7 +2788,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[8] = 12;
                     occupiedPositions[8] = 1;
-                    cardXorOne(pixelsX, pixelsY);
+                    printCardXorOne(pixelsX, pixelsY);
                     values[8] = 1;
                     removeCard(counter, playersallCards);
                     break;
@@ -2793,7 +2797,7 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
                 {
                     cardValues[8] = 7;
                     occupiedPositions[8] = 1;
-                    cardAndOne(pixelsX, pixelsY);
+                    printCardAndOne(pixelsX, pixelsY);
                     values[8] = 1;
                     removeCard(counter, playersallCards);
                     break;
@@ -2858,16 +2862,16 @@ void checkCardComputer(int* playersallCards, bool* initialvalues, int player, bo
     }
 }
 
-//Player one
+//Player's turn
 void playerTurn()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
 
     printCardsWithNotCard(playerOneCards);
     chooseCard(playerOneCards, 0, 1);
-    checkCardNotCardWithComputer(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsPlayer);
+    checkCardPlayer(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsPlayer);
 }
-//Player two
+//Computer's turn
 void computerTurn()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
@@ -2880,21 +2884,15 @@ void computerTurn()
     Sleep(3500);
     checkCardComputer(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2, cardsComputer);
 }
-//start the game
-void beginningOfTheGameWithComputerNotCard()
+
+//beginning of the game withcomputer with Not card
+void startTheGameWithComputerNotCard()
 {
-    fill_n(cardsWithNotCard, 56, 0);
-    fill_n(playerOneCards, 5, 0);
-    fill_n(playerTwoCards, 5, 0);
-    fill_n(boolCardValuesP1, 6, 0);
-    fill_n(boolCardValuesP2, 6, 0);
-    fill_n(cardValuesP1, 15, 0);
-    fill_n(cardValuesP2, 15, 0);
-    fill_n(isOccupiedP1, 15, 0);
-    fill_n(isOccupiedP2, 15, 0);
+    emptyVariables(56);
+
     chosenCard = 0;
 
-    shuffleBoolCards();
+    shuffleInitialCards();
     shuffleCards(56);
 
     takeCards(5, playerOneCards, 56);
