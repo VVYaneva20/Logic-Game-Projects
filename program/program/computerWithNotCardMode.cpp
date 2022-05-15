@@ -304,6 +304,12 @@ void printInitialPositionsWithComputer()
 
 void chooseCardNotCardComputer(int* player)
 {
+    int yCoordinates[5] = { 6, 15, 24, 33, 44 };
+
+    for (int i = 0; i < 5; i++)
+    {
+        gotoXY(189, yCoordinates[i]); cout << " ";
+    }
     if (counter == 1)
     {
         chosenCard = player[0];

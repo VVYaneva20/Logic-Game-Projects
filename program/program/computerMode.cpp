@@ -11,11 +11,15 @@
 
 using namespace std;
 
-
-
 //computer selects a card
 void chooseCardComputer(int* player)
 {
+    int yCoordinates[5] = { 6, 15, 24, 33, 44 };
+
+    for (int i = 0; i < 5; i++)
+    {
+        gotoXY(189, yCoordinates[i]); cout << " ";
+    }
     if (counter == 1)
     {
         chosenCard = player[0];
@@ -2139,6 +2143,7 @@ void computer()
     int yCoords[5] = { 6, 15, 24, 33, 44 };
     printCardsComputerMode(5, playerTwoCards);
     counter = 1;
+    
     chooseCardComputer(playerTwoCards);
     Sleep(2000);
     placeCardComputer(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2);
