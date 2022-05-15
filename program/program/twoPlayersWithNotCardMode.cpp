@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int cardsP1[15];
+int CardsP1[15];
 int cardsP2[15];
 int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                           {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
@@ -21,9 +21,8 @@ int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22},
 };
 
 bool isNotCard = true;
-bool scipTurnP1 = 0, scipTurnP2 = 0;
+bool skipTurnP1 = 0, skipTurnP2 = 0;
 
-//display the empty positions
 void printPositionsNotCard(int player, bool* isOccupied, int* values)
 {
     int xFirstFive, y, x, xP2;
@@ -34,7 +33,7 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
     for (int i = 0; i < 5; i++)
     {
         y = posCoordinatesNotCard[i][2];
-        if (!isOccupied[i] or isNotCard)
+        if (!isOccupied[i] && isNotCard)
         {
             gotoXY(xFirstFive, y++); cout << " _______________" << endl;
             gotoXY(xFirstFive, y++); cout << "|    POSITION   |" << endl;
@@ -46,7 +45,7 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
             gotoXY(xFirstFive, y++); cout << "|               |" << endl;
             gotoXY(xFirstFive, y++); cout << "|_______________|" << endl;
         }
-        else if (isOccupied[i] && isNotCard)
+        else if (isOccupied[i])
         {
             if (values[i] % 7 == 1)
             {
@@ -138,12 +137,11 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
         }
     }
 }
+
 void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int playerNum)
 {
     int pixelsX;
     int pixelsY;
-
-    int inColumn;
 
     //notCardCheck(cardsP1, occupiedP1, initialCardValuesP1, 1);
     for (int i = 0; i < 5; i++)
@@ -157,29 +155,18 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
         {
             isOccupied[i] = 0;
             values[i] = 0;
+            printPositionsNotCard(playerNum, isOccupied, values);
         }
     }
 
-    for (int i = 0; i < 13; i++)
+    for (int i = 0; i < 4; i++)
     {
-        if (i < 5)
-            inColumn = 5;
-        else if (i < 9)
-            inColumn = 4;
-        else if (i < 12)
-            inColumn = 3;
-        else
-            inColumn = 2;
-
-        if (i == 4 or i == 8 or i == 11)
-            continue;
-
-        pixelsX = posCoordinatesNotCard[i + inColumn][playerNum - 1];
-        pixelsY = posCoordinatesNotCard[i + inColumn][2];
+        pixelsX = posCoordinatesNotCard[i + 5][playerNum - 1];
+        pixelsY = posCoordinatesNotCard[i + 5][2];
 
         if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
         {
-            isOccupied[i + inColumn] = 0;
+            isOccupied[i + 5] = 0;
 
             for (int i = 0; i < 9; i++)
             {
@@ -188,10 +175,57 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
         }
     }
 
-    printPositionsNotCard(1, isOccupiedP1, cardsP1);
+    for (int i = 5; i < 8; i++)
+    {
+        pixelsX = posCoordinatesNotCard[i + 4][playerNum - 1];
+        pixelsY = posCoordinatesNotCard[i + 4][2];
+
+        if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
+        {
+            isOccupied[i + 4] = 0;
+
+            for (int i = 0; i < 9; i++)
+            {
+                gotoXY(pixelsX, pixelsY++); cout << "                 ";
+            }
+        }
+    }
+
+    for (int i = 9; i < 11; i++)
+    {
+        pixelsX = posCoordinatesNotCard[i + 3][playerNum - 1];
+        pixelsY = posCoordinatesNotCard[i + 3][2];
+
+        if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
+        {
+            isOccupied[i + 3] = 0;
+
+            for (int i = 0; i < 9; i++)
+            {
+                gotoXY(pixelsX, pixelsY++); cout << "                 ";
+            }
+        }
+    }
+
+    for (int i = 12; i < 13; i++)
+    {
+        pixelsX = posCoordinatesNotCard[i + 2][playerNum - 1];
+        pixelsY = posCoordinatesNotCard[i + 2][2];
+
+        if (isOccupied[i] == 0 || isOccupied[i + 1] == 0)
+        {
+            isOccupied[i + 2] = 0;
+
+            for (int i = 0; i < 9; i++)
+            {
+                gotoXY(pixelsX, pixelsY++); cout << "                 ";
+            }
+        }
+    }
+
+    printPositionsNotCard(1, isOccupiedP1, CardsP1);
     printPositionsNotCard(2, isOccupiedP2, cardsP2);
 }
-
 
 //display cardsNotCard 
 void printcardsNotCard(int cardsNotCardNeeded, int* player)
@@ -276,7 +310,7 @@ void printInitialCards(int position, bool reverse, int player)
 {
     int pixelsX = 77;
     int pixelsY = 2;
-    
+
 
     if (reverse)
     {
@@ -351,12 +385,12 @@ void printInitialCards(int position, bool reverse, int player)
                 }
                 if (player == 1)
                 {
-                    scipTurnP2 = 1;
+                    skipTurnP2 = 1;
                     removeCard(temp + 1, playerTwoCards);
                 }
                 else
                 {
-                    scipTurnP1 = 1;
+                    skipTurnP1 = 1;
                     removeCard(temp + 1, playerOneCards);
 
                 }
@@ -1576,7 +1610,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 cardPosition = 4;
             }
-            else if(ascii == 52)
+            else if (ascii == 52)
             {
                 removeCard(counter, playerscardsNotCard);
                 printInitialCards(cardPosition, 0, player);
@@ -1591,10 +1625,10 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             {
                 checkCardNotCard(playerscardsNotCard, initialvalues, player, occupiedPositions, values, cardValues);
             }
-            
+
             removeCard(counter, playerscardsNotCard);
             printInitialCards(cardPosition, 1, player);
-            notCardCheck(cardsP1, isOccupiedP1, boolCardValuesP1, 1);
+            notCardCheck(CardsP1, isOccupiedP1, boolCardValuesP1, 1);
             notCardCheck(cardsP2, isOccupiedP2, boolCardValuesP2, 2);
             break;
         }
@@ -1608,7 +1642,7 @@ void playerOne()
     int yCoords[5] = { 6, 15, 24, 33, 44 };
     printcardsNotCard(5, playerOneCards);
     chooseCard(playerOneCards, 0);
-    checkCardNotCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsP1);
+    checkCardNotCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, CardsP1);
 
     gotoXY(189, yCoords[counter]); cout << " ";
 }
@@ -1642,12 +1676,12 @@ void beginningOfTheGameWithTwoPLayersNotCard()
 
     while (true)
     {
-        if (scipTurnP1 == 0)
+        if (skipTurnP1 == 0)
         {
-            scipTurnP2 = 0;
+            skipTurnP2 = 0;
 
             gotoXY(18, 7); cout << "                                      ";
-            printPositionsNotCard(1, isOccupiedP1, cardsP1);
+            printPositionsNotCard(1, isOccupiedP1, CardsP1);
             printPositionsNotCard(2, isOccupiedP2, cardsP2);
 
 
@@ -1656,12 +1690,12 @@ void beginningOfTheGameWithTwoPLayersNotCard()
             playerOne();
         }
 
-        if (scipTurnP2 == 0)
+        if (skipTurnP2 == 0)
         {
-            scipTurnP1 = 0;
+            skipTurnP1 = 0;
 
             gotoXY(130, 7); cout << "                                      ";
-            printPositionsNotCard(1, isOccupiedP1, cardsP1);
+            printPositionsNotCard(1, isOccupiedP1, CardsP1);
             printPositionsNotCard(2, isOccupiedP2, cardsP2);
 
             gotoXY(195, 50); cout << "PLAYER 2";
