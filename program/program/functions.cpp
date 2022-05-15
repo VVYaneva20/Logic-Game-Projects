@@ -336,6 +336,12 @@ void printCardsWithNotCard(int* player)
 
 void printTruthTable(int x, int y)
 {
+    int yCoordinates[5] = { 6, 15, 24, 33, 44 };
+
+    for (int i = 0; i < 5; i++)
+    {
+        gotoXY(189, yCoordinates[i]); cout << " ";
+    }
     for (int i = 0; i < 10; i++)
     {
         gotoXY(x, y++); cout << "                     ";
@@ -371,9 +377,121 @@ void printTruthTable(int x, int y)
         gotoXY(x, y++); cout << "                     ";
     }
 }
+void printPositionsWithNotCard(int player, bool* isOccupied, int* values)
+{
+    int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+                          {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
+                          {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
+                          {17, 152, 17}, {17, 152, 29},
+                          {2, 167, 23}
+    };
+    int xFirstFive, y, x;
+    if (player == 1)
+        xFirstFive = 60;
+    else
+        xFirstFive = 107;
+    for (int i = 0; i < 5; i++)
+    {
+        y = posCoordinatesNotCard[i][2];
+        if (!isOccupied[i])
+        {
+            gotoXY(xFirstFive, y++); cout << " _______________" << endl;
+            gotoXY(xFirstFive, y++); cout << "|    POSITION   |" << endl;
+            gotoXY(xFirstFive, y++); cout << "|               |" << endl;
+            gotoXY(xFirstFive, y++); cout << "|               |" << endl;
+            gotoXY(xFirstFive, y++); cout << "|       " << i + 1 << "       |" << endl;
+            gotoXY(xFirstFive, y++); cout << "|               |" << endl;
+            gotoXY(xFirstFive, y++); cout << "|               |" << endl;
+            gotoXY(xFirstFive, y++); cout << "|               |" << endl;
+            gotoXY(xFirstFive, y++); cout << "|_______________|" << endl;
+        }
+        else if (isOccupied[i])
+        {
+            if (values[i] == 8)
+            {
+                cardOrZero(xFirstFive, y);
+            }
+            else if (values[i] == 9)
+            {
+                cardXorZero(xFirstFive, y);
+            }
+            else if (values[i] == 10)
+            {
+                cardAndZero(xFirstFive, y);
+            }
+            else if (values[i] == 11)
+            {
+                cardOrOne(xFirstFive, y);
+            }
+            else if (values[i] == 12)
+            {
+                cardXorOne(xFirstFive, y);
+            }
+            else if (values[i] == 7)
+            {
+                cardAndOne(xFirstFive, y);
+            }
+        }
+    }
+    int inColumn = 4;
+    int position = 6;
+    for (int i = 5; i < 15; i++)
+    {
+        x = posCoordinatesNotCard[i][player - 1];
+        y = posCoordinatesNotCard[i][2];
+        if (i == 9)
+        {
+            position = 1;
+        }
+        if ((isOccupied[i - inColumn] and isOccupied[i - inColumn - 1] and (!isOccupied[i])))
+        {
+            gotoXY(x, y++); cout << " _______________" << endl;
+            gotoXY(x, y++); cout << "|    POSITION   |" << endl;
+            gotoXY(x, y++); cout << "|               |" << endl;
+            gotoXY(x, y++); cout << "|               |" << endl;
+            gotoXY(x, y++); cout << "|       " << position << "       |" << endl;
+            gotoXY(x, y++); cout << "|               |" << endl;
+            gotoXY(x, y++); cout << "|               |" << endl;
+            gotoXY(x, y++); cout << "|               |" << endl;
+            gotoXY(x, y++); cout << "|_______________|" << endl;
+        }
+        else if (isOccupied[i])
+        {
+            if (values[i] == 8)
+            {
+                cardOrZero(x, y);
+            }
+            else if (values[i] == 9)
+            {
+                cardXorZero(x, y);
+            }
+            else if (values[i] == 10)
+            {
+                cardAndZero(x, y);
+            }
+            else if (values[i] == 11)
+            {
+                cardOrOne(x, y);
+            }
+            else if (values[i] == 12)
+            {
+                cardXorOne(x, y);
+            }
+            else if (values[i] == 7)
+            {
+                cardAndOne(x, y);
+            }
+        }
+        position++;
+        if (i == 8 or i == 11 or i == 13)
+        {
+            inColumn--;
+        }
+    }
+}
 
 //the player selects a card
-void chooseCard(int* player, bool returned)
+void chooseCard(int* player, bool returned, bool notCard)
 {
     int Set[] = { 12, 7, 7, 7, 7 };
     counter = 1;
@@ -458,6 +576,29 @@ void chooseCard(int* player, bool returned)
             startProgram();
             break;
         }
+        if (key == 105)// 'i' esc key ASCII value
+        {
+            printTruthTable(191, 2);
+            while (true)
+            {
+                char pressI;
+                pressI = _getch();
+                if (pressI == 105)
+                {
+                    break;
+                }
+            }
+
+            if (notCard)
+            {
+                printCardsWithNotCard(player);
+            }
+            else
+            {
+                printCards(player);
+            }
+            
+        }
 
         Set[0] = 7;
         Set[1] = 7;
@@ -506,7 +647,6 @@ void instructions()
       |  | 0 && 1 | 0 |     | 0 || 1 | 1 |      | 0 ^ 1  | 1 |  |
       |  | 1 && 0 | 0 |     | 1 || 0 | 1 |      | 1 ^ 0  | 1 |  |
       |  | 1 && 1 | 1 |     | 1 || 1 | 1 |      | 1 ^ 1  | 0 |  |
-      |                                                         |
       |_________________________________________________________|
        _________________________________________________________
       |                                                         |
@@ -517,6 +657,7 @@ void instructions()
       |  With keys from '1' to '9' - choose a place for a card  |
       |        With the key 'D' - discard selected card         |
       |       With the key 'R'- return after wrong choce        |
+      |         With the key 'I' - see the truth table          |
       |     With the key 'Esc' - stop the game and go back      |
       |_________________________________________________________|
        _________________________________________________________
@@ -623,17 +764,6 @@ void instructions()
     gotoXY(85, 37); cout << "|                                                         | " << endl;
     gotoXY(85, 38); cout << "|                                                         | " << endl;
     gotoXY(85, 39); cout << "|_________________________________________________________|" << endl;
-
-
-    gotoXY(50, 41);  cout << R"(
-                                      ___                      __    __          __    _                   _                    
-                                     / _ \_ __ ___  ___ ___   / /   /__\__  ___  \ \  | |_ ___    _ __ ___| |_ _   _ _ __ _ __  
-                                    / /_)/ '__/ _ \/ __/ __| / /   /_\/ __|/ __|  \ \ | __/ _ \  | '__/ _ \ __| | | | '__| '_ \ 
-                                   / ___/| | |  __/\__ \__ \ \ \  //__\__ \ (__   / / | || (_) | | | |  __/ |_| |_| | |  | | | |
-                                   \/    |_|  \___||___/___/  \_\ \__/|___/\___| /_/   \__\___/  |_|  \___|\__|\__,_|_|  |_| |_|
-                                                                                      
-                                                                                   
-    )";
 
     char pressEscToGoBack;
 

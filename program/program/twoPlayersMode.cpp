@@ -262,7 +262,7 @@ void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupi
         if (choice == 65 or choice == 33 or choice == -81 or choice == -161)
         {
             gotoXY(195, 50); cout << "PLAYER " << player << "  ";
-            chooseCard(playersCards, 1);
+            chooseCard(playersCards, 1, 0);
             checkCard(playersCards, boolCardValues, player, occupiedPositions, cardValues);
             break;
         }
@@ -293,7 +293,7 @@ void executeTurn(int* playerCards, bool* boolCardValues, int player, bool* isOcc
     takeCards(1, playerCards, 48);
     printCards(playerCards);
 
-    chooseCard(playerCards, 0);
+    chooseCard(playerCards, 0, 0);
     checkCard(playerCards, boolCardValues, player, isOccupied, cardValues);
     gotoXY(189, yCoords[counter]); cout << " ";
 }

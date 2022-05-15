@@ -1568,8 +1568,8 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
             }
             if (asciiValue == 66)// 'r' ASCII value
             {
-                gotoXY(195, 50); cout << "PLAYER " << player << "  ";
-                chooseCard(playerscardsNotCard, 1);
+                gotoXY(195, 50); cout << " PLAYER   ";
+                chooseCard(playerscardsNotCard, 1, 1);
                 if (player == 1)
                 {
                     checkCardNotCardWithComputer(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
@@ -1649,7 +1649,7 @@ void checkCardNotCardWithComputer(int* playerscardsNotCard, bool* initialvalues,
                     x = 0;
                     printInitialCardsWithComputer(cardPosition, x, player);
                     gotoXY(195, 50); cout << " PLAYER ";
-                    chooseCard(playerscardsNotCard, 1);
+                    chooseCard(playerscardsNotCard, 1, 1);
 
                     checkCardNotCardWithComputer(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
                     
@@ -2866,7 +2866,7 @@ void playerTurn()
 
     int yCoords[5] = { 6, 15, 24, 33, 44 };
     printCardsWithNotCard(playerOneCards);
-    chooseCard(playerOneCards, 0);
+    chooseCard(playerOneCards, 0, 1);
     checkCardNotCardWithComputer(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsPlayer);
 
 

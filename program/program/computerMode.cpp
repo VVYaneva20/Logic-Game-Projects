@@ -159,7 +159,7 @@ void placeCardComputerMode(int* playerscardsComputerMode, bool* boolCardValues, 
         {
             gotoXY(195, 50); cout << "PLAYER " << player << "  ";
 
-            chooseCard(playerscardsComputerMode, 1);
+            chooseCard(playerscardsComputerMode, 1, 1);
             placeCardComputerMode(playerscardsComputerMode, boolCardValues, 1, occupiedPositions, cardValues);
 
             break;
@@ -2083,7 +2083,7 @@ void player()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
     printCards(playerOneCards);
-    chooseCard(playerOneCards, 0);
+    chooseCard(playerOneCards, 0, 0);
     placeCardComputerMode(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1);
 
     gotoXY(189, yCoords[counter]); cout << " ";

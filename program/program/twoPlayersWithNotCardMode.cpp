@@ -1504,7 +1504,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             if (asciiValue == 66)// 'r' ASCII value
             {
                 gotoXY(195, 50); cout << "PLAYER " << player << "  ";
-                chooseCard(playerscardsNotCard, 1);
+                chooseCard(playerscardsNotCard, 1, 1);
                 if (player == 1)
                 {
                     checkCardNotCard(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
@@ -1578,7 +1578,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
 
                     printInitialCards(cardPosition, 1, player);
                     gotoXY(195, 50); cout << "PLAYER " << player << "  ";
-                    chooseCard(playerscardsNotCard, 1);
+                    chooseCard(playerscardsNotCard, 1, 1);
 
                     if (player == 1)
                     {
@@ -1610,7 +1610,7 @@ void playerOne()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
     printCards(playerOneCards);
-    chooseCard(playerOneCards, 0);
+    chooseCard(playerOneCards, 0, 1);
     checkCardNotCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsP1);
 
     gotoXY(189, yCoords[counter]); cout << " ";
@@ -1620,7 +1620,7 @@ void playerTwo()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
     printCards(playerTwoCards);
-    chooseCard(playerTwoCards, 0);
+    chooseCard(playerTwoCards, 0, 1);
     checkCardNotCard(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2, cardsP2);
 
     gotoXY(189, yCoords[counter]); cout << " ";
