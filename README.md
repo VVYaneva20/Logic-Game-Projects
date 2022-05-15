@@ -27,6 +27,7 @@
 ## 🗎 Documents
 * <a href="https://codingburgas-my.sharepoint.com/:w:/g/personal/vvyaneva20_codingburgas_bg/ESjRATFHhX9DqwfzJoAnK7oBWc2l6JJAtc_ozpGzg41UvQ?e=2yuGUe">Documentation
 * <a href="https://codingburgas-my.sharepoint.com/:p:/g/personal/vvyaneva20_codingburgas_bg/EdlyzBVovXtKps65zHnyT6kBOMCb_j0qkwTKaGuY_yEvqQ?e=HQEl7e">Presentation
+* <a href="https://codingburgas-my.sharepoint.com/:x:/g/personal/vvyaneva20_codingburgas_bg/EZgn-A2nrCNGlqMa-umqs_YBBgnZ03rSvsRN7_e_7nPTYA?e=PbXSZi">QA Documentation
 
  ## 🃏 Demo of the project
 
