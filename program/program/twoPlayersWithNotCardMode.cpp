@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int CardsP1[15];
+int cardsP1[15];
 int cardsP2[15];
 int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
                           {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
@@ -223,7 +223,7 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
         }
     }
 
-    printPositionsNotCard(1, isOccupiedP1, CardsP1);
+    printPositionsNotCard(1, isOccupiedP1, cardsP1);
     printPositionsNotCard(2, isOccupiedP2, cardsP2);
 }
 
@@ -1587,54 +1587,74 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
             int ascii;
             int cardPosition = 10;
 
-            press = _getch();
-            ascii = press - 48;
 
-            if (ascii == 1)
+            while (true)
             {
-                cardPosition = 0;
-            }
-            else if (ascii == 2)
-            {
-                cardPosition = 1;
-            }
-            else if (ascii == 3)
-            {
-                cardPosition = 2;
-            }
-            else if (ascii == 4)
-            {
-                cardPosition = 3;
-            }
-            else if (ascii == 5)
-            {
-                cardPosition = 4;
-            }
-            else if (ascii == 52)
-            {
-                removeCard(counter, playerscardsNotCard);
-                printInitialCards(cardPosition, 0, player);
-                break;
-            }
-            else if (ascii == 27)
-            {
-                startProgram();
-                break;
-            }
-            else
-            {
-                checkCardNotCard(playerscardsNotCard, initialvalues, player, occupiedPositions, values, cardValues);
+                press = _getch();
+                ascii = press - 48;
+
+                if (ascii == 1) // 1 ascii code
+                {
+                    cardPosition = 0;
+                    break;
+                }
+                else if (ascii == 2)
+                {
+                    cardPosition = 1;
+                    break;
+                }
+                else if (ascii == 3)
+                {
+                    cardPosition = 2;
+                    break;
+                }
+                else if (ascii == 4)
+                {
+                    cardPosition = 3;
+                    break;
+                }
+                else if (ascii == 5)
+                {
+                    cardPosition = 4;
+                    break;
+                }
+                else if (ascii == 52) // d is pressed
+                {
+                    removeCard(counter, playerscardsNotCard);
+                    printInitialCards(cardPosition, 0, player);
+                    break;
+                }
+                else if (ascii == 66 || ascii == -21)// 'r' is pressed
+                {
+
+                    printInitialCards(cardPosition, 1, player);
+                    gotoXY(195, 50); cout << "PLAYER " << player << "  ";
+                    chooseCard(playerscardsNotCard, 1);
+
+                    if (player == 1)
+                    {
+                        checkCardNotCard(playerscardsNotCard, initialvalues, 1, occupiedPositions, values, cardValues);
+                    }
+                    else
+                    {
+                        checkCardNotCard(playerscardsNotCard, initialvalues, 2, occupiedPositions, values, cardValues);
+                    }
+                    break;
+                }
+                else
+                {
+                    gotoXY(195, 50); cout << RED << "Invalid!" << RESET;
+                }
             }
 
             removeCard(counter, playerscardsNotCard);
             printInitialCards(cardPosition, 1, player);
-            notCardCheck(CardsP1, isOccupiedP1, boolCardValuesP1, 1);
+            notCardCheck(cardsP1, isOccupiedP1, boolCardValuesP1, 1);
             notCardCheck(cardsP2, isOccupiedP2, boolCardValuesP2, 2);
             break;
         }
     }
 }
-
 
 //Player one
 void playerOne()
@@ -1642,7 +1662,7 @@ void playerOne()
     int yCoords[5] = { 6, 15, 24, 33, 44 };
     printcardsNotCard(5, playerOneCards);
     chooseCard(playerOneCards, 0);
-    checkCardNotCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, CardsP1);
+    checkCardNotCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsP1);
 
     gotoXY(189, yCoords[counter]); cout << " ";
 }
@@ -1681,7 +1701,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
             skipTurnP2 = 0;
 
             gotoXY(18, 7); cout << "                                      ";
-            printPositionsNotCard(1, isOccupiedP1, CardsP1);
+            printPositionsNotCard(1, isOccupiedP1, cardsP1);
             printPositionsNotCard(2, isOccupiedP2, cardsP2);
 
 
@@ -1695,7 +1715,7 @@ void beginningOfTheGameWithTwoPLayersNotCard()
             skipTurnP1 = 0;
 
             gotoXY(130, 7); cout << "                                      ";
-            printPositionsNotCard(1, isOccupiedP1, CardsP1);
+            printPositionsNotCard(1, isOccupiedP1, cardsP1);
             printPositionsNotCard(2, isOccupiedP2, cardsP2);
 
             gotoXY(195, 50); cout << "PLAYER 2";
