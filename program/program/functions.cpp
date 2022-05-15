@@ -376,60 +376,81 @@ void instructions()
       |  | 1 && 1 | 1 |     | 1 || 1 | 1 |      | 1 ^ 1  | 0 |  |
       |                                                         |
       |_________________________________________________________|
-
-)" << endl;
-
-    cout << R"(
-
-
        _________________________________________________________
       |                                                         |
       |                       HOW TO PLAY                       |
       |                                                         |
-      |       with arrow up and arrow down - choose card        |
-      |            with the key 'S' - select card               |
-      |  with keys from '1' to '9' - choose a place for a card  |
-      |        with the key 'D' - discard selected card         |
-      |       with the key 'R'- return after wrong choce        |
-      |     with the key 'Esc' - stop the game and go back      |
+      |       With arrow up and arrow down - choose card        |
+      |            With the key 'S' - select a card             |
+      |  With keys from '1' to '9' - choose a place for a card  |
+      |        With the key 'D' - discard selected card         |
+      |       With the key 'R'- return after wrong choce        |
+      |     With the key 'Esc' - stop the game and go back      |
+      |_________________________________________________________|
+       _________________________________________________________
       |                                                         |
+      |             THE DECK CONSISTS OF 64 CARDS:              |
+      |                                                         |
+      |          ° 8 OR cards resolving to 1                    |
+      |          ° 8 OR cards resolving to 0                    |
+      |          ° 8 AND cards resolving to 1                   |
+      |          ° 8 AND cards resolving to 0                   |
+      |          ° 8 XOR cards resolving to 1                   |
+      |          ° 8 XOR cards resolving to 0                   |
+      |          ° 8 NOT cards                                  |
+      |          ° 6 Initial Binary cards (0 / 1)               |
+      |          ° 2 Truth Tables (used for reference)          |
       |_________________________________________________________|
 
-)" << endl;
+    )" << endl;
 
-    cardAndZero(191, 2);
-    cardXorOne(191, 11);
-    cardOrOne(191, 20);
-    cardOrZero(191, 29);
-    cardXorOne(191, 40);
+    for (int i = 30; i <= 38; i++)
+    {
+        gotoXY(17, i); cout << char(248);
+    }
 
-    gotoXY(188, 2); cout << "/" << endl;
-    gotoXY(187, 3); cout << "/" << endl;
-    for (int i = 4; i <= 35; i++)
+    cardAndZero(191, 3);
+    cardXorOne(191, 12);
+    cardOrOne(191, 21);
+    cardOrZero(191, 30);
+
+
+    gotoXY(191, 41); cout << RESET << " _______________" << endl;
+    gotoXY(191, 42); cout << "|    " << RED << "  ____  " << RESET << "   |" << endl;
+    gotoXY(191, 43); cout << "|    " << RED << " / __ `." << RESET << "   |" << endl;
+    gotoXY(191, 44); cout << "|    " << RED << "|_/__) |" << RESET << "   |" << endl;
+    gotoXY(191, 45); cout << "|    " << RED << "  /  _.'" << RESET << "   |" << endl;
+    gotoXY(191, 46); cout << "|    " << RED << "  |_|   " << RESET << "   |" << endl;
+    gotoXY(191, 47); cout << "|    " << RED << "  (_)   " << RESET << "   |" << endl;
+    gotoXY(191, 48); cout << "|_______________|" << endl;
+
+    gotoXY(188, 3); cout << "/" << endl;
+    gotoXY(187, 4); cout << "/" << endl;
+    for (int i = 5; i <= 37; i++)
     {
         switch (i)
         {
-        case 17:
+        case 19:
             gotoXY(186, i); cout << "/" << endl;
             break;
-        case 18:
+        case 20:
             gotoXY(174, i); cout << "Cards that /" << endl;
             break;
-        case 19:
+        case 21:
             gotoXY(175, i); cout << "you have  \\" << endl;
             break;
-        case 20:
+        case 22:
             gotoXY(186, i); cout << "\\" << endl;
             break;
         default:
             gotoXY(186, i); cout << "|" << endl;
         }
     }
-    gotoXY(187, 36); cout << "\\" << endl;
-    gotoXY(188, 37); cout << "\\" << endl;
+    gotoXY(187, 38); cout << "\\" << endl;
+    gotoXY(188, 39); cout << "\\" << endl;
 
-    gotoXY(166, 44); cout << "Random card that     ->" << endl;
-    gotoXY(162, 45); cout << "is different every time" << endl;
+    gotoXY(166, 45); cout << "Random card that     ->" << endl;
+    gotoXY(162, 46); cout << "is different every time" << endl;
 
     gotoXY(85, 3); cout << " _________________________________________________________" << endl;
     gotoXY(85, 4); cout << "|                                                         |" << endl;
@@ -439,8 +460,8 @@ void instructions()
     gotoXY(85, 8); cout << "|                       Game setup:                       | " << endl;
     gotoXY(85, 9); cout << "|                                                         | " << endl;
     gotoXY(85, 10); cout << "|   At the beginning of the game, all cards are shuffled  | " << endl;
-    gotoXY(85, 11); cout << "|  and the six initial cards are placed so that the ‘1’   | " << endl;
-    gotoXY(85, 12); cout << "|    side is facing the first player and the ‘0’ side     | " << endl;
+    gotoXY(85, 11); cout << "|  and the six initial cards are placed so that the '1'   | " << endl;
+    gotoXY(85, 12); cout << "|    side is facing the first player and the '0' side     | " << endl;
     gotoXY(85, 13); cout << "|                is facing the other.                     | " << endl;
     gotoXY(85, 14); cout << "|                                                         | " << endl;
     gotoXY(85, 15); cout << "|                                                         | " << endl;
@@ -472,6 +493,16 @@ void instructions()
     gotoXY(85, 39); cout << "|_________________________________________________________|" << endl;
 
 
+    gotoXY(50, 41);  cout << R"(
+                                      ___                      __    __          __    _                   _                    
+                                     / _ \_ __ ___  ___ ___   / /   /__\__  ___  \ \  | |_ ___    _ __ ___| |_ _   _ _ __ _ __  
+                                    / /_)/ '__/ _ \/ __/ __| / /   /_\/ __|/ __|  \ \ | __/ _ \  | '__/ _ \ __| | | | '__| '_ \ 
+                                   / ___/| | |  __/\__ \__ \ \ \  //__\__ \ (__   / / | || (_) | | | |  __/ |_| |_| | |  | | | |
+                                   \/    |_|  \___||___/___/  \_\ \__/|___/\___| /_/   \__\___/  |_|  \___|\__|\__,_|_|  |_| |_|
+                                                                                      
+                                                                                   
+    )";
+
     char pressEscToGoBack;
 
     while (true)
@@ -482,6 +513,7 @@ void instructions()
         {
             system("cls");
             startProgram();
+            break;
         }
     }
 }
