@@ -11,72 +11,18 @@
 
 using namespace std;
 
-
-
-int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
-                              {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
-                              {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
-                              {17, 152, 17}, {17, 152, 29},
-                              {2, 167, 23} };
-
 void (*pointToCard[6])(int x, int y) = { cardOrZero, cardXorZero, cardAndZero, cardOrOne, cardXorOne, cardAndOne };
 
 
 
-
-
-//display cards 
-void printCards(int cardsNeeded, int* player)
-{
-    int cardCounter = 0;
-    int pixelsX = 191;
-    int pixelsY = 2;
-
-    gotoXY(30, 3); cout << YELLOW << "Player 1's side" << RESET;
-    gotoXY(139, 3); cout << YELLOW << "Player 2's side" << RESET;
-
-    for (int i = 0; i < 52; i++)
-    {
-        gotoXY(187, i); cout << "|";
-    }
-    for (int i = 0; i < 5; i++)
-    {
-        if (player[i] % 6 == 1)
-        {
-            cardOrZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 2)
-        {
-            cardXorZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 3)
-        {
-            cardAndZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 4)
-        {
-            cardOrOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 5)
-        {
-            cardXorOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 0)
-        {
-            cardAndOne(pixelsX, pixelsY);
-        }
-        cardCounter++;
-        pixelsY += 9;
-        if (cardCounter == 4)
-        {
-            pixelsY += 2;
-        }
-    }
-}
-
 //display the empty positions
 void printPositions(int player, bool* isOccupied)
 {
+    int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+                                 {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
+                                 {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
+                                 {17, 152, 17}, {17, 152, 29},
+                                 {2, 167, 23} };
     int xFirstFive, y, x, xP2;
     if (player == 1)
         xFirstFive = 60;
@@ -143,6 +89,11 @@ void placeCard(bool* occupiedPositions, int index, int pointerIndex, int x, int 
 //put down a card in a chosen position
 void checkCard(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues)
 {
+    int posCoordinates[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+                                 {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
+                                 {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
+                                 {17, 152, 17}, {17, 152, 29},
+                                 {2, 167, 23} };
     int pixelsX;
     int pixelsY;
     int inColumn[15] = { 5, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 1 };
@@ -340,7 +291,7 @@ void executeTurn(int* playerCards, bool* boolCardValues, int player, bool* isOcc
     gotoXY(195, 50); cout << "PLAYER " << player;
 
     takeCards(1, playerCards, 48);
-    printCards(5, playerCards);
+    printCards(playerCards);
 
     chooseCard(playerCards, 0);
     checkCard(playerCards, boolCardValues, player, isOccupied, cardValues);
@@ -370,6 +321,9 @@ void beginningOfTheGameWithTwoPLayers()
     shuffleCards(48);
     takeCards(5, playerOneCards, 48);
     takeCards(5, playerTwoCards, 48);
+
+    gotoXY(30, 3); cout << YELLOW << "Player 1's side" << RESET;
+    gotoXY(139, 3); cout << YELLOW << "Player 2's side" << RESET;
 
     while (true)
     {

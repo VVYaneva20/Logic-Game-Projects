@@ -45,55 +45,6 @@ void chooseCardComputer(int* player)
         chosenCard = player[rand() % 4];
     }
 }
-
-//display cards 
-void printCardsComputerMode(int cardsComputerModeNeeded, int* player)
-{
-    int cardcounterComputerMode = 0;
-    int pixelsX = 191;
-    int pixelsY = 2;
-
-    gotoXY(30, 3); cout << YELLOW << "Player 1's side" << RESET;
-    gotoXY(139, 3); cout << YELLOW << "Computer's side" << RESET;
-
-    for (int i = 0; i < 52; i++)
-    {
-        gotoXY(187, i); cout << "|";
-    }
-    for (int i = 0; i < 5; i++)
-    {
-        if (player[i] % 6 == 1)
-        {
-            cardOrZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 2)
-        {
-            cardXorZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 3)
-        {
-            cardAndZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 4)
-        {
-            cardOrOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 5)
-        {
-            cardXorOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 6 == 0)
-        {
-            cardAndOne(pixelsX, pixelsY);
-        }
-        cardcounterComputerMode++;
-        pixelsY += 9;
-        if (cardcounterComputerMode == 4)
-        {
-            pixelsY += 2;
-        }
-    }
-}
 //display the empty positions
 void printPositionsComputerMode()
 {
@@ -2131,7 +2082,7 @@ void placeCardComputer(int* playerscardsComputerMode, bool* boolCardValues, int 
 void player()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printCardsComputerMode(5, playerOneCards);
+    printCards(playerOneCards);
     chooseCard(playerOneCards, 0);
     placeCardComputerMode(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1);
 
@@ -2141,7 +2092,7 @@ void player()
 void computer()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printCardsComputerMode(5, playerTwoCards);
+    printCards(playerTwoCards);
     counter = 1;
     
     chooseCardComputer(playerTwoCards);
@@ -2170,6 +2121,10 @@ void beginningOfTheGameWithComputer()
 
     takeCards(4, playerOneCards, 48);
     takeCards(4, playerTwoCards, 48);
+
+
+    gotoXY(30, 3); cout << YELLOW << " Player's side " << RESET;
+    gotoXY(139, 3); cout << YELLOW << "Computer's side" << RESET;
 
     while (true)
     {

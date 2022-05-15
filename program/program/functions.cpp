@@ -240,6 +240,138 @@ void takeCards(int cardsNeeded, int* player, int numberOfCards)
     }
 }
 
+//display cards 
+void printCards(int* player)
+{
+    int cardCounter = 0;
+    int pixelsX = 191;
+    int pixelsY = 2;
+
+    for (int i = 0; i < 52; i++)
+    {
+        gotoXY(187, i); cout << "|";
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        if (player[i] % 6 == 1)
+        {
+            cardOrZero(pixelsX, pixelsY);
+        }
+        else if (player[i] % 6 == 2)
+        {
+            cardXorZero(pixelsX, pixelsY);
+        }
+        else if (player[i] % 6 == 3)
+        {
+            cardAndZero(pixelsX, pixelsY);
+        }
+        else if (player[i] % 6 == 4)
+        {
+            cardOrOne(pixelsX, pixelsY);
+        }
+        else if (player[i] % 6 == 5)
+        {
+            cardXorOne(pixelsX, pixelsY);
+        }
+        else if (player[i] % 6 == 0)
+        {
+            cardAndOne(pixelsX, pixelsY);
+        }
+        cardCounter++;
+        pixelsY += 9;
+        if (cardCounter == 4)
+        {
+            pixelsY += 2;
+        }
+    }
+}
+
+void printCardsWithNotCard(int* player)
+{
+    int counter = 0;
+    int pixelsX = 191;
+    int pixelsY = 2;
+    for (int i = 0; i < 52; i++)
+    {
+        gotoXY(187, i); cout << "|";
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        if (player[i] % 7 == 1)
+        {
+            cardOrZero(pixelsX, pixelsY);
+        }
+        else if (player[i] % 7 == 2)
+        {
+            cardXorZero(pixelsX, pixelsY);
+        }
+        else if (player[i] % 7 == 3)
+        {
+            cardAndZero(pixelsX, pixelsY);
+        }
+        else if (player[i] % 7 == 4)
+        {
+            cardOrOne(pixelsX, pixelsY);
+        }
+        else if (player[i] % 7 == 5)
+        {
+            cardXorOne(pixelsX, pixelsY);
+        }
+        else if (player[i] % 7 == 6)
+        {
+            notCard(pixelsX, pixelsY);
+        }
+        else if (player[i] % 7 == 0)
+        {
+            cardAndOne(pixelsX, pixelsY);
+        }
+        counter++;
+        pixelsY += 9;
+        if (counter == 4)
+        {
+            pixelsY += 2;
+        }
+    }
+}
+
+void printTruthTable(int x, int y)
+{
+    for (int i = 0; i < 10; i++)
+    {
+        gotoXY(x, y++); cout << "                     ";
+    }
+    gotoXY(x, y++); cout << "  ____________       ";
+    gotoXY(x, y++); cout << " |    AND     |      ";
+    gotoXY(x, y++); cout << " |------------|      ";
+    gotoXY(x, y++); cout << " | 0 && 0 | 0 |      ";
+    gotoXY(x, y++); cout << " | 0 && 1 | 0 |      ";
+    gotoXY(x, y++); cout << " | 1 && 0 | 0 |      ";
+    gotoXY(x, y++); cout << " | 1 && 1 | 1 |      ";
+    gotoXY(x, y++); cout << " |____________|      ";
+    gotoXY(x, y++); cout << "                     ";
+    gotoXY(x, y++); cout << "  ____________       ";
+    gotoXY(x, y++); cout << " |     OR     |      ";
+    gotoXY(x, y++); cout << " |------------|      ";
+    gotoXY(x, y++); cout << " | 0 || 0 | 0 |      ";
+    gotoXY(x, y++); cout << " | 0 || 1 | 1 |      ";
+    gotoXY(x, y++); cout << " | 1 || 0 | 1 |      ";
+    gotoXY(x, y++); cout << " | 1 || 1 | 1 |      ";
+    gotoXY(x, y++); cout << " |____________|      ";
+    gotoXY(x, y++); cout << "                     ";
+    gotoXY(x, y++); cout << "  ____________       ";
+    gotoXY(x, y++); cout << " |    XOR     |      ";
+    gotoXY(x, y++); cout << " |------------|      ";
+    gotoXY(x, y++); cout << " | 0 ^ 0  | 0 |      ";
+    gotoXY(x, y++); cout << " | 0 ^ 1  | 1 |      ";
+    gotoXY(x, y++); cout << " | 1 ^ 0  | 1 |      ";
+    gotoXY(x, y++); cout << " | 1 ^ 1  | 0 |      ";
+    gotoXY(x, y++); cout << " |____________|      ";
+    for (int i = 0; i < 12; i++)
+    {
+        gotoXY(x, y++); cout << "                     ";
+    }
+}
+
 //the player selects a card
 void chooseCard(int* player, bool returned)
 {

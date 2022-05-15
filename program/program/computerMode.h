@@ -12,7 +12,7 @@ void shuffleCards();
 void removeCard(int card, int* player);
 void takeCards(int cardsNeeded, int* player);
 void chooseCardComputerMode(int* player);
-void printCardsComputerMode(int cardsNeeded, int* player);
+void printCards(int cardsNeeded, int* player);
 void printPositionsComputerMode();
 void placeCardComputerMode(int* playersCards, bool* boolCardValues, int player, bool* occupiedPositions, bool* cardValues);
 void player();

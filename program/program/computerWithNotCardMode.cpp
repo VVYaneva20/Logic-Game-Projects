@@ -13,12 +13,7 @@ using namespace std;
 
 int cardsPlayer[15];
 int cardsComputer[15];
-int posCoordinatesNotCardWithComputer[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
-                          {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
-                          {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
-                          {17, 152, 17}, {17, 152, 29},
-                          {2, 167}
-};
+
 
 bool isNotCardComputerMode = true;
 bool skipTurnPlayer = 0, skipTurnPC = 0;
@@ -27,6 +22,12 @@ bool skipTurnPlayer = 0, skipTurnPC = 0;
 //display the empty positions
 void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values)
 {
+    int posCoordinatesNotCardWithComputer[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+                          {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
+                          {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
+                          {17, 152, 17}, {17, 152, 29},
+                          {2, 167}
+    };
     int xFirstFive, y, x;
     if (player == 1)
         xFirstFive = 60;
@@ -134,6 +135,12 @@ void printPositionsNotCardWithComputer(int player, bool* isOccupied, int* values
 
 void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardValues, int playerNum)
 {
+    int posCoordinatesNotCardWithComputer[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+                          {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
+                          {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
+                          {17, 152, 17}, {17, 152, 29},
+                          {2, 167}
+    };
     int pixelsX;
     int pixelsY;
 
@@ -221,57 +228,6 @@ void notCardWithComputerCheck(int* values, bool* isOccupied, bool* initialCardVa
     printPositionsNotCardWithComputer(2, isOccupiedP2, cardsComputer);
 }
 
-
-//display allCards 
-void printCardsWithComputer(int allCardsNeeded, int* player)
-{
-    int counter = 0;
-    int pixelsX = 191;
-    int pixelsY = 2;
-    gotoXY(30, 3); cout << YELLOW << "Player's side" << RESET;
-    gotoXY(139, 3); cout << YELLOW << "Computer's side" << RESET;
-    for (int i = 0; i < 52; i++)
-    {
-        gotoXY(187, i); cout << "|";
-    }
-    for (int i = 0; i < 5; i++)
-    {
-        if (player[i] % 7 == 1)
-        {
-            cardOrZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 2)
-        {
-            cardXorZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 3)
-        {
-            cardAndZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 4)
-        {
-            cardOrOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 5)
-        {
-            cardXorOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 6)
-        {
-            notCard(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 0)
-        {
-            cardAndOne(pixelsX, pixelsY);
-        }
-        counter++;
-        pixelsY += 9;
-        if (counter == 4)
-        {
-            pixelsY += 2;
-        }
-    }
-}
 
 void printInitialPositionsWithComputer()
 {
@@ -2909,7 +2865,7 @@ void playerTurn()
 {
 
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printCardsWithComputer(5, playerOneCards);
+    printCardsWithNotCard(playerOneCards);
     chooseCard(playerOneCards, 0);
     checkCardNotCardWithComputer(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsPlayer);
 
@@ -2922,7 +2878,7 @@ void computerTurn()
 
     int yCoords[5] = { 6, 15, 24, 33, 44 };
 
-    printCardsWithComputer(5, playerTwoCards);
+    printCardsWithNotCard(playerTwoCards);
 
     counter = 1;
     chooseCardNotCardComputer(playerTwoCards);
@@ -2952,6 +2908,8 @@ void beginningOfTheGameWithComputerNotCard()
     takeCards(5, playerOneCards, 56);
     takeCards(5, playerTwoCards, 56);
 
+    gotoXY(32, 3); cout << YELLOW << "Player's side " << RESET;
+    gotoXY(139, 3); cout << YELLOW << "Computer's side" << RESET;
 
     while (true)
     {

@@ -13,18 +13,19 @@ using namespace std;
 
 int cardsP1[15];
 int cardsP2[15];
-int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
-                          {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
-                          {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
-                          {17, 152, 17}, {17, 152, 29},
-                          {2, 167, 23}
-};
+
 
 bool isNotCard = true;
 bool skipTurnP1 = 0, skipTurnP2 = 0;
 
 void printPositionsNotCard(int player, bool* isOccupied, int* values)
 {
+    int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+                          {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
+                          {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
+                          {17, 152, 17}, {17, 152, 29},
+                          {2, 167, 23}
+    };
     int xFirstFive, y, x, xP2;
     if (player == 1)
         xFirstFive = 60;
@@ -132,6 +133,12 @@ void printPositionsNotCard(int player, bool* isOccupied, int* values)
 
 void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int playerNum)
 {
+    int posCoordinatesNotCard[15][3] = { {60, 107, 4}, {60, 107, 13}, {60, 107, 22}, {60, 107, 31}, {60, 107, 40},
+                             {47, 122, 8}, {47, 122, 18}, {47, 122, 28}, {47, 122, 38},
+                             {32, 137, 12}, {32, 137, 23}, {32, 137, 34},
+                             {17, 152, 17}, {17, 152, 29},
+                             {2, 167, 23}
+    };
     int pixelsX;
     int pixelsY;
 
@@ -219,56 +226,6 @@ void notCardCheck(int* values, bool* isOccupied, bool* initialCardValues, int pl
     printPositionsNotCard(2, isOccupiedP2, cardsP2);
 }
 
-//display cardsNotCard 
-void printcardsNotCard(int cardsNotCardNeeded, int* player)
-{
-    int counter = 0;
-    int pixelsX = 191;
-    int pixelsY = 2;
-    gotoXY(30, 3); cout << YELLOW << "Player 1's side" << RESET;
-    gotoXY(139, 3); cout << YELLOW << "Player 2's side" << RESET;
-    for (int i = 0; i < 52; i++)
-    {
-        gotoXY(187, i); cout << "|";
-    }
-    for (int i = 0; i < 5; i++)
-    {
-        if (player[i] % 7 == 1)
-        {
-            cardOrZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 2)
-        {
-            cardXorZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 3)
-        {
-            cardAndZero(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 4)
-        {
-            cardOrOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 5)
-        {
-            cardXorOne(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 6)
-        {
-            notCard(pixelsX, pixelsY);
-        }
-        else if (player[i] % 7 == 0)
-        {
-            cardAndOne(pixelsX, pixelsY);
-        }
-        counter++;
-        pixelsY += 9;
-        if (counter == 4)
-        {
-            pixelsY += 2;
-        }
-    }
-}
 
 void printInitialPositions()
 {
@@ -1652,7 +1609,7 @@ void checkCardNotCard(int* playerscardsNotCard, bool* initialvalues, int player,
 void playerOne()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printcardsNotCard(5, playerOneCards);
+    printCards(playerOneCards);
     chooseCard(playerOneCards, 0);
     checkCardNotCard(playerOneCards, boolCardValuesP1, 1, isOccupiedP1, cardValuesP1, cardsP1);
 
@@ -1662,7 +1619,7 @@ void playerOne()
 void playerTwo()
 {
     int yCoords[5] = { 6, 15, 24, 33, 44 };
-    printcardsNotCard(5, playerTwoCards);
+    printCards(playerTwoCards);
     chooseCard(playerTwoCards, 0);
     checkCardNotCard(playerTwoCards, boolCardValuesP2, 2, isOccupiedP2, cardValuesP2, cardsP2);
 
@@ -1685,6 +1642,9 @@ void beginningOfTheGameWithTwoPLayersNotCard()
     shuffleCards(56);
     takeCards(5, playerOneCards, 56);
     takeCards(5, playerTwoCards, 56);
+
+    gotoXY(30, 3); cout << YELLOW << "Player 1's side" << RESET;
+    gotoXY(139, 3); cout << YELLOW << "Player 2's side" << RESET;
 
     while (true)
     {
